@@ -24,6 +24,3 @@ export class Paddlewheel {
 } 
 
 
-// function loadImage(url) {
-//    return new Promise(r => { let i = new Image(); i.onload = (() => r(i)); i.src = url; });
-// }
