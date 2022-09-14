@@ -12,6 +12,8 @@ document.body.onmouseup = function () {
     --mouseDown;
 };
 
+
+
 // HTML OBJECTS //
 
 // Canvas
@@ -52,7 +54,7 @@ const paddlewheel_checkbox = document.querySelector('#paddlewheel')
 
 // Simulation defining vars // 
 var amount_of_vectors = vector_amount_entry.value;
-let move = 0;
+let move = 0; // For mouse movement over canvas
 let first_clicked_p = {x:0,y:0}
 let theorem = 'gauss';
 var res 
@@ -69,7 +71,7 @@ let p_wheel = new Paddlewheel(F1)
 ///////////////////////////////////// INIT ENDs HERE /////////////////////////////////////
 
 
-// Event Handeling //
+// Event Handeling  for Buttons//
 export function clickedGauss(event) {
     btn_gauss.setAttribute('class', 'dropdown-item active');
     btn_stokes.setAttribute('class', 'dropdown-item');
@@ -111,6 +113,7 @@ export function clickPressField(event) {
     }
 }
 
+// Event Handeling for checkboxes
 
 paddlewheel_checkbox.addEventListener('change', (event) => {
     if (paddlewheel_checkbox.checked){
@@ -276,80 +279,91 @@ var old_width = 0
 var old_height = 0
 canvas.addEventListener('mousemove', (event) => {
     const p = { x: event.layerX, y: event.layerY }
-    if (mouseDown) {
-        if (move == 0){
-            first_clicked_p = { x: event.layerX, y: event.layerY };
-            Object.assign(old_startpoint, rect.startpoint)
-            Object.assign(old_width, rect.width)
-            Object.assign(old_height, rect.height)
-        }
-        move += 1;
-        // do something wiith the rect
-        if (fieldscanner_checkbox.checked == false) {
-            c.clearRect(0, 0, canvas.width, canvas.height);
-            F1.draw(c);
-            coordinates.draw(c);
-            switch (state) {
-                case 'inside': 
-                    rect.startpoint.x = old_startpoint.x-(first_clicked_p.x-p.x)
-                    rect.startpoint.y = old_startpoint.y-(first_clicked_p.y-p.y)
+    if (fieldscanner_checkbox.checked == false) {
+        if (mouseDown) {
+            if (move == 0){
+                first_clicked_p = { x: event.layerX, y: event.layerY };
+                Object.assign(old_startpoint, rect.startpoint)
+                Object.assign(old_width, rect.width)
+                Object.assign(old_height, rect.height)
+            }
+            move += 1;
+            // do something wiith the rect
+                c.clearRect(0, 0, canvas.width, canvas.height);
+                F1.draw(c);
+                coordinates.draw(c);
+                p_wheel.draw(c)
+                switch (state) {
+                    case 'inside': 
+                        rect.startpoint.x = old_startpoint.x-(first_clicked_p.x-p.x)
+                        rect.startpoint.y = old_startpoint.y-(first_clicked_p.y-p.y)
                     break
 
-                case 'left':
-                    if (rect.width < 0){
-                        rect.width = (p.x-first_clicked_p.x)+(first_clicked_p.x-old_startpoint.x) // This works:)
-                    }else {
-                        rect.width = old_width//+(old_startpoint.x+p.x) // This does not wotk it somehow forgets the old width... :(
+                    case 'left':
+                        if (rect.width < 0){
+                            rect.width = (p.x-first_clicked_p.x)+(first_clicked_p.x-old_startpoint.x) // This works:)
+                        }else {
+                            rect.width = old_width//+(old_startpoint.x+p.x) // This does not wotk it somehow forgets the old width...   :(
                         rect.startpoint.x = p.x
-                    }
+                        }
                     break
 
-                case 'bottom':
-                    break
-                
-                case 'right':
-                    break
-                
-                case 'top':
+                    case 'bottom':
                     break
                     
-                default :
+                    case 'right':
+                    break
+                    
+                    case 'top':
+                    break
+
+                    case 'on_p_wheel':
+                        p_wheel.move_to(p,F1)
+                    break
+                    
+                    default :
                     if (move == 1) {
-                        rect.startpoint = p
-                    }
-                    rect.set_endpoint(p)     
-            }
-            rect.vecs_in_rect = rect.get_vectors_in_rect(F1)
-            if (projections_checkbox.checked) {
+                            rect.startpoint = p
+                        }
+                        rect.set_endpoint(p)     
+                
+                rect.vecs_in_rect = rect.get_vectors_in_rect(F1)
+                if (projections_checkbox.checked) {
                 if (theorem == 'gauss') {
-                    rect.draw_surface_vektores();
+                        rect.draw_surface_vektores();
+                    }
+                    if (theorem == 'stokes') {
+                        rect.draw_line_vectores()
+                    }
                 }
-                if (theorem == 'stokes') {
-                    rect.draw_line_vectores()
+                if (partial_x_checkbox.checked) {
+                    rect.draw_partial_x_vecotres(rect.vecs_in_rect)
                 }
-            }
-            if (partial_x_checkbox.checked) {
-                rect.draw_partial_x_vecotres(rect.vecs_in_rect)
-            }
-            if (partial_y_checkbox.checked){
+                if (partial_y_checkbox.checked){
                 rect.draw_partial_y_vecotres(rect.vecs_in_rect)
+                    }
             }
-        }
-        set_integral_label()
-        rect.draw(c)
-        }
-    else {
-        state = rect.on_outline(p)
-        if (state != false){
-            document.body.style.cursor = "pointer"
-        }
-        else if (rect.in_rect(p)){
-            state = "inside"
-            document.body.style.cursor = "move"
-        }
+            set_integral_label()
+            rect.draw(c)
+            }
         else {
-            state = "outside"
-            document.body.style.cursor = "default"
+            state = rect.on_outline(p)
+            if (state != false){
+                document.body.style.cursor = "pointer"
+
+            }
+            else if (rect.in_rect(p)){
+                state = "inside"
+                document.body.style.cursor = "move"
+            }
+            else if(p_wheel.near(p)){
+                state = "on_p_wheel"
+                document.body.style.cursor = "move"
+                }
+            else {
+                state = "outside"
+                document.body.style.cursor = "default"
+            }
         }
     }
 })

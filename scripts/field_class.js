@@ -46,8 +46,8 @@ export class Field {
        var expr_y = math.parse(this.y);
        var diff_Fx_y = math.derivative(expr_x, "y");
        var diff_Fy_x = math.derivative(expr_y, "x");
-       var divergence = diff_Fx_y.evaluate({ 'x': p.x, 'y': p.y }) + diff_Fy_x.evaluate({ 'x': p.x, 'y': p.y });
-       return divergence;
+       var curl = diff_Fy_x.evaluate({ 'x': p.x, 'y': p.y }) - diff_Fx_y.evaluate({ 'x': p.x, 'y': p.y });
+       return curl;
    }
    
    // Creating it beautiful //
