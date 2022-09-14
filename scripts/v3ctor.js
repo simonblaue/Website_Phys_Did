@@ -93,6 +93,7 @@ export function clickedStokes(event) {
     theorem = 'stokes';
     set_integral_label()
 }
+
 // Pressing enter on field entries
 export function clickPressField(event) {
     if (event.keyCode == 13 || event.type == 'click') {
@@ -106,6 +107,7 @@ export function clickPressField(event) {
         integral_label.innerHTML = "NaN"
         F1.draw(c);
         coordinates.draw(c);
+        p_wheel.move_to(p_wheel.position, F1)
     }
 }
 
