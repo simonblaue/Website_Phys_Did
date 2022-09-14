@@ -38,9 +38,8 @@ export class Paddlewheel {
    }
 
    update(c){
-      console.log(this.speed)
       if (this.visible){
-         this.angle -= 2 //this.speed
+         this.angle -= this.speed
       }
    }
 
