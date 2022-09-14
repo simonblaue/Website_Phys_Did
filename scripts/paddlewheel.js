@@ -2,40 +2,53 @@ export class Paddlewheel {
 
    visible;
    position;
-   img;
-   animationID
 
    constructor(field){
-      this.visible = false
+      this.visible = true
       this.field = field
-      this.position = this.field.canvas_middle
+      this.position = {x:0, y:0} // In field coordinates centered at the middle (0,0)
       this.angle = 0
+      this.speed = this.field.curl_at(this.position)
    }
 
-   draw(context,rect,F1,coordinates){
+   draw(c){
+      c.save()
+      c.translate(canvas.width/2,canvas.height/2);
+      c.rotate(this.angle*Math.PI/180);
+
+      c.beginPath()
+      c.arc(this.position.x, this.position.y, 3.5, 0, 2*Math.PI)
+      c.fillStyle = 'white'
+      c.fill()
+      c.moveTo(this.position.x, this.position.y+15)
+      c.lineTo(this.position.x, this.position.y-15)
+
+      c.moveTo(this.position.x-15, this.position.y)
+      c.lineTo(this.position.x+15, this.position.y)
       
-      var img = new Image();
-      img.onload = () => {
-         // save the unrotated context of the canvas so we can restore it later
-         // the alternative is to untranslate & unrotate after drawing
-         c.save();
-         // move to the center of the canvas
-         c.translate(canvas.width/2,canvas.height/2);
-         // rotate the canvas to the specified degrees
-         c.rotate(this.angle*Math.PI/180);
-         c.drawImage(img,-img.width/2,-img.height/2);
-         c.restore();
-      }
-      img.src = '/res/paddlewheel.svg';
+      c.moveTo(this.position.x-10, this.position.y-10)
+      c.lineTo(this.position.x+10, this.position.y+10)
+
+      c.moveTo(this.position.x-10, this.position.y+10)
+      c.lineTo(this.position.x+10, this.position.y-10)
+      c.strokeStyle = 'white'
+      c.lineWidth = 1
+      c.stroke() 
+      c.restore();
    }
 
-   update(){
+   update(c){
+      console.log(this.speed)
       if (this.visible){
-         this.draw()
-         this.angle += this.field.curl_at(this.position)
-      }
+         this.angle -= 2 //this.speed
       }
    }
+
+   move(event){
+      // Change position based on event
+      this.speed = this.field.curl_at(this.position)
+   }
+}
 
 
 

@@ -113,7 +113,8 @@ export function clickPressField(event) {
 paddlewheel_checkbox.addEventListener('change', (event) => {
     if (paddlewheel_checkbox.checked){
         p_wheel.visible = true
-        p_wheel.draw(c,rect,F1,coordinates)
+        p_wheel.draw(c)
+        animate()
     }
     else {
         p_wheel.visible = false
@@ -383,18 +384,19 @@ function set_integral_label(){
 let animationID
 
 function animate(){
-    animationID = requestAnimationFrame(animate)
+    if (paddlewheel_checkbox.checked == false) {return}
     c.clearRect(0,0,canvas.width, canvas.height)
-
+    
     rect.draw(c)
     F1.draw(c)
     coordinates.draw(c)
-    p_wheel.update()
+    p_wheel.draw(c)
+
+    p_wheel.update(c)
     
+    animationID = requestAnimationFrame(animate)
 
 }
-
-animate()
 
 ////////////////////////////////////////////////////////////7
 
