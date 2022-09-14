@@ -13,6 +13,7 @@ export class Paddlewheel {
 
    draw(canvas_context){
       canvas_context.drawImage(this.img, this.position.x, this.position.y);
+      console.log(canvas_context)
    }
 
    animate(){
