@@ -3,34 +3,33 @@ export class Paddlewheel {
    visible;
    position;
 
-   constructor(field){
+   constructor(){
       this.visible = true
-      this.field = field
-      this.position = {x:0, y:0} // In field coordinates centered at the middle (0,0)
+      this.position = {x:100, y:100}
       this.angle = 0
-      this.speed = this.field.curl_at(this.position)
+      this.speed = 0
    }
 
    draw(c){
       c.save()
-      c.translate(canvas.width/2,canvas.height/2);
+      c.translate(this.position.x, this.position.y);
       c.rotate(this.angle*Math.PI/180);
 
       c.beginPath()
-      c.arc(this.position.x, this.position.y, 3.5, 0, 2*Math.PI)
+      c.arc(0,0, 3.5, 0, 2*Math.PI)
       c.fillStyle = 'white'
       c.fill()
-      c.moveTo(this.position.x, this.position.y+15)
-      c.lineTo(this.position.x, this.position.y-15)
+      c.moveTo(0,15)
+      c.lineTo(0,-15)
 
-      c.moveTo(this.position.x-15, this.position.y)
-      c.lineTo(this.position.x+15, this.position.y)
+      c.moveTo(-15, 0)
+      c.lineTo(15, 0)
       
-      c.moveTo(this.position.x-10, this.position.y-10)
-      c.lineTo(this.position.x+10, this.position.y+10)
+      c.moveTo(-10, -10)
+      c.lineTo(10, 10)
 
-      c.moveTo(this.position.x-10, this.position.y+10)
-      c.lineTo(this.position.x+10, this.position.y-10)
+      c.moveTo(-10, 10)
+      c.lineTo(10, -10)
       c.strokeStyle = 'white'
       c.lineWidth = 1
       c.stroke() 
@@ -43,9 +42,10 @@ export class Paddlewheel {
       }
    }
 
-   move(event){
+   move_to(p,field){
       // Change position based on event
-      this.speed = this.field.curl_at(this.position)
+      this.position = p
+      this.speed = field.curl_at(this.position)
    }
 }
 

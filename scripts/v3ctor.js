@@ -113,6 +113,7 @@ export function clickPressField(event) {
 paddlewheel_checkbox.addEventListener('change', (event) => {
     if (paddlewheel_checkbox.checked){
         p_wheel.visible = true
+        p_wheel.move_to({x:100,y:100}, F1)
         p_wheel.draw(c)
         animate()
     }
