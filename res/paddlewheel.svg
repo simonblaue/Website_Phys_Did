@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="paddlewheel" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 10 10">
+	<defs>
+		<style>
+			.cls-1{fill:none;}.cls-1,.cls-2{stroke:#fff;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2{fill:#fff;}
+		</style>
+	</defs>
+	<g id="paddlewheel-2">
+		<circle class="cls-2" cx="5" cy="5" r="1"/>
+		<line class="cls-1" x1="10" y1="5" x2="0" y2="5"/>  <!-- Horizontal -->
+		<line class="cls-1" x1="5" y1="10" x2="5" y2="0"/> <!-- Horizontal -->
+		<line class="cls-1" x1="8.53" y1="8.53" x2="1.48" y2="1.48"/> <!-- Horizontal -->
+		<line class="cls-1" x1="1.48" y1="8.53" x2="8.53" y2="1.48"/> <!-- Horizontal -->
+	</g>
+</svg>

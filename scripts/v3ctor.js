@@ -58,8 +58,6 @@ let theorem = 'gauss';
 var res 
 
 
-
-
 // Init of rectangle and coordinate lines
 let F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors);
 F1.draw(c);
@@ -115,10 +113,14 @@ export function clickPressField(event) {
 paddlewheel_checkbox.addEventListener('change', (event) => {
     if (paddlewheel_checkbox.checked){
         p_wheel.visible = true
-        p_wheel.draw(c)
+        p_wheel.draw(c,rect,F1,coordinates)
     }
     else {
         p_wheel.visible = false
+        c.clearRect(0,0,canvas.width, canvas.height)
+        rect.draw(c)
+        F1.draw(c);
+        coordinates.draw(c);
     }
 })
 
@@ -306,7 +308,7 @@ canvas.addEventListener('mousemove', (event) => {
                 
                 case 'top':
                     break
-                
+                    
                 default :
                     if (move == 1) {
                         rect.startpoint = p
@@ -376,6 +378,23 @@ function set_integral_label(){
 }
 
 
+// Animation
+
+let animationID
+
+function animate(){
+    animationID = requestAnimationFrame(animate)
+    c.clearRect(0,0,canvas.width, canvas.height)
+
+    rect.draw(c)
+    F1.draw(c)
+    coordinates.draw(c)
+    p_wheel.update()
+    
+
+}
+
+animate()
 
 ////////////////////////////////////////////////////////////7
 
