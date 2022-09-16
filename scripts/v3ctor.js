@@ -282,8 +282,8 @@ canvas.addEventListener('mousemove', (event) => {
             if (move == 0){
                 first_clicked_p = { x: event.layerX, y: event.layerY };
                 Object.assign(old_startpoint, rect.startpoint)
-                Object.assign(old_width, rect.width)
-                Object.assign(old_height, rect.height)
+                old_width = rect.width.valueOf()
+                old_height = rect.height.valueOf()
             }
             move += 1;
             // do something with the rect
@@ -295,20 +295,43 @@ canvas.addEventListener('mousemove', (event) => {
 
                     case 'left':
                         if (rect.width < 0){
-                            rect.width = (p.x-first_clicked_p.x)+(first_clicked_p.x-old_startpoint.x) // This works:)
-                        }else {
-                            rect.width = old_width//+(old_startpoint.x+p.x) // This does not wotk it somehow forgets the old width...   :(
-                        rect.startpoint.x = p.x
+                            rect.width = (p.x-first_clicked_p.x)+(first_clicked_p.x-old_startpoint.x)
+                        }else if (rect.width > 0){
+                            rect.startpoint.x = p.x
+                            rect.width = old_width + (first_clicked_p.x-p.x) 
                         }
-                    break
-
-                    case 'bottom':
+                        else {break}
                     break
                     
                     case 'right':
+                        if (rect.width > 0){
+                            rect.width = (p.x-first_clicked_p.x)+(first_clicked_p.x-old_startpoint.x) 
+                        }else if (rect.width < 0){
+                            rect.startpoint.x = p.x
+                            rect.width = old_width + (first_clicked_p.x-p.x) 
+                        }
+                        else {break}
+                    break
+
+                    case 'bottom':
+                        if (rect.height > 0){
+                            rect.height = (p.y-first_clicked_p.y)+(first_clicked_p.y-old_startpoint.y) 
+                        }else if (rect.height < 0){
+                            rect.startpoint.y = p.y
+                            rect.height = old_height + (first_clicked_p.y-p.y) 
+                        }
+                        else {break}
                     break
                     
+                    
                     case 'top':
+                        if (rect.height < 0){
+                            rect.height = (p.y-first_clicked_p.y)+(first_clicked_p.y-old_startpoint.y) 
+                        }else if (rect.height > 0){
+                            rect.startpoint.y = p.y
+                            rect.height = old_height + (first_clicked_p.y-p.y) 
+                        }
+                        else {break}
                     break
 
                     case 'on_p_wheel':
@@ -344,7 +367,7 @@ canvas.addEventListener('mousemove', (event) => {
             }
         else {
             state = rect.on_outline(p)
-            if (state == true){
+            if (state != false){
                 document.body.style.cursor = "pointer"
 
             }

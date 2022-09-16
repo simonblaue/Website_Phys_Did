@@ -2,8 +2,8 @@ import { Vector2d } from './vector_class.js'
 // This is a drawable and moveable rectangle on a canvas
 export class Rectangle {
    startpoint;
-   width;
-   height;
+   width = 0;
+   height = 0;
    vecs_in_rect = [];
    field;
 
