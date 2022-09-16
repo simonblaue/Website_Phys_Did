@@ -177,28 +177,6 @@ export class Rectangle {
     canvas_context.stroke();
 }
 
-   draw_partial_x_vecotres(list){
-       this.field.rec_partial_x.splice(0, this.field.rec_partial_x.length);
-       list.forEach((p_and_v)=>{
-           var v  = new Vector2d(p_and_v.v.x,0,'blue') 
-           this.field.rec_partial_x.push({p:p_and_v.p, v:v})
-
-       })
-       if (this.field.rec_partial_x.length == 0){
-           this.field.rec_partial_x = []
-       }
-   }
-
-   draw_partial_y_vecotres(list){
-       this.field.rec_partial_y.splice(0, this.field.rec_partial_y.length);
-       list.forEach((p_and_v)=>{
-           var v  = new Vector2d(0, p_and_v.v.y, 'orange')
-           this.field.rec_partial_y.push({p:p_and_v.p, v:v})
-       })
-       if (this.field.rec_partial_y.length == 0){
-           this.field.rec_partial_y = []
-       }
-   }
 
    draw_surface_vektores() {
        this.field.rec_vectors.splice(0, this.field.rec_vectors.length);

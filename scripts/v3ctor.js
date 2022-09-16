@@ -208,12 +208,12 @@ partial_x_checkbox.addEventListener('change', (event) =>{
     c.fillRect(0, 0, canvas.width, canvas.height);
     if (partial_x_checkbox.checked){
         if (fieldscanner_checkbox.checked == false){
-            rect.draw_partial_x_vecotres(rect.vecs_in_rect)
+            F1.add_partial_x_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel))
         }
     }
     else{
-        F1.rec_partial_x = [];
-        rect.draw_partial_x_vecotres([])
+        F1.partial_x_vecs = [];
+        F1.add_partial_x_vectors([])
     }
     rect.draw(c);
     F1.draw(c);
@@ -225,12 +225,12 @@ partial_y_checkbox.addEventListener('change', (event) =>{
     c.fillRect(0, 0, canvas.width, canvas.height);
     if (partial_y_checkbox.checked){
         if (fieldscanner_checkbox.checked == false){
-            rect.draw_partial_y_vecotres(rect.vecs_in_rect)
+            F1.add_partial_y_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel))
         }
     }
     else{
-        F1.rec_partial_y = [];
-        rect.draw_partial_y_vecotres([])
+        F1.partial_y_vecs = [];
+        F1.add_partial_y_vectors([])
     }
     rect.draw(c);
     F1.draw(c);
@@ -310,11 +310,7 @@ canvas.addEventListener('mousemove', (event) => {
                 Object.assign(old_height, rect.height)
             }
             move += 1;
-            // do something wiith the rect
-                c.clearRect(0, 0, canvas.width, canvas.height);
-                F1.draw(c);
-                coordinates.draw(c);
-                p_wheel.draw(c)
+            // do something with the rect
                 switch (state) {
                     case 'inside': 
                         rect.startpoint.x = old_startpoint.x-(first_clicked_p.x-p.x)
@@ -359,13 +355,13 @@ canvas.addEventListener('mousemove', (event) => {
                     }
                 }
                 if (partial_x_checkbox.checked) {
-                    rect.draw_partial_x_vecotres(rect.vecs_in_rect)
+                    F1.add_partial_x_vecotrs(rect.vecs_in_rect)
                 }
                 if (partial_y_checkbox.checked){
-                rect.draw_partial_y_vecotres(rect.vecs_in_rect)
+                F1.add_partial_y_vectors(rect.vecs_in_rect)
                     }
             set_integral_label()
-            rect.draw(c)
+            redraw_canvas()
             }
         else {
             state = rect.on_outline(p)
@@ -424,17 +420,18 @@ let animationID
 
 function animate(){
     if (paddlewheel_checkbox.checked == false) {return}
+    animationID = requestAnimationFrame(animate)
+    p_wheel.update(c)
+    redraw_canvas()
+}
+
+// Updater
+function redraw_canvas(){
     c.clearRect(0,0,canvas.width, canvas.height)
-    
-    rect.draw(c)
     F1.draw(c)
+    rect.draw(c)
     coordinates.draw(c)
     p_wheel.draw(c)
-
-    p_wheel.update(c)
-    
-    animationID = requestAnimationFrame(animate)
-
 }
 
 ////////////////////////////////////////////////////////////7

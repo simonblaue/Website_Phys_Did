@@ -11,8 +11,8 @@ export class Field {
    vectors = [];
    fieldscanner_vectors = [];
    rec_vectors = [];
-   rec_partial_x = [];
-   rec_partial_y = [];
+   partial_x_vecs = [];
+   partial_y_vecs = [];
    p_wheel_partial_x = [];
    p_wheel_partial_y = [];
 
@@ -91,13 +91,13 @@ export class Field {
         v.y *= this.norm_factor
         v.recalc_len()
     })
-    this.rec_partial_x.forEach((p_and_v)=>{
+    this.partial_x_vecs.forEach((p_and_v)=>{
         var v = p_and_v.v
         v.x *= this.norm_factor
         v.y *= this.norm_factor
         v.recalc_len()
     })
-    this.rec_partial_y.forEach((p_and_v)=>{
+    this.partial_y_vecs.forEach((p_and_v)=>{
         var v = p_and_v.v
         v.x *= this.norm_factor
         v.y *= this.norm_factor
@@ -130,15 +130,15 @@ export class Field {
                v.draw_at(p,canvas_context);
            });
        }
-       if (this.rec_partial_x.length != 0) {
-           this.rec_partial_x.forEach((p_and_v) => {
+       if (this.partial_x_vecs.length != 0) {
+           this.partial_x_vecs.forEach((p_and_v) => {
                var p = p_and_v.p;
                var v = p_and_v.v;
                v.draw_at(p,canvas_context);
            });
        } 
-       if (this.rec_partial_y.length != 0) {
-           this.rec_partial_y.forEach((p_and_v) => {
+       if (this.partial_y_vecs.length != 0) {
+           this.partial_y_vecs.forEach((p_and_v) => {
                var p = p_and_v.p;
                var v = p_and_v.v;
                v.draw_at(p,canvas_context);
@@ -166,6 +166,28 @@ export class Field {
         })
    }
    }
+
+    add_partial_x_vecotrs(list){
+         this.partial_x_vecs.splice(0, this.partial_x_vecs.length);
+         list.forEach((p_and_v)=>{
+             var v  = new Vector2d(p_and_v.v.x,0,'blue') 
+             this.partial_x_vecs.push({p:p_and_v.p, v:v})
+         })
+         if (this.partial_x_vecs.length == 0){
+             this.partial_x_vecs = []
+         }
+    }
+
+    add_partial_y_vecotrs(list){
+        this.partial_y_vecs.splice(0, this.partial_y_vecs.length);
+        list.forEach((p_and_v)=>{
+            var v  = new Vector2d(0, p_and_v.v.y, 'orange')
+            this.partial_y_vecs.push({p:p_and_v.p, v:v})
+        })
+        if (this.partial_y_vecs.length == 0){
+            this.partial_y_vecs = []
+        }
+}  
 
 
     transform(point) {
