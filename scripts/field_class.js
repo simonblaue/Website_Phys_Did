@@ -167,7 +167,7 @@ export class Field {
    }
    }
 
-    add_partial_x_vecotrs(list){
+    add_partial_x_vectors(list){
          this.partial_x_vecs.splice(0, this.partial_x_vecs.length);
          list.forEach((p_and_v)=>{
              var v  = new Vector2d(p_and_v.v.x,0,'blue') 
@@ -178,7 +178,7 @@ export class Field {
          }
     }
 
-    add_partial_y_vecotrs(list){
+    add_partial_y_vectors(list){
         this.partial_y_vecs.splice(0, this.partial_y_vecs.length);
         list.forEach((p_and_v)=>{
             var v  = new Vector2d(0, p_and_v.v.y, 'orange')

@@ -1,3 +1,5 @@
+import { Vector2d } from './vector_class.js'
+
 export class Paddlewheel {
 
    visible;
@@ -50,7 +52,7 @@ export class Paddlewheel {
        field.vectors.forEach((p_and_v) => {
            var p = p_and_v.p;
            var v = p_and_v.v
-           if (this.near(p, distance=80)){
+           if (this.near(p, 80)){
                let new_object = {p:p, v: new Vector2d(v.x,v.y)}
                this.vecs_near_wheel.push(new_object)
            }

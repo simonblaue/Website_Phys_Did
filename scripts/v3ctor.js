@@ -128,11 +128,21 @@ paddlewheel_checkbox.addEventListener('change', (event) => {
     if (paddlewheel_checkbox.checked){
         p_wheel.visible = true
         p_wheel.move_to({x:100,y:100}, F1)
+        p_wheel.set_vectors_near_wheel(F1)
         p_wheel.draw(c)
         animate()
     }
     else {
         p_wheel.visible = false
+        p_wheel.vecs_near_wheel = []
+        F1.partial_x_vecs = []
+        F1.partial_y_vecs = []
+        if (partial_x_checkbox.checked){
+            F1.add_partial_x_vectors(rect.vecs_in_rect)
+        }
+        if (partial_y_checkbox.checked){
+            F1.add_partial_y_vectors(rect.vecs_in_rect)
+        }
         redraw_canvas()
     }
 })
@@ -311,7 +321,10 @@ canvas.addEventListener('mousemove', (event) => {
                         }
                         rect.set_endpoint(p)     
                 }
-                rect.vecs_in_rect = rect.get_vectors_in_rect(F1)
+                rect.set_vectors_in_rect(F1)
+                if (p_wheel.visible){
+                    p_wheel.set_vectors_near_wheel(F1)
+                }
                 if (projections_checkbox.checked) {
                 if (theorem == 'gauss') {
                         rect.draw_surface_vektores();
@@ -321,10 +334,10 @@ canvas.addEventListener('mousemove', (event) => {
                     }
                 }
                 if (partial_x_checkbox.checked) {
-                    F1.add_partial_x_vecotrs(rect.vecs_in_rect)
+                    F1.add_partial_x_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel))
                 }
                 if (partial_y_checkbox.checked){
-                F1.add_partial_y_vectors(rect.vecs_in_rect)
+                F1.add_partial_y_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel))
                     }
             set_integral_label()
             redraw_canvas()

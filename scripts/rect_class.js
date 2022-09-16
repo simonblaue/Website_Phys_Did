@@ -154,17 +154,16 @@ export class Rectangle {
        return (p.x-3 > x0 && p.x+3 < x1 && p.y-3 > y0 && p.y+3 < y1)
    }
 
-   get_vectors_in_rect(field) {
-       var vec_in_rect = []
+   set_vectors_in_rect(field) {
+       this.vecs_in_rect.splice(0,this.vecs_in_rect.length)
        field.vectors.forEach((p_and_v) => {
            var p = p_and_v.p;
            var v = p_and_v.v
            if (this.in_rect(p)){
                let new_object = {p:p, v: new Vector2d(v.x,v.y)}
-               vec_in_rect.push(new_object)
+               this.vecs_in_rect.push(new_object)
            }
        })
-       return vec_in_rect
    }
 
    // Draw functions
