@@ -277,6 +277,7 @@ var state = "outside"
 var old_startpoint = {x:0,y:0}
 var old_width = 0
 var old_height = 0
+
 canvas.addEventListener('mousemove', (event) => {
     const p = { x: event.layerX, y: event.layerY }
     if (fieldscanner_checkbox.checked == false) {
@@ -326,7 +327,7 @@ canvas.addEventListener('mousemove', (event) => {
                             rect.startpoint = p
                         }
                         rect.set_endpoint(p)     
-                
+                }
                 rect.vecs_in_rect = rect.get_vectors_in_rect(F1)
                 if (projections_checkbox.checked) {
                 if (theorem == 'gauss') {
@@ -342,7 +343,6 @@ canvas.addEventListener('mousemove', (event) => {
                 if (partial_y_checkbox.checked){
                 rect.draw_partial_y_vecotres(rect.vecs_in_rect)
                     }
-            }
             set_integral_label()
             rect.draw(c)
             }

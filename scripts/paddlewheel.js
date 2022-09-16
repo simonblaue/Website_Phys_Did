@@ -4,7 +4,7 @@ export class Paddlewheel {
    position;
 
    constructor(){
-      this.visible = true
+      this.visible = false
       this.position = {x:100, y:100}
       this.angle = 0
       this.speed = 0
@@ -12,6 +12,7 @@ export class Paddlewheel {
 
    draw(c){
       // Save for rotateing
+      if (this.visible == false) {return}
       c.save()
       c.translate(this.position.x, this.position.y);
       c.rotate(this.angle*Math.PI/180);
