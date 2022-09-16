@@ -82,6 +82,15 @@ export function clickedGauss(event) {
     paddlewheel_div.style.visibility='hidden' 
     theorem = 'gauss';
     set_integral_label()
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    F1.rec_vectors = []
+    if (projections_checkbox.checked){
+        rect.draw_surface_vektores()
+    }    
+    F1.draw(c)
+    rect.draw(c)
+    coordinates.draw(c)
+    p_wheel.draw(c)
 }
 
 export function clickedStokes(event) {
@@ -94,6 +103,15 @@ export function clickedStokes(event) {
     paddlewheel_div.style.visibility='visible' 
     theorem = 'stokes';
     set_integral_label()
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    F1.rec_vectors = []
+    if (projections_checkbox.checked){
+        rect.draw_line_vectores()
+    }    
+    F1.draw(c)
+    rect.draw(c)
+    coordinates.draw(c)
+    p_wheel.draw(c)
 }
 
 // Pressing enter on field entries
@@ -170,6 +188,9 @@ projections_checkbox.addEventListener('change', (event) => {
     if (projections_checkbox.checked){
         if (theorem == 'gauss') {
             rect.draw_surface_vektores();
+        }
+        if (theorem == 'stokes'){
+            rect.draw_line_vectores()
         }
     }
     else{
@@ -367,6 +388,7 @@ canvas.addEventListener('mousemove', (event) => {
         }
     }
 })
+
 
 // Rectangle:
 // Output Functions
