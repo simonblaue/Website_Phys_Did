@@ -344,7 +344,7 @@ canvas.addEventListener('mousemove', (event) => {
             }
         else {
             state = rect.on_outline(p)
-            if (state != false){
+            if (state == true){
                 document.body.style.cursor = "pointer"
 
             }
