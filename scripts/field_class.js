@@ -1,5 +1,6 @@
 // This is a drawable Vectorfield in 2d
 // Convention: i,j -> Canvas Coordinates, x,y -> Coordinates with origing in middle
+// This could easly be dealt with if I translate the canvas ... work for later
 import { Vector2d } from './vector_class.js'
 export class Field {
    x;
