@@ -10,8 +10,6 @@ export class Rectangle {
    constructor(field) {
        this.startpoint = {x:0, y:0};
        this.endpoint = {x:0, y:0};
-    //    this.width = endpoint.x - startpoint.x;
-    //    this.height = endpoint.y - startpoint.y;
        this.field = field
    }
    set_endpoint(p) {
