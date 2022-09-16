@@ -82,15 +82,11 @@ export function clickedGauss(event) {
     paddlewheel_div.style.visibility='hidden' 
     theorem = 'gauss';
     set_integral_label()
-    c.clearRect(0, 0, canvas.width, canvas.height);
     F1.rec_vectors = []
     if (projections_checkbox.checked){
         rect.draw_surface_vektores()
     }    
-    F1.draw(c)
-    rect.draw(c)
-    coordinates.draw(c)
-    p_wheel.draw(c)
+    redraw_canvas()
 }
 
 export function clickedStokes(event) {
@@ -103,15 +99,11 @@ export function clickedStokes(event) {
     paddlewheel_div.style.visibility='visible' 
     theorem = 'stokes';
     set_integral_label()
-    c.clearRect(0, 0, canvas.width, canvas.height);
     F1.rec_vectors = []
     if (projections_checkbox.checked){
         rect.draw_line_vectores()
     }    
-    F1.draw(c)
-    rect.draw(c)
-    coordinates.draw(c)
-    p_wheel.draw(c)
+    redraw_canvas()
 }
 
 // Pressing enter on field entries
@@ -125,8 +117,7 @@ export function clickPressField(event) {
         rect = new Rectangle(F1);
         div_rot_label.innerHTML = "NaN";
         integral_label.innerHTML = "NaN"
-        F1.draw(c);
-        coordinates.draw(c);
+        redraw_canvas()
         p_wheel.move_to(p_wheel.position, F1)
     }
 }
@@ -142,10 +133,7 @@ paddlewheel_checkbox.addEventListener('change', (event) => {
     }
     else {
         p_wheel.visible = false
-        c.clearRect(0,0,canvas.width, canvas.height)
-        rect.draw(c)
-        F1.draw(c);
-        coordinates.draw(c);
+        redraw_canvas()
     }
 })
 
@@ -157,17 +145,12 @@ coordinate_checkbox.addEventListener('change', (event) => {
     }
     else {
         coordinates.active = false;
-        c.fillStyle = 'black';
-        c.fillRect(0, 0, canvas.width, canvas.height);
-        F1.draw(c);
-        rect.draw(c)
+        redraw_canvas()
     }
 });
 
 // Fieldscanenr checkbox
 fieldscanner_checkbox.addEventListener('change', (event)=>{
-    c.fillStyle = 'black';
-    c.fillRect(0, 0, canvas.width, canvas.height);
     if (fieldscanner_checkbox.checked){
         F1.rec_vectors = []
         rect.startpoint = {x:0, y:0}
@@ -176,15 +159,11 @@ fieldscanner_checkbox.addEventListener('change', (event)=>{
     else {
         F1.fieldscanner_vectors = []
     }
-    rect.draw(c);
-    F1.draw(c);
-    coordinates.draw(c);
+    redraw_canvas()
 })
 
 // Projections chheckbox
 projections_checkbox.addEventListener('change', (event) => {
-    c.fillStyle = 'black';
-    c.fillRect(0, 0, canvas.width, canvas.height);
     if (projections_checkbox.checked){
         if (theorem == 'gauss') {
             rect.draw_surface_vektores();
@@ -196,16 +175,12 @@ projections_checkbox.addEventListener('change', (event) => {
     else{
         F1.rec_vectors = []
     }
-    rect.draw(c);
-    F1.draw(c);
-    coordinates.draw(c);
+    redraw_canvas()
 })
 
 
 // Patial checkboxes
 partial_x_checkbox.addEventListener('change', (event) =>{
-    c.fillStyle = 'black';
-    c.fillRect(0, 0, canvas.width, canvas.height);
     if (partial_x_checkbox.checked){
         if (fieldscanner_checkbox.checked == false){
             F1.add_partial_x_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel))
@@ -215,14 +190,10 @@ partial_x_checkbox.addEventListener('change', (event) =>{
         F1.partial_x_vecs = [];
         F1.add_partial_x_vectors([])
     }
-    rect.draw(c);
-    F1.draw(c);
-    coordinates.draw(c);
+    redraw_canvas()
 } )
 
 partial_y_checkbox.addEventListener('change', (event) =>{
-    c.fillStyle = 'black';
-    c.fillRect(0, 0, canvas.width, canvas.height);
     if (partial_y_checkbox.checked){
         if (fieldscanner_checkbox.checked == false){
             F1.add_partial_y_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel))
@@ -232,9 +203,7 @@ partial_y_checkbox.addEventListener('change', (event) =>{
         F1.partial_y_vecs = [];
         F1.add_partial_y_vectors([])
     }
-    rect.draw(c);
-    F1.draw(c);
-    coordinates.draw(c);
+    redraw_canvas()
 } )
 
 
@@ -244,9 +213,7 @@ partial_y_checkbox.addEventListener('change', (event) =>{
 // When mousebutton is released:
 canvas.addEventListener('click', (event) => {
     move = 0;
-    c.clearRect(0, 0, canvas.width, canvas.height);
-    rect.draw(c);
-
+   
     const p_canvas = { x: event.layerX, y: event.layerY };
     const p_coord = F1.transform(p_canvas);
 
@@ -287,9 +254,8 @@ canvas.addEventListener('click', (event) => {
             rect.draw_line_vectores()
         }
     }
-    F1.draw(c);
-    coordinates.draw(c);
-    // rect.startpoint = 0;
+
+    redraw_canvas()
 })
 
 
