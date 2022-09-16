@@ -13,6 +13,9 @@ export class Field {
    rec_vectors = [];
    rec_partial_x = [];
    rec_partial_y = [];
+   p_wheel_partial_x = [];
+   p_wheel_partial_y = [];
+
 
    constructor(x, y,canvas, amount_of_vectors) {
     this.x = x;
@@ -100,6 +103,18 @@ export class Field {
         v.y *= this.norm_factor
         v.recalc_len()
     })
+    this.p_wheel_partial_x.forEach((p_and_v)=>{
+        var v = p_and_v.v
+        v.x *= this.norm_factor
+        v.y *= this.norm_factor
+        v.recalc_len()
+    })
+    this.p_wheel_partial_y.forEach((p_and_v)=>{
+        var v = p_and_v.v
+        v.x *= this.norm_factor
+        v.y *= this.norm_factor
+        v.recalc_len()
+    })
    }
 
    draw(canvas_context) {
@@ -136,6 +151,20 @@ export class Field {
                v.draw_at(p,canvas_context);
            });
        }
+       if (this.p_wheel_partial_x.length != 0){
+            this.p_wheel_partial_x.forEach((p_and_v)=>{
+                var p = p_and_v.p;
+                var v = p_and_v.v;
+                v.draw_at(p,canvas_context);
+            })
+       }
+       if (this.p_wheel_partial_y.length != 0){
+        this.p_wheel_partial_y.forEach((p_and_v)=>{
+            var p = p_and_v.p;
+            var v = p_and_v.v;
+            v.draw_at(p,canvas_context);
+        })
+   }
    }
 
 

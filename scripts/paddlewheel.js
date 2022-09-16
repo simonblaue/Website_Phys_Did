@@ -40,14 +40,25 @@ export class Paddlewheel {
       c.restore();
    }
 
-   near(p){
-      return (this.visible && Math.abs(this.position.x-p.x) < 10 && Math.abs(this.position.y-p.y)<10)
-      if (this.visible){
-         if (Math.abs(this.position.x-p.x) < 10 && Math.abs(this.position.y-p.y)<10){
-            return true
-         }
-      }
-      return false
+   near(p, distance=10){
+      return (this.visible && Math.abs(this.position.x-p.x) < distance && Math.abs(this.position.y-p.y)<distance)
+   }
+
+   get_vectors_near_wheel(field){
+      var vec_near_wheel = []
+       field.vectors.forEach((p_and_v) => {
+           var p = p_and_v.p;
+           var v = p_and_v.v
+           if (this.near(p, distance=80)){
+               let new_object = {p:p, v: new Vector2d(v.x,v.y)}
+               vec_near_wheel.push(new_object)
+           }
+       })
+       return vec_near_wheel
+   }
+
+   draw_partial_x(vecs_near){
+      
    }
 
    update(c){
