@@ -86,6 +86,7 @@ export function clickedGauss(event) {
     set_integral_label()
     F1.rec_vectors = []
     p_wheel.visible = false
+    p_wheel.vecs_near_wheel = []
     F1.partial_x_vecs = []
     F1.partial_y_vecs = []
     paddlewheel_checkbox.checked = false
