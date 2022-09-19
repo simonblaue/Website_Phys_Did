@@ -78,7 +78,7 @@ export function clickedGauss(event) {
     div_rot_header.innerHTML = 'Divergenz';
     flux_header.innerHTML = 'Fluss durch Fläche';
     projection_label.innerHTML = 'Projektion auf die Kurvennormale der Fläche einblenden';
-    latex_image.src = '/res/Latex_Gauss.png'
+    latex_image.src = './res/Latex_Gauss.png'
     paddlewheel_div.style.visibility='hidden' 
     theorem = 'gauss';
     set_integral_label()
@@ -95,7 +95,7 @@ export function clickedStokes(event) {
     div_rot_header.innerHTML = 'Rotation';
     flux_header.innerHTML = 'Zirkulation entlang einer Kurve';
     projection_label.innerHTML = 'Projektion auf das vektorielle Wegelement einblenden';
-    latex_image.src = '/res/Latex_Stokes.png'
+    latex_image.src = './res/Latex_Stokes.png'
     paddlewheel_div.style.visibility='visible' 
     theorem = 'stokes';
     set_integral_label()

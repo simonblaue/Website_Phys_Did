@@ -16,6 +16,14 @@
 <script src="https://cdn.jsdelivr.net/npm/mathjs@10.4.2/lib/browser/math.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+<script src="./scripts/v3ctor.js" type="module" > </script> 
+  <script type="module">
+    import { clickPressField, clickedGauss, clickedStokes } from "./scripts/v3ctor.js"
+    window.clickPressField = clickPressField
+    window.clickedGauss = clickedGauss
+    window.clickedStokes = clickedStokes
+  </script>
+
 <div class="container pt-4 content">
     <h1> Vere Vedi Vecu  </h1>
     <h2> Eine forschungsbasierte Simulation zu Vektorfeldern Divergenz und Curl</h2>
@@ -35,7 +43,7 @@
                       </ul>
                   </div>
                 </div>
-                <img src="/res/Latex_Gauss.png" class="col-6 p-4" id="latex_img">
+                <img src="./res/Latex_Gauss.png" class="col-6 p-4" id="latex_img">
                 <hr>
                 <!-- Latex Formel -->
                 
@@ -132,13 +140,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="./scripts/math.diff.js"> </script>
   <script src="./scripts/docs.js"> </script> 
-  <script src="./scripts/v3ctor.js" type="module" > </script> 
-  <script type="module">
-    import { clickPressField, clickedGauss, clickedStokes } from "./scripts/v3ctor.js"
-    window.clickPressField = clickPressField
-    window.clickedGauss = clickedGauss
-    window.clickedStokes = clickedStokes
-  </script>
   </body>
 </html>
 
