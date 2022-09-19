@@ -5,7 +5,7 @@
 - Skalieren des Rechtecks am rand
 - Farbminderung bei Fluss = 0, entsprechend der Seiten 
 - ~~partielle vektoren um Paddlewheel~~
-- Info butten wegen Hover Infos
+- ~~Info butten wegen Hover Infos~~
 - ~~Checkbox für Paddlewheel~~
 - ~~Infobuttons mit PopUp~~
 - ~~verschieben**** von **Paddlewheel~~

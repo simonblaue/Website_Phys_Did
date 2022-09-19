@@ -85,6 +85,16 @@ export function clickedGauss(event) {
     theorem = 'gauss';
     set_integral_label()
     F1.rec_vectors = []
+    p_wheel.visible = false
+    F1.partial_x_vecs = []
+    F1.partial_y_vecs = []
+    paddlewheel_checkbox.checked = false
+    if (partial_x_checkbox.checked){
+        F1.add_partial_x_vectors(rect.vecs_in_rect)
+    }
+    if (partial_y_checkbox.checked){
+        F1.add_partial_y_vectors(rect.vecs_in_rect)
+    }
     if (projections_checkbox.checked){
         rect.draw_surface_vektores()
     }    
@@ -131,6 +141,12 @@ paddlewheel_checkbox.addEventListener('change', (event) => {
         p_wheel.visible = true
         p_wheel.move_to({x:100,y:100}, F1)
         p_wheel.set_vectors_near_wheel(F1)
+        if (partial_x_checkbox.checked){
+            F1.add_partial_x_vectors(p_wheel.vecs_near_wheel)
+        }
+        if (partial_y_checkbox.checked){
+            F1.add_partial_y_vectors(p_wheel.vecs_near_wheel)
+        }
         p_wheel.draw(c)
         animate()
     }
