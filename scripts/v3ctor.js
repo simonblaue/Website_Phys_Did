@@ -3,6 +3,8 @@ import { Rectangle } from './rect_class.js';
 import { Coordinateline_Euklidian } from './coordinates.js';
 import { Paddlewheel } from './paddlewheel.js';
 
+window.addEventListener('resize', resize);
+
 // Variable to chek if mouse button is pressed
 var mouseDown = 0;
 document.body.onmousedown = function () {
@@ -15,6 +17,8 @@ document.body.onmouseup = function () {
 // Popover init from bootstrap for infobox
 const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+
 
 // HTML OBJECTS //
 
@@ -446,6 +450,10 @@ function animate(){
     redraw_canvas()
 }
 
+function resize(){
+    redraw_canvas()
+}
+
 // Updater
 function redraw_canvas(){
     c.clearRect(0,0,canvas.width, canvas.height)
@@ -453,6 +461,7 @@ function redraw_canvas(){
     rect.draw(c)
     coordinates.draw(c)
     p_wheel.draw(c)
+    console.log("Redrawed")
 }
 
 ////////////////////////////////////////////////////////////7
