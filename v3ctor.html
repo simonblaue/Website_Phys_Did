@@ -44,8 +44,8 @@
             <div class="row align-items-center">
                 <!-- Dropdown für Integral -->
                 <div class="col-4 ">
-                  <div class="dropdown text-center mb-3">
-                      <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover" title="Wähle zwischen den Theoremen um zwischen Divergenz und Rotation zu wechseln.">
+                  <div class="dropdown text-center mb-3" data-bs-toggle="tooltip" id="dropdown-menu">
+                      <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
                         Integralsatz
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -54,13 +54,13 @@
                       </ul>
                   </div>
                 </div>
-                <img src="./res/Latex_Gauss.png" class="col-6 p-4" id="latex_img">
+                <img src="./res/Latex_Gauss.png" class="col-6 p-4" id="latex_img" data-bs-toggle="tooltip">
                 <hr>
                 <!-- Latex Formel -->
 
                 <!-- Vektorfeld eingabe -->
                 <div class="col-6 mt-2"> 
-                  <h3 class="align-self-center">Definiere das Vektorfeld: </h3> 
+                  <h3 class="align-self-center" id="vectorfield_define_label">Definiere das Vektorfeld: </h3> 
                 </div>
                 <div class="col-6 mt-3"> 
                     <form>
