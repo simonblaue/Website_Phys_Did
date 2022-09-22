@@ -459,10 +459,12 @@ function resize(){
 // Updater
 function redraw_canvas(){
     c.clearRect(0,0,canvas.width, canvas.height)
+    c.save()
     rect.draw(c)
-    p_wheel.draw(c)
-    coordinates.draw(c)
     F1.draw(c)
+    coordinates.draw(c)
+    p_wheel.draw(c)
+    c.restore()
 }
 
 ////////////////////////////////////////////////////////////7
