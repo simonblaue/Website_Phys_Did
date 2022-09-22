@@ -29,7 +29,7 @@ canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 
 //Field defeinition
-const x_component_entry = document.querySelector('#x-component');
+better inputconst x_component_entry = document.querySelector('#x-component');
 const y_component_entry = document.querySelector('#y-component');
 
 //Vectoramount
