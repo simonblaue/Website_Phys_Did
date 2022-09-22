@@ -29,7 +29,7 @@ canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 
 //Field defeinition
-better inputconst x_component_entry = document.querySelector('#x-component');
+const x_component_entry = document.querySelector('#x-component');
 const y_component_entry = document.querySelector('#y-component');
 
 //Vectoramount
@@ -457,11 +457,10 @@ function resize(){
 // Updater
 function redraw_canvas(){
     c.clearRect(0,0,canvas.width, canvas.height)
-    F1.draw(c)
     rect.draw(c)
-    coordinates.draw(c)
     p_wheel.draw(c)
-    console.log("Redrawed")
+    coordinates.draw(c)
+    F1.draw(c)
 }
 
 ////////////////////////////////////////////////////////////7
