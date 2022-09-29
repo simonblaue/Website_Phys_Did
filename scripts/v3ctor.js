@@ -92,9 +92,10 @@ let p_wheel = new Paddlewheel(F1)
 
 ///////////////////////////////////// INIT ENDs HERE /////////////////////////////////////
 
-
 // Event Handeling  for Buttons//
+
 export function clickedGauss(event) {
+    // Looks
     btn_gauss.setAttribute('class', 'dropdown-item active');
     btn_stokes.setAttribute('class', 'dropdown-item');
     div_rot_header.innerHTML = 'Divergenz';
@@ -102,8 +103,10 @@ export function clickedGauss(event) {
     projection_label.innerHTML = 'Projektion auf die Kurvennormale der Fläche einblenden';
     latex_image.src = './res/Latex_Gauss.png'
     paddlewheel_div.style.visibility='hidden' 
+    // Tooltips
     switch_tooltips('stokes')
     theorem = 'gauss';
+    // Background
     set_integral_label()
     F1.rec_vectors = []
     p_wheel.visible = false
@@ -111,6 +114,7 @@ export function clickedGauss(event) {
     F1.partial_x_vecs = []
     F1.partial_y_vecs = []
     paddlewheel_checkbox.checked = false
+
     if (partial_x_checkbox.checked){
         F1.add_partial_x_vectors(rect.vecs_in_rect)
     }
@@ -209,11 +213,18 @@ coordinate_checkbox.addEventListener('change', (event) => {
 fieldscanner_checkbox.addEventListener('change', (event)=>{
     if (fieldscanner_checkbox.checked){
         F1.rec_vectors = []
+        F1.partial_x_vecs = []
+        F1.partial_y_vecs = []
         rect.startpoint = {x:0, y:0}
+        rect.vecs_in_rect = []
+        p_wheel.vecs_near_wheel = []
         rect.set_width_and_height({x:0, y:0})
     }
     else {
         F1.fieldscanner_vectors = []
+        F1.rec_vectors = []
+        F1.partial_x_vecs = []
+        F1.partial_y_vecs = []
     }
     redraw_canvas()
 })
