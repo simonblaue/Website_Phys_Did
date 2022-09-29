@@ -257,12 +257,9 @@ partial_x_checkbox.addEventListener('change', (event) =>{
 
 partial_y_checkbox.addEventListener('change', (event) =>{
     if (partial_y_checkbox.checked){
-        if (fieldscanner_checkbox.checked == false){
-            F1.add_partial_y_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel))
-        }
+            F1.add_partial_y_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel).concat(F1.fieldscanner_vectors))
     }
     else{
-        F1.partial_y_vecs = [];
         F1.add_partial_y_vectors([])
     }
     redraw_canvas()
@@ -316,15 +313,14 @@ var old_height = 0
 
 canvas.addEventListener('mousemove', (event) => {
     const p = { x: event.layerX, y: event.layerY }
-    if (fieldscanner_checkbox.checked == false) {
-        if (mouseDown) {
+    if (mouseDown) {
+        if (fieldscanner_checkbox.checked == false) {
             if (move == 0){
                 first_clicked_p = { x: event.layerX, y: event.layerY };
                 Object.assign(old_startpoint, rect.startpoint)
                 old_width = rect.width.valueOf()
                 old_height = rect.height.valueOf()
             }
-            move += 1;
             // do something with the rect
                 switch (state) {
                     case 'inside': 
@@ -402,8 +398,28 @@ canvas.addEventListener('mousemove', (event) => {
                 F1.add_partial_y_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel))
                     }
             set_integral_label()
-            redraw_canvas()
+        }
+        else {
+            if (move%10 == 0){
+                var p_coord = F1.transform(p)
+                var v = F1.value_at(p_coord.x, p_coord.y);
+                v.x *= F1.norm_factor;
+                v.y *= F1.norm_factor;
+                v.recalc_len()
+                F1.fieldscanner_vectors.push({ p: p, v: v });
+                set_div_rot_label(p_coord)
+    
+                if (partial_x_checkbox.checked) {
+                    F1.add_partial_x_vectors(F1.fieldscanner_vectors)     
+                }
+                if (partial_y_checkbox.checked) {
+                    F1.add_partial_y_vectors(F1.fieldscanner_vectors)
+                }
             }
+        }
+        redraw_canvas()
+        move += 1
+    }
         else {
             state = rect.on_outline(p)
             if (state != false){
@@ -423,7 +439,6 @@ canvas.addEventListener('mousemove', (event) => {
                 document.body.style.cursor = "default"
             }
         }
-    }
 })
 
 
