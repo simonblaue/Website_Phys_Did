@@ -2,6 +2,7 @@ import {Field} from './field_class.js'
 import { Rectangle } from './rect_class.js';
 import { Coordinateline_Euklidian } from './coordinates.js';
 import { Paddlewheel } from './paddlewheel.js';
+import { switch_tooltips } from './docs.js'
 
 window.addEventListener('resize', resize);
 
@@ -14,13 +15,15 @@ document.body.onmouseup = function () {
     --mouseDown;
 };
 
+switch_tooltips('stokes')
+
 // Popover init from bootstrap for infobox
 const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 
 // Tooltips init
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 // HTML OBJECTS //
 
@@ -86,6 +89,7 @@ if (debug){
 rect.draw(c)
 let p_wheel = new Paddlewheel(F1)
 
+
 ///////////////////////////////////// INIT ENDs HERE /////////////////////////////////////
 
 
@@ -98,6 +102,7 @@ export function clickedGauss(event) {
     projection_label.innerHTML = 'Projektion auf die Kurvennormale der Fläche einblenden';
     latex_image.src = './res/Latex_Gauss.png'
     paddlewheel_div.style.visibility='hidden' 
+    switch_tooltips('stokes')
     theorem = 'gauss';
     set_integral_label()
     F1.rec_vectors = []
@@ -116,6 +121,9 @@ export function clickedGauss(event) {
         rect.draw_surface_vektores()
     }    
     redraw_canvas()
+    // Tooltips init
+    tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
 
 export function clickedStokes(event) {
@@ -125,7 +133,8 @@ export function clickedStokes(event) {
     flux_header.innerHTML = 'Zirkulation entlang einer Kurve';
     projection_label.innerHTML = 'Projektion auf das vektorielle Wegelement einblenden';
     latex_image.src = './res/Latex_Stokes.png'
-    paddlewheel_div.style.visibility='visible' 
+    paddlewheel_div.style.visibility='visible'
+    switch_tooltips('gauss')
     theorem = 'stokes';
     set_integral_label()
     F1.rec_vectors = []
@@ -133,6 +142,8 @@ export function clickedStokes(event) {
         rect.draw_line_vectores()
     }    
     redraw_canvas()
+    tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
 
 // Pressing enter on field entries

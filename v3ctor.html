@@ -65,14 +65,15 @@
                 <div class="col-6 mt-3"> 
                     <form>
                         <div class="mb-3">
-                          <label for="x-component" class="form-label">x Komponente:</label>
+                          <label for="x-component" class="form-label">x-Komponente:</label>
                           <input type="text" class="form-control" id="x-component" value="x" onkeypress="clickPressField(event)" >
                         </div>
                         <div class="mb-3">
-                          <label for="y-component" class="form-label">y Komponente:</label>
+                          <label for="y-component" class="form-label">y-Komponente:</label>
                           <input type="text" class="form-control" id="y-component" value="y" onkeypress="clickPressField(event)">
                         </div>
-                        <button class="btn btn-primary" type="button" onclick="clickPressField(event)" >Neu laden!</button>
+                        <button class="btn btn-primary" type="button" onclick="clickPressField(event)" >Neu berechnen</button>
+                        <button class="btn btn-primary" type="button" onclick="window.location.reload()" >Zurücksetzen</button>
                       </form>
                 </div>    
             </div>
@@ -127,10 +128,10 @@
                   </div>
                   <!-- Werte Anzeigen -->
                 <div class="col-6">
-                  <h4 class="text-bottom d-inline"> Wert:</h4> <h4 class="text-bottom d-inline" id="div-rot-value">NaN</h4> <h4 class="text-bottom d-inline">a.u.</h4>
+                  <h4 class="text-bottom d-inline"> Wert:</h4> <h4 class="text-bottom d-inline" id="div-rot-value"></h4> 
                 </div>
                 <div class="col-6">
-                  <h4 class="text-bottom d-inline"> Wert:</h4> <h4 class="text-bottom d-inline" id="integral-value">NaN</h4> <h4 class="text-bottom d-inline">a.u.</h4>
+                  <h4 class="text-bottom d-inline"> Wert:</h4> <h4 class="text-bottom d-inline" id="integral-value"></h4> 
                 </div>
             </div>
         </div>
@@ -152,7 +153,7 @@
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="./scripts/math.diff.js"> </script>
-  <script src="./scripts/docs.js"> </script> 
+  <!-- <script src="./scripts/docs.js"> </script>  -->
   </body>
 </html>
 

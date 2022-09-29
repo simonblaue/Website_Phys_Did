@@ -1,10 +1,10 @@
+/// Get Elements from DOM
 
 // Canvas
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext("2d");
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
-
 
 //Theorems
 const theorem_button = document.querySelector('#dropdown-menu')
@@ -42,66 +42,95 @@ paddlewheel_div.style.visibility='hidden'
 const paddlewheel_checkbox = document.querySelector('#paddlewheel')
 
 
-// Setting title for tooltips
+/// Setting the Tooltip strings -> End them with a whitespace for gluing them together
 
-const theorem_text = "Wähle zwischen den Theoremen, um zwischen Divergenz und Rotation zu wechseln."
+const theorem_text = "Wähle zwischen den Theoremen, um zwischen Divergenz und Rotation zu wechseln. "
 
-const field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /). Wurzel-Operationen, Tangensfunktionen, Betragsfunktionen und Exponentialfunktionen sind nicht möglich. Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden.'
+const field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /). Wurzel-Operationen, Tangensfunktionen, Betragsfunktionen und Exponentialfunktionen sind nicht möglich. Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden. '
 
-const vector_amount_text = 'Veränderung der Anzahl an Vektoren pro Reihe und Zeile. Eine Änderung muss mit Enter bestätigt werden. An der rechten seite kann die Anzahl in Einer-Schritten erfolgen.'
+const vector_amount_text = 'Veränderung der Anzahl an Vektoren. Eine Änderung muss mit Enter oder Neu berechnen bestätigt werden. Mit den Pfeiltasten kann die Anzahl in Einer-Schritten erfolgen. '
 
-const coordinate_checkbox_text = 'Durch Aktivierung werden die Koordinatenachsen in den kartesischen Koordinaten x und y  eingeblendet.'
+const coordinate_checkbox_text = 'Durch Aktivierung werden die Koordinatenachsen in den kartesischen Koordinaten x und y  eingeblendet. '
 
-const rectangle_text = 'Mit dem Mauszeiger kann ein Rechteck in das Vektorfeld gezogen werden (Fieldscanner muss deaktiviert sein). Dieses kann mit der Maus im Feld bewegt und seine Ränder können beliebig verschoben werden. Der Fluss durch/entlang des Randes der aufgezogenen Rechteckfläche wird angezeigt (Angabe in abitrary units a.u.).'
+const rectangle_text = 'Mit dem Mauszeiger kann ein Rechteck in das Vektorfeld gezogen werden (Feld abtasten muss deaktiviert sein). Dieses kann mit der Maus im Feld bewegt und seine Ränder können beliebig verschoben werden. Der Fluss durch/entlang des Randes der aufgezogenen Rechteckfläche wird angezeigt. Die Divergenz wird am Mittelpunkt des Rechtecks berechnet. '
 
-const fieldscanner_text = 'Mit dem Fieldscanner können durch Drücken der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Divergenz angezeigt.'
+const fieldscanner_text_gauss = 'Durch das Feld abtasten können durch Drücken der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Divergenz angezeigt. '
 
-const partial_x_text = 'Durch Aktivierung der Box kann die x-Komponente innerhalb eines Rechtecks eingeblendet werden.'
-const partial_y_text = 'Durch Aktivierung der Box kann die y-Komponente innerhalb eines Rechtecks eingeblendet werden.'
+const fieldscanner_text_stokes = 'Durch das Feld abtasten können durch Drücken der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Rotation angezeigt. '
 
-const projections_text_gauss = 'Die Projektion der Feldkomponenten auf die Normalen an den Rand der Rechteckfläche wird durch Aktivierung der Box eingeblendet.'
-const projections_text_stokes = 'Die Projektion der Feldkomponenten auf die vektoriellen Wegelemente der Rechteckkurve wird durch Aktivierung der Box eingeblendet.'
+const partial_x_text_gauss = 'Durch Aktivierung der x-Komponente kann diese innerhalb eines Rechtecks eingeblendet werden. '
+const partial_y_text_gauss = 'Durch Aktivierung der y-Komponente kann diese innerhalb eines Rechtecks eingeblendet werden. '
 
-const paddlewheel_text = 'Durch Aktivierung der Box wird ein Schaufelrad in das Feld eingefügt. Dieses kann mit der Maus verschoben werden.'
+const partial_x_text_stokes = 'Durch Aktivierung der x-Komponente kann diese innerhalb eines Rechtecks und in der nähe des Schaufelrads eingeblendet werden. '
+const partial_y_text_stokes = 'Durch Aktivierung der y-Komponente kann diese innerhalb eines Rechtecks und in der nähe des Schaufelrads eingeblendet werden. '
 
+const projections_text_gauss = 'Die Projektion der Feldkomponenten auf die Normalen an den Rand der Rechteckfläche wird durch Aktivierung der Box eingeblendet. '
+const projections_text_stokes = 'Die Projektion der Feldkomponenten auf die vektoriellen Wegelemente der Rechteckkurve wird durch Aktivierung der Box eingeblendet. '
 
-// '  Ein Klick mit der rechten Maustaste an einen beliebigen Ort im Feld gibt die Divergenz an diesem Ort an (in a.u.). '
-
-// Mit dem Mauszeiger kann ein Rechteck in das Vektorfeld gezogen werden (Fieldscanner muss deaktiviert sein). Rechteck und Rad können mit der Maus im Feld bewegt und die Ränder des Rechtecks können beliebig verschoben werden. Der Fluss entlang der Randkurve der aufgezogenen Rechteckfläche wird angezeigt (Angabe in abitrary units a.u.). 
-
-// 
+const paddlewheel_text = 'Durch Aktivierung der Box wird ein Schaufelrad in das Feld eingefügt. Dieses kann mit der Maus verschoben werden. '
 
 
-theorem_button.setAttribute('title', theorem_text)
-latex_image.setAttribute('title', theorem_text)
 
-entry_label.setAttribute('title', field_creation_text)
-x_component_entry.setAttribute('title', field_creation_text)
-x_component_entry.previousElementSibling.setAttribute('title', field_creation_text)
-y_component_entry.setAttribute('title',field_creation_text)
-y_component_entry.previousElementSibling.setAttribute('title', field_creation_text)
+// function for change between stokes and gauss
 
-vector_amount_entry.setAttribute('title', vector_amount_text)
-vector_amount_entry.previousElementSibling.setAttribute('title', vector_amount_text)
+export function switch_tooltips(old_theorem){
 
-coordinate_checkbox.setAttribute('title', coordinate_checkbox_text )
-coordinate_checkbox.nextElementSibling.setAttribute('title', coordinate_checkbox_text)
+	theorem_button.setAttribute('title', theorem_text)
+	latex_image.setAttribute('title', theorem_text)
 
-div_rot_header.setAttribute('title', rectangle_text+fieldscanner_text+projections_text_gauss+paddlewheel_text)
-flux_header.setAttribute('title', rectangle_text+fieldscanner_text+projections_text_gauss+paddlewheel_text)
+	entry_label.setAttribute('title', field_creation_text)
+	x_component_entry.setAttribute('title', field_creation_text)
+	x_component_entry.previousElementSibling.setAttribute('title', field_creation_text)
+	y_component_entry.setAttribute('title',field_creation_text)
+	y_component_entry.previousElementSibling.setAttribute('title', field_creation_text)
 
-fieldscanner_checkbox.setAttribute('title', fieldscanner_text)
-fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text)
+	vector_amount_entry.setAttribute('title', vector_amount_text)
+	vector_amount_entry.previousElementSibling.setAttribute('title', vector_amount_text)
 
-projections_checkbox.setAttribute('title', projections_text_gauss)
-projections_checkbox.nextElementSibling.setAttribute('title', projections_text_gauss)
+	coordinate_checkbox.setAttribute('title', coordinate_checkbox_text )
+	coordinate_checkbox.nextElementSibling.setAttribute('title', coordinate_checkbox_text)
 
-paddlewheel_checkbox.setAttribute('title', paddlewheel_text)
-paddlewheel_checkbox.nextElementSibling.setAttribute('title', paddlewheel_text)
 
-all_with_title = document.querySelectorAll('[title]')
+	if (old_theorem == 'stokes'){
+		div_rot_header.setAttribute('title', fieldscanner_text_gauss+partial_x_text_gauss+partial_x_text_gauss)
+		
+		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_gauss)
+		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_gauss)
 
-all_with_title.forEach(elem => {
-	elem.setAttribute('data-bs-toggle','tooltip')
-	elem.setAttribute('data-bs-delay','{"show":200,"hide":150}')
-});
+		flux_header.setAttribute('title', rectangle_text+projections_text_gauss)
+		projections_checkbox.setAttribute('title', projections_text_gauss)
+		projections_checkbox.nextElementSibling.setAttribute('title', projections_text_gauss)
+
+		partial_x_checkbox.setAttribute('title', partial_x_text_gauss)
+		partial_x_checkbox.nextElementSibling.setAttribute('title', partial_x_text_gauss)
+		partial_y_checkbox.setAttribute('title', partial_y_text_gauss)
+		partial_y_checkbox.nextElementSibling.setAttribute('title', partial_y_text_gauss)
+	}
+	else {
+		div_rot_header.setAttribute('title', fieldscanner_text_stokes+partial_x_text_stokes+partial_x_text_stokes)
+		
+		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_stokes)
+		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_stokes)
+
+		flux_header.setAttribute('title', rectangle_text+projections_text_stokes)
+		projections_checkbox.setAttribute('title', projections_text_stokes)
+		projections_checkbox.nextElementSibling.setAttribute('title', projections_text_stokes)
+
+		partial_x_checkbox.setAttribute('title', partial_x_text_stokes)
+		partial_x_checkbox.nextElementSibling.setAttribute('title', partial_x_text_stokes)
+		partial_y_checkbox.setAttribute('title', partial_y_text_stokes)
+		partial_y_checkbox.nextElementSibling.setAttribute('title', partial_y_text_stokes)
+
+		paddlewheel_checkbox.setAttribute('title', paddlewheel_text)
+		paddlewheel_checkbox.nextElementSibling.setAttribute('title', paddlewheel_text)
+	}
+	
+
+	var all_with_title = document.querySelectorAll('[title]')
+
+	all_with_title.forEach(elem => {
+		elem.setAttribute('data-bs-toggle','tooltip')
+		elem.setAttribute('data-bs-delay','{"show":200,"hide":150}')
+	});
+
+}
