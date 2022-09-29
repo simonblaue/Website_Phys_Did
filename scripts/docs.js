@@ -1,11 +1,5 @@
 /// Get Elements from DOM
 
-// Canvas
-const canvas = document.querySelector('canvas');
-const c = canvas.getContext("2d");
-canvas.width = canvas.clientWidth;
-canvas.height = canvas.clientHeight;
-
 //Theorems
 const theorem_button = document.querySelector('#dropdown-menu')
 const latex_image = document.querySelector('#latex_img')
@@ -46,23 +40,25 @@ const paddlewheel_checkbox = document.querySelector('#paddlewheel')
 
 const theorem_text = "Wähle zwischen den Theoremen, um zwischen Divergenz und Rotation zu wechseln. "
 
-const field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /). Wurzel-Operationen, Tangensfunktionen, Betragsfunktionen und Exponentialfunktionen sind nicht möglich. Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden. '
+const field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /). Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden. Die Änderung muss mit Enter oder Neu berechnen bestätigt werden. '
 
 const vector_amount_text = 'Veränderung der Anzahl an Vektoren. Eine Änderung muss mit Enter oder Neu berechnen bestätigt werden. Mit den Pfeiltasten kann die Anzahl in Einer-Schritten erfolgen. '
 
 const coordinate_checkbox_text = 'Durch Aktivierung werden die Koordinatenachsen in den kartesischen Koordinaten x und y  eingeblendet. '
 
-const rectangle_text = 'Mit dem Mauszeiger kann ein Rechteck in das Vektorfeld gezogen werden (Feld abtasten muss deaktiviert sein). Dieses kann mit der Maus im Feld bewegt und seine Ränder können beliebig verschoben werden. Der Fluss durch/entlang des Randes der aufgezogenen Rechteckfläche wird angezeigt. Die Divergenz wird am Mittelpunkt des Rechtecks berechnet. '
+const rectangle_text_gauss = 'Mit dem Mauszeiger kann ein Rechteck in das Vektorfeld gezogen werden (Feld abtasten muss deaktiviert sein). Dieses kann mit der Maus im Feld bewegt und seine Ränder können beliebig verschoben werden. Der Fluss durch/entlang des Randes der aufgezogenen Rechteckfläche wird angezeigt. Die Divergenz wird am Mittelpunkt des Rechtecks berechnet. '
+
+const rectangle_text_stokes = 'Mit dem Mauszeiger kann ein Rechteck in das Vektorfeld gezogen werden (Feld abtasten muss deaktiviert sein). Dieses kann mit der Maus im Feld bewegt und seine Ränder können beliebig verschoben werden. Die Zirkulation durch/entlang des Randes der aufgezogenen Rechteckfläche wird angezeigt. Die Rotation wird am Mittelpunkt des Rechtecks berechnet. '
 
 const fieldscanner_text_gauss = 'Durch das Feld abtasten können durch Drücken der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Divergenz angezeigt. '
 
 const fieldscanner_text_stokes = 'Durch das Feld abtasten können durch Drücken der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Rotation angezeigt. '
 
-const partial_x_text_gauss = 'Durch Aktivierung der x-Komponente kann diese innerhalb eines Rechtecks eingeblendet werden. '
-const partial_y_text_gauss = 'Durch Aktivierung der y-Komponente kann diese innerhalb eines Rechtecks eingeblendet werden. '
+const partial_x_text_gauss = 'Durch Aktivierung der x-Komponente kann diese innerhalb eines Rechtecks oder an den eingezeichneten Vektoren eingeblendet werden. '
+const partial_y_text_gauss = 'Durch Aktivierung der y-Komponente kann diese innerhalb eines Rechtecks oder an den eingezeichneten Vektoren eingeblendet werden. '
 
-const partial_x_text_stokes = 'Durch Aktivierung der x-Komponente kann diese innerhalb eines Rechtecks und in der nähe des Schaufelrads eingeblendet werden. '
-const partial_y_text_stokes = 'Durch Aktivierung der y-Komponente kann diese innerhalb eines Rechtecks und in der nähe des Schaufelrads eingeblendet werden. '
+const partial_x_text_stokes = 'Durch Aktivierung der x-Komponente kann diese innerhalb eines Rechtecks, an den eingezeichneten Vektoren und in der nähe des Schaufelrads eingeblendet werden. '
+const partial_y_text_stokes = 'Durch Aktivierung der y-Komponente kann diese innerhalb eines Rechtecks, an den eingezeichneten Vektoren und in der nähe des Schaufelrads eingeblendet werden. '
 
 const projections_text_gauss = 'Die Projektion der Feldkomponenten auf die Normalen an den Rand der Rechteckfläche wird durch Aktivierung der Box eingeblendet. '
 const projections_text_stokes = 'Die Projektion der Feldkomponenten auf die vektoriellen Wegelemente der Rechteckkurve wird durch Aktivierung der Box eingeblendet. '
@@ -92,12 +88,12 @@ export function switch_tooltips(old_theorem){
 
 
 	if (old_theorem == 'stokes'){
-		div_rot_header.setAttribute('title', fieldscanner_text_gauss+partial_x_text_gauss+partial_x_text_gauss)
+		div_rot_header.setAttribute('title', fieldscanner_text_gauss+partial_x_text_gauss+partial_y_text_gauss)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_gauss)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_gauss)
 
-		flux_header.setAttribute('title', rectangle_text+projections_text_gauss)
+		flux_header.setAttribute('title', rectangle_text_gauss+projections_text_gauss)
 		projections_checkbox.setAttribute('title', projections_text_gauss)
 		projections_checkbox.nextElementSibling.setAttribute('title', projections_text_gauss)
 
@@ -107,12 +103,12 @@ export function switch_tooltips(old_theorem){
 		partial_y_checkbox.nextElementSibling.setAttribute('title', partial_y_text_gauss)
 	}
 	else {
-		div_rot_header.setAttribute('title', fieldscanner_text_stokes+partial_x_text_stokes+partial_x_text_stokes)
+		div_rot_header.setAttribute('title', fieldscanner_text_stokes+partial_x_text_stokes+partial_y_text_stokes)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_stokes)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_stokes)
 
-		flux_header.setAttribute('title', rectangle_text+projections_text_stokes)
+		flux_header.setAttribute('title', rectangle_text_stokes+projections_text_stokes)
 		projections_checkbox.setAttribute('title', projections_text_stokes)
 		projections_checkbox.nextElementSibling.setAttribute('title', projections_text_stokes)
 

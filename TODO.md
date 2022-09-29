@@ -1,5 +1,40 @@
 # TODO
 
+## Rückmeldung
+
+### Bugs
+
+- Skalierung der Webseite offset mit Rechteck
+- Neu laden soll alles behalten. nurt feld anpassen
+- Chrome/ Firefox support
+- Werte der Integrale zum Koordinatensystem passend
+- Rechteck über eigene Grenze ziehen
+  
+- ~~NaN weglassen~~
+- ~~Wenn Feld abtasten, partielle vecs bleiben wenn rechteck verschwindet~~
+ 
+
+### To add
+
+-  Icon im Header mit Hover und Informationen
+-  Infos für die beiden Buttons
+-  Divergenz zum Mittelpuntk des Rechtecks berechnen
+  
+-  ~~Stokes info getrennt~~
+- ~~Zurücksetzen der seite~~
+- ~~x-Komponente (schreibweisen)~~
+- ~~Feld abtasten soll spurr hinterlassen~~
+
+<hr>
+
+## Other things
+### Polarkordinaten
+- Button zum Wechseln 
+- r, phi, komponente für Eingabefelder
+<hr>
+
+# Older Stuff
+
 ## UI
 
 - ~~Skalieren des Rechtecks am rand~~
@@ -18,31 +53,6 @@
 - ~~refacturing to multiple file system~~
 - ~~Infobuttons mit PopUp~~
 
-## Polarkordinaten
-- Button zum Wechseln 
-- r, phi, komponente für Eingabefelder
 
 
-## Rückmeldung
 
-### Bugs
-
-- Skalierung der Webseite offset mit Rechteck
-- ~~Wenn Feld abtasten, partielle vecs bleiben wenn rechteck verschwindet~~
-- Neu laden soll alles behalten. nurt feld anpassen
-- ~~NaN weglassen~~
-- Chrome/ Firefox support
-- Werte der Integrale zum Koordinatensystem passend
-- Rechteck über eigene Grenze ziehen
-- 
-
-
-### To add
-
--  Infos siehe zettel
--  ~~Stokes info getrennt~~
-- ~~ Zurücksetzen der seite~~
--  Icon im Header mit Hover und Informationen
-- ~~ x-Komponente (schreibweisen)~~
--  Divergenz zum Mittelpuntk des Rechtecks berechnen
--  Feld abtasten soll spurr hinterlassen
