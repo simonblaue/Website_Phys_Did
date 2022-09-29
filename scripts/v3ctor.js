@@ -159,8 +159,6 @@ export function clickPressField(event) {
         amount_of_vectors = vector_amount_entry.value;
         F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors);
         rect = new Rectangle(F1);
-        div_rot_label.innerHTML = "NaN";
-        integral_label.innerHTML = "NaN"
         redraw_canvas()
         p_wheel.move_to(p_wheel.position, F1)
     }
