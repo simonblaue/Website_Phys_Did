@@ -9,10 +9,9 @@ export class Rectangle {
 
    constructor(field) {
        this.startpoint = {x:0, y:0};
-       this.endpoint = {x:0, y:0};
        this.field = field
    }
-   set_endpoint(p) {
+   set_width_and_height(p) {
        this.width = p.x - this.startpoint.x;
        this.height = p.y - this.startpoint.y;
    }
@@ -167,11 +166,13 @@ export class Rectangle {
    // Draw functions
 
    draw(canvas_context) {
-    canvas_context.save();
+    canvas_context.save()
     canvas_context.beginPath();
     canvas_context.rect(this.startpoint.x, this.startpoint.y, this.width, this.height);
-    canvas_context.strokeStyle = 'white';
+    canvas_context.strokeStyle = '#ffffff';
     canvas_context.stroke();
+    canvas_context.closePath()
+    canvas_context.restore()
 }
 
 

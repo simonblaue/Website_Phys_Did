@@ -36,6 +36,7 @@ export class Coordinateline_Euklidian {
            canvas_context.lineTo(this.canvas_middle.x, canvas.height);
            canvas_context.strokeStyle = 'white';
            canvas_context.stroke();
+           canvas_context.closePath()
            canvas_context.restore();
        }
    }

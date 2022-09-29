@@ -32,6 +32,7 @@ export class Vector2d {
        var dx = tox - fromx;
        var dy = toy - fromy;
        var angle = Math.atan2(dy, dx);
+       canvas_context.save()
        canvas_context.beginPath();
        canvas_context.moveTo(fromx, fromy);
        canvas_context.lineTo(tox, toy);
@@ -40,6 +41,7 @@ export class Vector2d {
        canvas_context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
        canvas_context.strokeStyle = this.color;
        canvas_context.stroke();
+       canvas_context.closePath()
        canvas_context.restore();
    }
 }

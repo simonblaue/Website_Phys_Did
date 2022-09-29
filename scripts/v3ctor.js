@@ -24,11 +24,17 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 
 // HTML OBJECTS //
 
+//Debugging
+var debug = false
+const debug_btn = document.getElementById("debugger")
+debug_btn.setAttribute("style","display:none;")
+
 // Canvas
 const canvas = document.querySelector('canvas');
-const c = canvas.getContext("2d");
+const c = canvas.getContext("2d",  { alpha: false });
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
+
 
 //Field defeinition
 const x_component_entry = document.querySelector('#x-component');
@@ -65,7 +71,7 @@ var amount_of_vectors = vector_amount_entry.value;
 let move = 0; // For mouse movement over canvas
 let first_clicked_p = {x:0,y:0}
 let theorem = 'gauss';
-var res 
+var res // Result varibale for flux
 
 
 // Init of rectangle and coordinate lines
@@ -73,6 +79,10 @@ let F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amo
 F1.draw(c);
 let coordinates = new Coordinateline_Euklidian(canvas, F1);
 let rect = new Rectangle(F1);
+if (debug){
+    rect.width = 200
+    rect.height = 200
+}
 rect.draw(c)
 let p_wheel = new Paddlewheel(F1)
 
@@ -189,7 +199,7 @@ fieldscanner_checkbox.addEventListener('change', (event)=>{
     if (fieldscanner_checkbox.checked){
         F1.rec_vectors = []
         rect.startpoint = {x:0, y:0}
-        rect.set_endpoint({x:0, y:0})
+        rect.set_width_and_height({x:0, y:0})
     }
     else {
         F1.fieldscanner_vectors = []
@@ -367,7 +377,7 @@ canvas.addEventListener('mousemove', (event) => {
                     if (move == 1) {
                             rect.startpoint = p
                         }
-                        rect.set_endpoint(p)     
+                        rect.set_width_and_height(p)     
                 }
                 rect.set_vectors_in_rect(F1)
                 if (p_wheel.visible){
@@ -459,13 +469,33 @@ function resize(){
 // Updater
 function redraw_canvas(){
     c.clearRect(0,0,canvas.width, canvas.height)
-    c.save()
     rect.draw(c)
     F1.draw(c)
     coordinates.draw(c)
     p_wheel.draw(c)
-    c.restore()
 }
 
 ////////////////////////////////////////////////////////////7
 
+// Debugging //
+
+
+function redraw_canvas_debug(){
+    c.clearRect(0,0,canvas.width, canvas.height)
+    // rect.draw(c)
+    F1.draw(c)
+    // coordinates.draw(c)
+    // p_wheel.draw(c)
+}
+
+if (debug){
+    canvas.setAttribute("style","background-color: green;")
+    debug_btn.setAttribute("style","display:show;")
+
+    debug_btn.addEventListener('click', (event) =>{
+    redraw_canvas_debug()
+
+    console.log("Redrawed Manually", F1)
+})
+
+}
