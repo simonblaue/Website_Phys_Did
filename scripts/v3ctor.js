@@ -247,12 +247,9 @@ projections_checkbox.addEventListener('change', (event) => {
 // Patial checkboxes
 partial_x_checkbox.addEventListener('change', (event) =>{
     if (partial_x_checkbox.checked){
-        if (fieldscanner_checkbox.checked == false){
-            F1.add_partial_x_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel))
-        }
+        F1.add_partial_x_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel).concat(F1.fieldscanner_vectors))
     }
     else{
-        F1.partial_x_vecs = [];
         F1.add_partial_x_vectors([])
     }
     redraw_canvas()
@@ -290,28 +287,15 @@ canvas.addEventListener('click', (event) => {
         v.recalc_len()
         F1.fieldscanner_vectors.push({ p: p_canvas, v: v });
         set_div_rot_label(p_coord)
-    }
-    if (partial_x_checkbox.checked) {
-        if (fieldscanner_checkbox.checked) {
-            var v = F1.value_at(p_coord.x, p_coord.y);
-            v.x *= F1.norm_factor;
-            v.y = 0;
-            v.recalc_len()
-            v.color = 'blue';
-            F1.fieldscanner_vectors.push({ p: p_canvas, v: v });
-        }
-    }
-    if (partial_y_checkbox.checked) {
-        if (fieldscanner_checkbox.checked) {
-            var v = F1.value_at(p_coord.x, p_coord.y);
-            v.x *= 0;
-            v.y *= F1.norm_factor;
-            v.recalc_len()
-            v.color = 'orange';
-            F1.fieldscanner_vectors.push({ p: p_canvas, v: v });
-        }
 
-    }
+        if (partial_x_checkbox.checked) {
+            F1.add_partial_x_vectors(F1.fieldscanner_vectors)     
+        }
+        if (partial_y_checkbox.checked) {
+            F1.add_partial_y_vectors(F1.fieldscanner_vectors)
+        }
+    }   
+
     if (projections_checkbox.checked) {
         if (theorem == 'gauss') {
             rect.draw_surface_vektores();
