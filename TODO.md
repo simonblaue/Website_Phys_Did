@@ -28,9 +28,9 @@
 ### Bugs
 
 - Skalierung der Webseite offset mit Rechteck
-- Wenn Feld abtasten, partielle vecs bleiben wenn rechteck verschwindet
+- ~~Wenn Feld abtasten, partielle vecs bleiben wenn rechteck verschwindet~~
 - Neu laden soll alles behalten. nurt feld anpassen
-- NaN weglassen
+- ~~NaN weglassen~~
 - Chrome/ Firefox support
 - Werte der Integrale zum Koordinatensystem passend
 - Rechteck über eigene Grenze ziehen
@@ -40,9 +40,9 @@
 ### To add
 
 -  Infos siehe zettel
--  Stokes info getrennt
--  Zurücksetzen der seite
+-  ~~Stokes info getrennt~~
+- ~~ Zurücksetzen der seite~~
 -  Icon im Header mit Hover und Informationen
--  x-Komponente (schreibweisen)
+- ~~ x-Komponente (schreibweisen)~~
 -  Divergenz zum Mittelpuntk des Rechtecks berechnen
 -  Feld abtasten soll spurr hinterlassen
