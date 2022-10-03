@@ -18,8 +18,8 @@
 
 -  Icon im Header mit Hover und Informationen
 -  Infos für die beiden Buttons
--  Divergenz zum Mittelpuntk des Rechtecks berechnen
   
+-  ~~Divergenz zum Mittelpuntk des Rechtecks berechnen~~
 -  ~~Stokes info getrennt~~
 - ~~Zurücksetzen der seite~~
 - ~~x-Komponente (schreibweisen)~~
