@@ -14,7 +14,7 @@ export class Coordinateline_Euklidian {
                let p = this.field.transform({ x: i, y: i });
                canvas_context.fillStyle = 'white';
                canvas_context.textAlign = 'center';
-               canvas_context.fillText(p.x.toFixed(1), i, this.canvas_middle.y + 10);
+               canvas_context.fillText((p.x).toFixed(1), i, this.canvas_middle.y + 10);
            }
            canvas_context.beginPath();
            canvas_context.moveTo(0, this.canvas_middle.y);
