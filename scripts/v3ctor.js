@@ -162,6 +162,7 @@ export function clickPressField(event) {
         F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors);
         F1.fieldscanner_vectors = recalc_fieldscanner_vecs(old_fieldscann_vecs)
         rect.field = F1
+        coordinates.field = F1
         rect.set_vectors_in_rect(F1)
         if (partial_x_checkbox.checked){
             F1.add_partial_x_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel).concat(F1.fieldscanner_vectors))

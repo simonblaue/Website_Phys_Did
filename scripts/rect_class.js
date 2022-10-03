@@ -60,7 +60,7 @@ export class Rectangle {
            value += this.field.value_at(x0,i).scalar(n_left)
            value += this.field.value_at(x1,i).scalar(n_right)
        }
-       value *= this.field.norm_factor
+    //    value *= this.field.norm_factor
        value = value/precison*perimeter
 
        return {value: value, error:0}
@@ -93,7 +93,7 @@ export class Rectangle {
             value += this.field.value_at(x0,i).scalar(n_left)
             value += this.field.value_at(x1,i).scalar(n_right)
         }
-        value *= this.field.norm_factor
+        // value *= this.field.norm_factor
         value = value/(4*precison)*perimeter
 
         return {value: value, error:0}
