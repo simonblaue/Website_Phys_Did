@@ -284,7 +284,8 @@ partial_y_checkbox.addEventListener('change', (event) =>{
 canvas.addEventListener('click', (event) => {
     move = 0;
    
-    const p_canvas = { x: event.layerX, y: event.layerY };
+    const bounding = canvas.getBoundingClientRect()
+    const p_canvas = { x: event.clientX - bounding.left, y: event.clientY - bounding.top };
     const p_coord = F1.transform(p_canvas);
 
 
@@ -323,11 +324,12 @@ var old_width = 0
 var old_height = 0
 
 canvas.addEventListener('mousemove', (event) => {
-    const p = { x: event.layerX, y: event.layerY }
+    const bounding = canvas.getBoundingClientRect()
+    const p = { x: event.clientX - bounding.left, y: event.clientY - bounding.top };
     if (mouseDown) {
         if (fieldscanner_checkbox.checked == false) {
             if (move == 0){
-                first_clicked_p = { x: event.layerX, y: event.layerY };
+                first_clicked_p = { x: event.clientX - bounding.left, y: event.clientY - bounding.top };
                 Object.assign(old_startpoint, rect.startpoint)
                 old_width = rect.width.valueOf()
                 old_height = rect.height.valueOf()
