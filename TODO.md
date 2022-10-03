@@ -16,9 +16,9 @@
 
 ### To add
 
--  Icon im Header mit Hover und Informationen
 -  Infos für die beiden Buttons
   
+-  ~~Icon im Header mit Hover und Informationen~~
 -  ~~Divergenz zum Mittelpuntk des Rechtecks berechnen~~
 -  ~~Stokes info getrennt~~
 - ~~Zurücksetzen der seite~~
