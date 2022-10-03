@@ -3,6 +3,7 @@ import { Rectangle } from './rect_class.js';
 import { Coordinateline_Euklidian } from './coordinates.js';
 import { Paddlewheel } from './paddlewheel.js';
 import { switch_tooltips } from './docs.js'
+import { Vector2d } from './vector_class.js';
 
 window.addEventListener('resize', resize);
 
@@ -150,17 +151,26 @@ export function clickedStokes(event) {
     tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
 
-// Pressing enter on field entries
+// Pressing enter on field entries or Neu berechnen
 export function clickPressField(event) {
     if (event.keyCode == 13 || event.type == 'click') {
         event.preventDefault();
         c.fillStyle = 'black';
         c.fillRect(0, 0, canvas.width, canvas.height);
         amount_of_vectors = vector_amount_entry.value;
+        var old_fieldscann_vecs = F1.fieldscanner_vectors
         F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors);
-        rect = new Rectangle(F1);
-        redraw_canvas()
+        F1.fieldscanner_vectors = recalc_fieldscanner_vecs(old_fieldscann_vecs)
+        rect.field = F1
+        rect.set_vectors_in_rect(F1)
+        if (partial_x_checkbox.checked){
+            F1.add_partial_x_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel).concat(F1.fieldscanner_vectors))
+        }
+        if (partial_y_checkbox.checked){
+            F1.add_partial_y_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel).concat(F1.fieldscanner_vectors))
+        }
         p_wheel.move_to(p_wheel.position, F1)
+        redraw_canvas()
     }
 }
 
@@ -441,6 +451,21 @@ canvas.addEventListener('mousemove', (event) => {
         }
 })
 
+
+// Fieldscanner
+
+function recalc_fieldscanner_vecs(old_fv){
+    var new_fieldscann_vecs =[]
+    old_fv.forEach(vec =>{
+        var point = F1.transform(vec.p) 
+        var new_v = F1.value_at(point.x,point.y)
+        new_v.x *= F1.norm_factor;
+        new_v.y *= F1.norm_factor;
+        new_v.recalc_len()
+        new_fieldscann_vecs.push({p:vec.p, v:new_v})
+    })
+    return new_fieldscann_vecs
+}
 
 // Rectangle:
 // Output Functions

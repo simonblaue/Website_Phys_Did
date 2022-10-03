@@ -5,11 +5,11 @@
 ### Bugs
 
 - Skalierung der Webseite offset mit Rechteck
-- Neu laden soll alles behalten. nurt feld anpassen
 - Chrome/ Firefox support
 - Werte der Integrale zum Koordinatensystem passend
 - Rechteck über eigene Grenze ziehen
   
+- ~~Neu laden soll alles behalten. nur feld anpassen~~
 - ~~NaN weglassen~~
 - ~~Wenn Feld abtasten, partielle vecs bleiben wenn rechteck verschwindet~~
  
