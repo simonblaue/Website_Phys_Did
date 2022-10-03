@@ -16,6 +16,13 @@ export class Rectangle {
        this.height = p.y - this.startpoint.y;
    }
 
+
+   middle(){
+    let x = this.startpoint.x+this.width/2
+    let y = this.startpoint.y + this.height/2
+    return {x:x, y:y}
+   }
+
    ordered_ccords() {
        // orderd so that (x0,y0) is top left
        var x0 = this.startpoint.x

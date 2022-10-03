@@ -170,6 +170,14 @@ export function clickPressField(event) {
         if (partial_y_checkbox.checked){
             F1.add_partial_y_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel).concat(F1.fieldscanner_vectors))
         }
+        if (projections_checkbox.checked){
+            if (theorem == 'gauss') {
+                rect.draw_surface_vektores();
+            }
+            if (theorem == 'stokes'){
+                rect.draw_line_vectores()
+            }
+        }
         p_wheel.move_to(p_wheel.position, F1)
         redraw_canvas()
     }
@@ -411,6 +419,8 @@ canvas.addEventListener('mousemove', (event) => {
                 F1.add_partial_y_vectors(rect.vecs_in_rect.concat(p_wheel.vecs_near_wheel))
                     }
             set_integral_label()
+            var middle_coord = F1.transform(rect.middle())
+            set_div_rot_label(middle_coord)
         }
         else {
             if (move%10 == 0){
