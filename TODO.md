@@ -1,5 +1,7 @@
 # TODO
 
+- was ist wenn paddlewheel und rechteck gleichzeitig von was da die rotation nehmen?
+
 ## Rückmeldung
 
 ### Bugs

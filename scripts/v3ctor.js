@@ -179,6 +179,8 @@ export function clickPressField(event) {
             }
         }
         p_wheel.move_to(p_wheel.position, F1)
+        div_rot_label.innerHTML = " "
+        set_integral_label()
         redraw_canvas()
     }
 }
