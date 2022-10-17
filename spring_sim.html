@@ -19,18 +19,19 @@
 			</div>
 			<!-- Main Content Row -->
 			<div class="row">
-				<div class="col-6">
-					<h2>Lab Surface</h2>
-					<canvas class="rounded" style="padding: 0; background-color: white; border-color: black; border-style: solid; width: 100%;" id="canvas"></canvas>
-				</div>
-				<div class="col-6">
-					<h2>Potential Plot</h2>
-					<div id="plotly-object"></div>
+				<h2 class="col-6">Lab Surface</h2>
+				<h2 class="col-6">Plot</h2>
+				<div class="row mt-3">
+					<canvas class="rounded col-6 d-block" style="padding: 0; background-color: white; border-color: black; border-style: solid" id="canvas"></canvas>
+					
+					<div class="col-6">
+						<div id="plotly-object"></div>
+					</div>
 				</div>
 			</div>
 		</div>
-
+		
 	</body>
-	<script src="./scripts/spring_sim/main.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+	<script src="./scripts/spring_sim/main.js" type="module"></script>
 </html>
