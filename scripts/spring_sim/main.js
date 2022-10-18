@@ -1,14 +1,23 @@
-
 import { spring_physics2d } from "./physics.js"
+import { Coordinateline_Euklidian2d } from "./coordinates.js"
 
-export const canvas = document.getElementById("canvas")
-var c
-var drawing = false
+// Global Spring
+const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
+const default_end_position = {x:100, y:10}
+const default_k=1
+const spring = new spring_physics2d(boundaries, default_k, default_end_position)
 
-var spring_pos = {x:50, y:50}
+// Global Canvas
+const canvas = document.getElementById("canvas")
+canvas.width = canvas.clientWidth;
+canvas.height = canvas.clientWidth;
+const c = canvas.getContext("2d",  { alpha: false })
 
-const plot_div = document.getElementById('plotly-object');
+c.fillStyle = "black"
+c.translate(canvas.width/2, canvas.height/2)
 
+
+// Variables for handeling drawing
 var mouseDown = 0;
 document.body.onmousedown = function() { 
   ++mouseDown;
@@ -17,35 +26,22 @@ document.body.onmouseup = function() {
   --mouseDown;
 }
 
+// for stoping the animation
+var stop_animation = true
 
+// Div for Plotting
+const plot_div = document.getElementById('plotly-object');
+
+// Global Coordinates
+const euclid_coords = new Coordinateline_Euklidian2d(boundaries)
+
+// Main after everything else loaded
 window.onload = (event) => {
-	console.log(canvas)
-	canvas.width = canvas.clientWidth;
-	canvas.height = canvas.clientHeight;
-	Plotly.newPlot(plot_dic, surface_plot.data, surface_plot.layout)
-	c = canvas.getContext("2d",  { alpha: false })
-	c.fillStyle = "black"
-	c.translate(canvas.width/2, canvas.height/2)
 
+	// var potential_plot = spring.plot_potential(canvas.width, canvas.height)
+	// Plotly.newPlot(plot_div, potential_plot.data,potential_plot.layout)
+	
 	main()
-}
-
-
-
-function draw_spring(){
-	clear_canvas()
-	c.beginPath()
-	c.moveTo(0,0)
-	c.lineTo(spring_pos.x,-spring_pos.y)
-	c.stroke()
-	c.closePath()
-}
-
-function clear_canvas(){
-	c.save()
-	c.resetTransform()
-	c.clearRect(0,0,canvas.width, canvas.height)
-	c.restore()
 }
 
 function getTransformedPoint(x, y) {
@@ -55,49 +51,54 @@ function getTransformedPoint(x, y) {
 	return { x: transformedX, y: -transformedY };
  }
 
-
-function near_spring_end(p_phys){
-		return Math.abs(spring_pos.x-p_phys.x) < 5 && Math.abs(spring_pos.y-p_phys.y) < 5
+function clear_canvas(){
+	c.save()
+	c.resetTransform()
+	c.clearRect(0,0,canvas.width, canvas.height)
+	c.restore()
 }
 
 
-// canvas.addEventListener('mousedown', (event) =>{
-// 	MouseDown = true
-// })
-
-// canvas.addEventListener('mouseup', (event)=>{
-// 	MouseUp = false
-// })
-
 canvas.addEventListener('mousemove', (event) => {
-	phys_pos = getTransformedPoint(event.offsetX, event.offsetY)
-	if (near_spring_end(phys_pos)) {
+	var event_pos = getTransformedPoint(event.offsetX, event.offsetY)
+	if (spring.near_end(event_pos.x, event_pos.y)) {
 		document.body.style.cursor = "pointer"
-		if (mouseDown){
-			drawing = true
-		}
-		else {
-			drawing = false
-		}
 	}
 	else{
 		document.body.style.cursor = "default"
 	}
-	if (drawing){
-		spring_pos = phys_pos
-		draw_spring()
+	if (mouseDown){
+		spring.end_position = event_pos
+		redraw_canvas()
+	}
+	else{
+		animate()
 	}
 })
 
 
+function redraw_canvas(){
+	clear_canvas()
+	spring.draw(c)
+	euclid_coords.draw(canvas, c)
+}
 
+let animationID
 
+function animate(){
+	if (stop_animation){
+		animationID = 0
+	}
+	else{
+		if (!mouseDown)
+		animationID = requestAnimationFrame(animate)
+		spring.update(c)
+		redraw_canvas()
+	}
+}
 
-
-
-		
 
 function main(){
-	draw_spring(spring_pos)
-	
+	redraw_canvas()
+	animate()
 }

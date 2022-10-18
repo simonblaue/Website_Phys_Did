@@ -55,7 +55,7 @@ export class Rectangle {
        var n_right = new Vector2d(1,0)
 
        var value = 0
-       var precison = 1000
+       const precison = 1000
 
        var perimeter = 2*(x1-x0)+2*(y0-y1)
 
@@ -68,6 +68,7 @@ export class Rectangle {
            value += this.field.value_at(x1,i).scalar(n_right)
        }
     //    value *= this.field.norm_factor
+       console.log(value)
        value = value/precison*perimeter
 
        return {value: value, error:0}
