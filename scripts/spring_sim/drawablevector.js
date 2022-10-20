@@ -32,5 +32,6 @@ export class drawablevVector{
 		ctx.lineTo(this.s.x - headlen * Math.cos(angle + Math.PI / 6), this.s.y - headlen * Math.sin(angle + Math.PI / 6));
 		ctx.strokeStyle = this.color;
 		ctx.stroke();
+		ctx.closePath()
 	}
 }

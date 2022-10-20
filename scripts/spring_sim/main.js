@@ -41,7 +41,7 @@ const euclid_coords = new Coordinateline_Euklidian2d(boundaries)
 var vectors = []
 
 
-
+main()
 
 /////////// MAIN //////////////////
 
@@ -64,24 +64,34 @@ function addVector(event){
 
 
  // Events
-
+ var drag = false
+ 
 canvas.addEventListener('mousemove', (event) => {
 	let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
 	if (spring.near_end(event_pos.x, event_pos.y)) {
 		document.body.style.cursor = "pointer"
+		if (mouseDown){
+			drag = true
+			spring.endpoint = event_pos
+			redraw_canvas()
+		}
+	}
+	else if (drag){
+		spring.endpoint = event_pos
+		redraw_canvas()
 	}
 	else{
 		document.body.style.cursor = "default"
-	}
-	if (mouseDown){
-		spring.endpoint = event_pos
-		redraw_canvas()
 	}
 })
 
 canvas.addEventListener("click", (event)=>{
 	animate()
-	addVector(event)
+	let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
+	if (drag) {
+		addVector(event)
+	}
+	drag = false
 })
 
 
@@ -108,9 +118,9 @@ export function toggleAnimation(){
 	stop_animation = !stop_animation
 }
 
-let animationID
 
 function animate(){
+	let animationID
 	if (stop_animation){
 		animationID = 0
 	}
