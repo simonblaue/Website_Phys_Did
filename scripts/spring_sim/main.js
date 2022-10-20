@@ -3,9 +3,8 @@ import { Coordinateline_Euklidian2d } from "./coordinates.js"
 
 // Global Spring
 const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
-const default_end_position = {x:100, y:10}
 const default_k=1
-const spring = new spring_physics2d(boundaries, default_k, default_end_position)
+const spring = new spring_physics2d(boundaries)
 
 // Global Canvas
 const canvas = document.getElementById("canvas")
@@ -28,6 +27,7 @@ document.body.onmouseup = function() {
 
 // for stoping the animation
 var stop_animation = false
+const btn_anim = document.getElementById("stop_anim")
 
 // Div for Plotting
 const plot_div = document.getElementById('plotly-object');
@@ -68,7 +68,7 @@ canvas.addEventListener('mousemove', (event) => {
 		document.body.style.cursor = "default"
 	}
 	if (mouseDown){
-		spring.end_position = event_pos
+		spring.endpoint = event_pos
 		redraw_canvas()
 	}
 	else{
@@ -81,6 +81,11 @@ function redraw_canvas(){
 	clear_canvas()
 	spring.draw(c)
 	euclid_coords.draw(canvas, c)
+}
+
+export function toggleAnimation(){
+	stop_animation = !stop_animation
+	console.log(stop_animation, "here");
 }
 
 let animationID

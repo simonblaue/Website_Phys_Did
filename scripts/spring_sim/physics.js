@@ -8,42 +8,46 @@ export class spring_physics2d{
 	y_left // left y boundary
 	y_right // right y boundary
 	dr // gridsize
-	l // spring defualt length
+	base_l // spring defualt length
 	n // number of windings
 	endpoint
 	potential_data = []
 	field_data = [] // Vector field of strength of spring if pulled up to this point
 
 	
-	constructor(boundaries, k=1, endpoint={x:50,y:0}, dr=0.1){
+	constructor(boundaries, k=1, endpoint={x:50,y:20}, dr=0.1){
 		// Init vatrs
 		this.tension = k
 		this.mass = 50
 		this.friction = 0
 		this.n = 10
-		this.l = Math.sqrt(endpoint.x**2+endpoint.y**2)
+		this.base_l = Math.sqrt(endpoint.x**2+endpoint.y**2)
 		this.endpoint = endpoint
 		this.dr = dr
 		this.x_left = boundaries.x0
 		this.x_right = boundaries.x1
 		this.y_left = boundaries.y0
 		this.y_right = boundaries.y1
-		
+	
 		console.log(this)
 	}
+
+	l(){ return Math.sqrt(this.endpoint.x**2+this.endpoint.y**2) } // actual length
 	
 	near_end(x,y){
 		return Math.abs(this.endpoint.x - x) <= 5 &&  Math.abs(this.endpoint.y - y) <= 5
 	}
 
 	potential_at(x,y){
-		var r = this.l - Math.sqrt(x**2+y**2)
+		var r = this.base_l - Math.sqrt(x**2+y**2)
 		return 1/2*this.tension*r**2
 	}
 
 	field_at(x,y){
-		var Fx = -this.tension*(x-this.l)
-		var Fy = -this.tension*(y-this.l) 
+		let v_norm = {x: x/this.l(), y: y/this.l()} // normalized spring vec
+		let u = {x:this.base_l*v_norm.x, y: this.base_l*v_norm.y} // spring vector for base length in direction of its current orientation
+		var Fx = -this.tension*(x-u.x)
+		var Fy = -this.tension*(y-u.y) 
 		return {x: Fx, y:Fy}
 	}
 
@@ -99,14 +103,12 @@ export class spring_physics2d{
 		let F = this.field_at(this.endpoint.x, this.endpoint.y)
 		this.endpoint.x += F.x/this.mass
 		this.endpoint.y += F.y/this.mass
-		this.l = Math.sqrt(this.endpoint.x**2+this.endpoint.y**2)
 	}
 
 	draw(ctx){
-	var sl = this.l/(2*this.n)
-	var theta = Math.acos(this.endpoint.y/this.l)
-
-
+	let sl = this.l()/(2*this.n)
+	let theta = Math.acos(this.endpoint.y/this.l())
+	if (this.endpoint.x<0){ theta *= -1 }
 	ctx.save()
 	ctx.rotate(theta)
 
