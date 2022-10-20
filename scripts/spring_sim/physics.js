@@ -15,7 +15,7 @@ export class spring_physics2d{
 	field_data = [] // Vector field of strength of spring if pulled up to this point
 
 	
-	constructor(boundaries, k=1, endpoint={x:50,y:20}, dr=0.1){
+	constructor(boundaries, k=1, endpoint={x:80,y:80}, dr=0.1){
 		// Init vatrs
 		this.tension = k
 		this.mass = 5
@@ -39,7 +39,7 @@ export class spring_physics2d{
 	}
 
 	potential_at(x,y){
-		var r = this.base_l - Math.sqrt(x**2+y**2)
+		var r = this.base_l - Math.sqrt(x**2+y**2) 
 		return 1/2*this.tension*r**2
 	}
 
