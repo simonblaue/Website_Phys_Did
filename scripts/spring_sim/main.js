@@ -1,5 +1,6 @@
 import { spring_physics2d } from "./physics.js"
 import { Coordinateline_Euklidian2d } from "./coordinates.js"
+import { drawablevVector } from "./drawablevector.js"
 
 // Global Spring
 const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
@@ -35,14 +36,14 @@ const plot_div = document.getElementById('plotly-object');
 // Global Coordinates
 const euclid_coords = new Coordinateline_Euklidian2d(boundaries)
 
-// Main after everything else loaded
-window.onload = (event) => {
 
-	// var potential_plot = spring.plot_potential(canvas.width, canvas.height)
-	// Plotly.newPlot(plot_div, potential_plot.data,potential_plot.layout)
-	
-	main()
-}
+// For Vectors apering where spring dragged
+var vectors = []
+
+
+
+
+/////////// MAIN //////////////////
 
 function getTransformedPoint(x, y) {
 	const transform = c.getTransform();
@@ -51,16 +52,21 @@ function getTransformedPoint(x, y) {
 	return { x: transformedX, y: -transformedY };
  }
 
-function clear_canvas(){
-	c.save()
-	c.resetTransform()
-	c.clearRect(0,0,canvas.width, canvas.height)
-	c.restore()
+
+function addVector(event){
+	let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
+	let v = new drawablevVector(event_pos, spring.field_at(event_pos.x, event_pos.y))
+	console.log(event_pos)
+	console.log(v.len());
+	vectors.push(v)
 }
 
 
+
+ // Events
+
 canvas.addEventListener('mousemove', (event) => {
-	var event_pos = getTransformedPoint(event.offsetX, event.offsetY)
+	let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
 	if (spring.near_end(event_pos.x, event_pos.y)) {
 		document.body.style.cursor = "pointer"
 	}
@@ -71,14 +77,29 @@ canvas.addEventListener('mousemove', (event) => {
 		spring.endpoint = event_pos
 		redraw_canvas()
 	}
-	else{
-		animate()
-	}
 })
+
+canvas.addEventListener("click", (event)=>{
+	animate()
+	addVector(event)
+})
+
+
+//// Canvas looking
+
+function clear_canvas(){
+	c.save()
+	c.resetTransform()
+	c.clearRect(0,0,canvas.width, canvas.height)
+	c.restore()
+}
 
 
 function redraw_canvas(){
 	clear_canvas()
+	vectors.forEach((v) => {
+		v.draw(c)
+	})
 	spring.draw(c)
 	euclid_coords.draw(canvas, c)
 }

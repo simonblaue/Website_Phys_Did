@@ -18,7 +18,7 @@ export class spring_physics2d{
 	constructor(boundaries, k=1, endpoint={x:50,y:20}, dr=0.1){
 		// Init vatrs
 		this.tension = k
-		this.mass = 50
+		this.mass = 5
 		this.friction = 0
 		this.n = 10
 		this.base_l = Math.sqrt(endpoint.x**2+endpoint.y**2)
