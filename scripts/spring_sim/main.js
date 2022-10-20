@@ -85,7 +85,6 @@ function redraw_canvas(){
 
 export function toggleAnimation(){
 	stop_animation = !stop_animation
-	console.log(stop_animation, "here");
 }
 
 let animationID
