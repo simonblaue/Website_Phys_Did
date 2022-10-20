@@ -506,7 +506,7 @@ function set_integral_label(){
         value = res.value
         error = res.error
     }
-    integral_label.innerHTML = value.toFixed(2) //+ '±' + error.toFixed(2)
+    integral_label.innerHTML = value.toFixed(2) + '±' + error.toFixed(2)
 }
 
 

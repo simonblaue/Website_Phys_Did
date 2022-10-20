@@ -55,23 +55,31 @@ export class Rectangle {
        var n_right = new Vector2d(1,0)
 
        var value = 0
-       const precison = 1000
+       var precison = 500
 
        var perimeter = 2*(x1-x0)+2*(y0-y1)
-
-       for (var i=x0; i<x1; i+= (x1-x0)/precison){
+        var max_riemann_error = 0
+        // this is a left handed riemann sum  
+       for (var i=x0; i<=x1; i+= (x1-x0)/precison){
+       // console.log(i,x1 )
            value += this.field.value_at(i,y0).scalar(n_top)
            value += this.field.value_at(i,y1).scalar(n_bottom)
        }
        for (var i=y1; i<y0; i+= (y0-y1)/precison){
            value += this.field.value_at(x0,i).scalar(n_left)
            value += this.field.value_at(x1,i).scalar(n_right)
-       }
-    //    value *= this.field.norm_factor
-       console.log(value)
-       value = value/precison*perimeter
+        }
 
-       return {value: value, error:0}
+        /// Error Calculations
+        max_riemann_error += Math.abs((this.field.value_at(x1,y0).scalar(n_top) - this.field.value_at(x0,y0).scalar(n_top)) * (x1-x0)/precison)
+        max_riemann_error += Math.abs((this.field.value_at(x1,y1).scalar(n_bottom) - this.field.value_at(x0,y1).scalar(n_bottom)) * (x1-x0)/precison)
+        max_riemann_error += Math.abs((this.field.value_at(y1,x0).scalar(n_left) - this.field.value_at(y0,x0).scalar(n_left)) * (y1-y0)/precison)
+        max_riemann_error += Math.abs((this.field.value_at(y1,x1).scalar(n_right) - this.field.value_at(y0,x1).scalar(n_right)) * (y1-y0)/precison)
+       value *= this.field.norm_factor
+
+       value = value/precison*perimeter
+        console.log(max_riemann_error)
+       return {value: value, error:max_riemann_error}
    }
 
     circulation(){

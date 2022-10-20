@@ -27,7 +27,7 @@ document.body.onmouseup = function() {
 }
 
 // for stoping the animation
-var stop_animation = true
+var stop_animation = false
 
 // Div for Plotting
 const plot_div = document.getElementById('plotly-object');
