@@ -15,7 +15,7 @@ export class spring_physics2d{
 	field_data = [] // Vector field of strength of spring if pulled up to this point
 
 	
-	constructor(boundaries, k=1, endpoint={x:80,y:80}, dr=0.1){
+	constructor(canvasSize,boundaries, k=1, endpoint={x:6,y:6}, dr=0.1){
 		// Init vatrs
 		this.tension = k
 		this.mass = 5
@@ -28,17 +28,28 @@ export class spring_physics2d{
 		this.x_right = boundaries.x1
 		this.y_left = boundaries.y0
 		this.y_right = boundaries.y1
+		this.scaleX = Math.abs(this.x_right-this.x_left)/canvasSize.x
+		this.scaleY = Math.abs(this.y_right-this.y_left)/canvasSize.y
 	
 		console.log(this)
 	}
 
 	l(){ return Math.sqrt(this.endpoint.x**2+this.endpoint.y**2) } // actual length
 	
+	canvas_to_physics(x,y){
+		return {x: x*this.scaleX, y: y*this.scaleY}
+	}
+
+	physics_to_canvas(x,y){
+		return {x: x/this.scaleX, y: y/this.scaleY}
+	}
+
 	near_end(x,y){
-		return Math.abs(this.endpoint.x - x) <= 5 &&  Math.abs(this.endpoint.y - y) <= 5
+		return Math.abs(this.endpoint.x - x) <= 0.5 &&  Math.abs(this.endpoint.y - y) <= 0.5
 	}
 
 	potential_at(x,y){
+		x = p.x, y=p.y
 		var r = this.base_l - Math.sqrt(x**2+y**2) 
 		return 1/2*this.tension*r**2
 	}
@@ -105,10 +116,13 @@ export class spring_physics2d{
 		this.endpoint.y += F.y/this.mass
 	}
 
+
+
 	draw(ctx){
-	let sl = this.l()/(2*this.n)
-	let theta = Math.acos(this.endpoint.y/this.l())
-	if (this.endpoint.x<0){ theta *= -1 }
+	let canvas_endpoint = this.physics_to_canvas(this.endpoint.x, this.endpoint.y)
+	let sl = Math.sqrt(canvas_endpoint.x**2+ canvas_endpoint.y**2)/(2*this.n)
+	let theta = Math.acos(canvas_endpoint.y/Math.sqrt(canvas_endpoint.x**2+ canvas_endpoint.y**2))
+	if (canvas_endpoint.x<0){ theta *= -1 }
 	ctx.save()
 	ctx.rotate(theta)
 
@@ -130,8 +144,8 @@ export class spring_physics2d{
 	ctx.restore()
 
 	ctx.beginPath()
-	ctx.lineTo(this.endpoint.x, -this.endpoint.y)
-	ctx.arc(this.endpoint.x, -this.endpoint.y,2,0,2*Math.PI)
+	ctx.lineTo(canvas_endpoint.x, -canvas_endpoint.y)
+	ctx.arc(canvas_endpoint.x, -canvas_endpoint.y,2,0,2*Math.PI)
 	ctx.stroke()
 	ctx.closePath()
 	}

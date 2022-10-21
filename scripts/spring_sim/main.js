@@ -2,20 +2,22 @@ import { spring_physics2d } from "./physics.js"
 import { Coordinateline_Euklidian2d } from "./coordinates.js"
 import { drawablevVector } from "./drawablevector.js"
 
-// Global Spring
-const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
-const default_k=1
-const spring = new spring_physics2d(boundaries)
 
 // Global Canvas
 const canvas = document.getElementById("canvas")
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientWidth;
 const c = canvas.getContext("2d",  { alpha: false })
+const canvasSize = {x:canvas.width, y:canvas.height}
 
 c.fillStyle = "black"
 c.translate(canvas.width/2, canvas.height/2)
 
+// Global Spring
+const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
+
+const default_k=1
+const spring = new spring_physics2d(canvasSize,boundaries)
 
 // Variables for handeling drawing
 var mouseDown = 0;
@@ -55,9 +57,12 @@ function getTransformedPoint(x, y) {
 
 function addVector(event){
 	let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
-	let v = new drawablevVector(event_pos, spring.field_at(event_pos.x, event_pos.y))
+	let p = spring.canvas_to_physics(event_pos.x, event_pos.y)
+	let F = spring.field_at(p.x, p.y)
+	let canvasF = spring.physics_to_canvas(F.x,F.y)
+	let v = new drawablevVector(event_pos, canvasF)
 	console.log(event_pos)
-	console.log(v.len());
+	console.log(F, canvasF);
 	vectors.push(v)
 }
 
@@ -68,17 +73,17 @@ function addVector(event){
  
 canvas.addEventListener('mousemove', (event) => {
 	let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
-	if (spring.near_end(event_pos.x, event_pos.y)) {
+	let p = spring.canvas_to_physics(event_pos.x, event_pos.y)
+	if (spring.near_end(p.x, p.y)) {
 		document.body.style.cursor = "pointer"
 		if (mouseDown){
 			drag = true
-			spring.endpoint = event_pos
+			spring.endpoint = p
 			redraw_canvas()
 		}
 	}
 	else if (drag){
-		spring.endpoint = event_pos
-		redraw_canvas()
+		spring.endpoint = p
 	}
 	else{
 		document.body.style.cursor = "default"
@@ -87,7 +92,6 @@ canvas.addEventListener('mousemove', (event) => {
 
 canvas.addEventListener("click", (event)=>{
 	animate()
-	let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
 	if (drag) {
 		addVector(event)
 	}
