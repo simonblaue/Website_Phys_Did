@@ -7,7 +7,8 @@ import { drawablevVector } from "./drawablevector.js"
 const canvas = document.getElementById("canvas")
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientWidth;
-const c = canvas.getContext("2d",  { alpha: false })
+canvas.style.background = "white";
+const c = canvas.getContext("2d")
 const canvasSize = {x:canvas.width, y:canvas.height}
 
 c.fillStyle = "black"
@@ -16,7 +17,6 @@ c.translate(canvas.width/2, canvas.height/2)
 // Global Spring
 const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
 
-const default_k=1
 const spring = new spring_physics2d(canvasSize,boundaries)
 
 // Variables for handeling drawing
@@ -30,7 +30,6 @@ document.body.onmouseup = function() {
 
 // for stoping the animation
 var stop_animation = false
-const btn_anim = document.getElementById("stop_anim")
 
 // Div for Plotting
 const plot_div = document.getElementById('plotly-object');
@@ -38,12 +37,13 @@ const plot_div = document.getElementById('plotly-object');
 // Global Coordinates
 const euclid_coords = new Coordinateline_Euklidian2d(boundaries)
 
-
 // For Vectors apering where spring dragged
 var vectors = []
 
 
 main()
+
+plot()
 
 /////////// MAIN //////////////////
 
@@ -61,8 +61,6 @@ function addVector(event){
 	let F = spring.field_at(p.x, p.y)
 	let canvasF = spring.physics_to_canvas(F.x,F.y)
 	let v = new drawablevVector(event_pos, canvasF)
-	console.log(event_pos)
-	console.log(F, canvasF);
 	vectors.push(v)
 }
 
@@ -104,6 +102,7 @@ canvas.addEventListener("click", (event)=>{
 function clear_canvas(){
 	c.save()
 	c.resetTransform()
+	c.fillStyle= "white"
 	c.clearRect(0,0,canvas.width, canvas.height)
 	c.restore()
 }
@@ -137,7 +136,13 @@ function animate(){
 }
 
 
+function plot(){
+	let plotly_stuff = spring.plot_potential(canvas.width, canvas.height)
+	Plotly.newPlot(plot_div, plotly_stuff.data, plotly_stuff.layout);
+}
+
+
 function main(){
 	redraw_canvas()
-	animate()
+	// animate()
 }

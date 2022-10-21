@@ -49,7 +49,6 @@ export class spring_physics2d{
 	}
 
 	potential_at(x,y){
-		x = p.x, y=p.y
 		var r = this.base_l - Math.sqrt(x**2+y**2) 
 		return 1/2*this.tension*r**2
 	}
@@ -72,30 +71,42 @@ export class spring_physics2d{
 		}
 	}
 
-	plot_potential(width, height, dr){
+	plot_potential(width, height){
 		this.potential_data = [ ]
 
+
 		for (var x=this.x_left; x<=this.x_right; x+=this.dr){
+			var row = []
 			for (var y=this.y_left; y<=this.y_right; y+=this.dr){
-				this.potential_data.push(this.potential_at(x,y))
+				row.push(this.potential_at(x,y))
 			}
+			this.potential_data.push(row)
 		}
 
-		var data = [{
+		var data_z = {
 			z: this.potential_data,
 			type: 'surface',
-			contours: {
-			z: {
-				show:true,
-				usecolormap: true,
-				highlightcolor:"#42f462",
-				project:{z: true}
-			}
-			}
-		}];
+			showscale: false,
+			
+		};
+
+		var data_p = {
+			x: [this.endpoint.x],
+			y: [this.endpoint.y],
+			z: [this.potential_at(this.endpoint.x, this.endpoint.y)],
+			marker: {
+				color: 'rgb(127, 127, 127)',
+				size: 12,
+				symbol: 'circle',
+				line: {
+				color: 'rgb(204, 204, 204)',
+				width: 1},
+				opacity: 0.8},
+			type: 'scatter3d',
+		};
 	
 		var layout = {
-			scene: {camera: {eye: {x: 1.87, y: 0.88, z: -0.64}}},
+			scene: {camera: {eye: {x: 1.87, y: 0.88, z: 0.64}}},
 			autosize: false,
 			width: width,
 			height: height,
@@ -106,6 +117,8 @@ export class spring_physics2d{
 			t: 90,
 			}
 		};
+
+		let data = [data_p, data_z]
 	
 		return  {data:data, layout:layout}
 	}
