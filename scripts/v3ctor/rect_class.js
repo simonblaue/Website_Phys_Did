@@ -57,10 +57,10 @@ export class Rectangle {
        var value = 0
        var precison = 500
 
-       var perimeter = 2*(x1-x0)+2*(y0-y1)
+        var perimeter = 2*(x1-x0)+2*(y0-y1)
         var max_riemann_error = 0
         // this is a left handed riemann sum  
-       for (var i=x0; i<=x1; i+= (x1-x0)/precison){
+       for (var i=x0; i<x1; i+= (x1-x0)/precison){
        // console.log(i,x1 )
            value += this.field.value_at(i,y0).scalar(n_top)
            value += this.field.value_at(i,y1).scalar(n_bottom)
@@ -71,14 +71,14 @@ export class Rectangle {
         }
 
         /// Error Calculations
-        max_riemann_error += Math.abs((this.field.value_at(x1,y0).scalar(n_top) - this.field.value_at(x0,y0).scalar(n_top)) * (x1-x0)/precison)
-        max_riemann_error += Math.abs((this.field.value_at(x1,y1).scalar(n_bottom) - this.field.value_at(x0,y1).scalar(n_bottom)) * (x1-x0)/precison)
-        max_riemann_error += Math.abs((this.field.value_at(y1,x0).scalar(n_left) - this.field.value_at(y0,x0).scalar(n_left)) * (y1-y0)/precison)
-        max_riemann_error += Math.abs((this.field.value_at(y1,x1).scalar(n_right) - this.field.value_at(y0,x1).scalar(n_right)) * (y1-y0)/precison)
+        // max_riemann_error += Math.abs((this.field.value_at(x1,y0).scalar(n_top) - this.field.value_at(x0,y0).scalar(n_top)) * (x1-x0)/precison)
+        // max_riemann_error += Math.abs((this.field.value_at(x1,y1).scalar(n_bottom) - this.field.value_at(x0,y1).scalar(n_bottom)) * (x1-x0)/precison)
+        // max_riemann_error += Math.abs((this.field.value_at(y1,x0).scalar(n_left) - this.field.value_at(y0,x0).scalar(n_left)) * (y1-y0)/precison)
+        // max_riemann_error += Math.abs((this.field.value_at(y1,x1).scalar(n_right) - this.field.value_at(y0,x1).scalar(n_right)) * (y1-y0)/precison)
        value *= this.field.norm_factor
 
        value = value/precison*perimeter
-        console.log(max_riemann_error)
+    // console.log(max_riemann_error)
        return {value: value, error:max_riemann_error}
    }
 
