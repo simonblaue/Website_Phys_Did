@@ -91,15 +91,15 @@ export class spring_physics2d{
 		};
 
 		var data_p = {
-			x: [this.endpoint.x],
-			y: [this.endpoint.y],
+			x: [this.endpoint.x/this.scaleX],
+			y: [this.endpoint.y/this.scaleY],
 			z: [this.potential_at(this.endpoint.x, this.endpoint.y)],
 			marker: {
-				color: 'rgb(127, 127, 127)',
-				size: 12,
-				symbol: 'circle',
+				color: 'rgb(255, 0, 0)',
+				size: 5,
+				symbol: 'x-thin-open',
 				line: {
-				color: 'rgb(204, 204, 204)',
+				color: 'rgb(255, 0, 0)',
 				width: 1},
 				opacity: 0.8},
 			type: 'scatter3d',
@@ -115,7 +115,9 @@ export class spring_physics2d{
 			r: 50,
 			b: 65,
 			t: 90,
-			}
+			},
+			xaxis: {range: [-10, 10]},
+  			yaxis: {range: [-10, 10]}
 		};
 
 		let data = [data_p, data_z]
