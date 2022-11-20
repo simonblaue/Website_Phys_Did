@@ -15,14 +15,16 @@ export class spring_physics2d{
 	field_data = [] // Vector field of strength of spring if pulled up to this point
 
 	
-	constructor(canvasSize,boundaries, k=1, endpoint={x:6,y:6}, dr=0.1){
+	constructor(canvasSize,boundaries, k=0.2, endpoint={x:6,y:6}, dr=0.1){
 		// Init vatrs
 		this.tension = k
 		this.mass = 5
-		this.friction = 0
+		this.friction = 0.5
 		this.n = 10
 		this.base_l = Math.sqrt(endpoint.x**2+endpoint.y**2)
 		this.endpoint = endpoint
+		this.v = {x:0, y:0}
+		this.a = {x:0,y:0}
 		this.dr = dr
 		this.x_left = boundaries.x0
 		this.x_right = boundaries.x1
@@ -56,8 +58,8 @@ export class spring_physics2d{
 	field_at(x,y){
 		let v_norm = {x: x/this.l(), y: y/this.l()} // normalized spring vec
 		let u = {x:this.base_l*v_norm.x, y: this.base_l*v_norm.y} // spring vector for base length in direction of its current orientation
-		var Fx = -this.tension*(x-u.x)
-		var Fy = -this.tension*(y-u.y) 
+		var Fx = -this.tension*(x-u.x)-this.friction*this.v.x
+		var Fy = -this.tension*(y-u.y)-this.friction*this.v.y
 		return {x: Fx, y:Fy}
 	}
 
@@ -127,8 +129,13 @@ export class spring_physics2d{
 
 	update(){
 		let F = this.field_at(this.endpoint.x, this.endpoint.y)
-		this.endpoint.x += F.x/this.mass
-		this.endpoint.y += F.y/this.mass
+		this.a.x = F.x/this.mass
+		this.a.y = F.y/this.mass
+		this.v.x += this.a.x
+		this.v.y += this.a.y 
+		this.endpoint.x += this.v.x
+		this.endpoint.y += this.v.y
+		console.log(this.a, this.v, this.endpoint)
 	}
 
 

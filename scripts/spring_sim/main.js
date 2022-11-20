@@ -42,7 +42,6 @@ var vectors = []
 
 
 main()
-
 plot()
 
 /////////// MAIN //////////////////
@@ -82,6 +81,7 @@ canvas.addEventListener('mousemove', (event) => {
 	}
 	else if (drag){
 		spring.endpoint = p
+		update_plot()
 	}
 	else{
 		document.body.style.cursor = "default"
@@ -139,6 +139,12 @@ function animate(){
 function plot(){
 	let plotly_stuff = spring.plot_potential(canvas.width, canvas.height)
 	Plotly.newPlot(plot_div, plotly_stuff.data, plotly_stuff.layout);
+}
+
+function update_plot(){
+	let new_value = 0
+	Plotly.restyle(plot_div, 'data_p',  [[new_value]] )
+	console.log(new_value)
 }
 
 
