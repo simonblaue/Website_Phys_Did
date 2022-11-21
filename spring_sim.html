@@ -14,8 +14,9 @@
    <body>  
 		<script src="./scripts/spring_sim/main.js" type="module"></script>
 		<script type="module">
-			import { toggleAnimation } from "./scripts/spring_sim/main.js"
+			import { toggleAnimation, reset_spring } from "./scripts/spring_sim/main.js"
 			window.toggleAnimation = toggleAnimation
+			window.reset_spring = reset_spring
 		 </script>
 		<div class="container pt-4 content">
 			<!-- Header Row -->
@@ -35,11 +36,24 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<h2 class="col-6" id="field_strength">Field strength: </h2>
-				<h2 class="col-6" id="potential_strength">Potential strength: </h2>
+			<hr>
+			<div class="row col-6">
+				<div class="mb-3">
+					<label for="tension_slider" class="form-label">Tension strength:</label>
+					<input type="range" class="form-range" max="100" min="0" id="tension_slider" value="10">
+				</div>
+				<div class="mb-3">
+					<label for="friction_slider" class="form-label">Friction strength:</label>
+					<input type="range" class="form-range" max="100" min="0" id="friction_slider" value="10">
+				</div>
+				<div class="mb-3">
+					<label for="mass_slider" class="form-label">Mass:</label>
+					<input type="range" class="form-range" max="100" min="0" id="mass_slider" value="50" ondrag="window.reset_spring()">
+				</div>
 			</div>
-			<div class="row">
+
+			<hr>
+			<div class="row col-3">
 				<button class="btn btn-primary" type="button" onclick="window.toggleAnimation()" >Stop Physics</button>
 			</div>
 		</div>

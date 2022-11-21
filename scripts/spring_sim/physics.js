@@ -15,11 +15,11 @@ export class spring_physics2d{
 	field_data = [] // Vector field of strength of spring if pulled up to this point
 
 	
-	constructor(canvasSize,boundaries, k=0.2, endpoint={x:6,y:6}, dr=0.1){
+	constructor(canvasSize,boundaries, k=0.2, m=5, friction=0.5, endpoint={x:6,y:6}, dr=0.1){
 		// Init vatrs
 		this.tension = k
-		this.mass = 5
-		this.friction = 0.5
+		this.mass = m
+		this.friction = friction
 		this.n = 10
 		this.base_l = Math.sqrt(endpoint.x**2+endpoint.y**2)
 		this.endpoint = endpoint
@@ -33,7 +33,6 @@ export class spring_physics2d{
 		this.scaleX = Math.abs(this.x_right-this.x_left)/canvasSize.x
 		this.scaleY = Math.abs(this.y_right-this.y_left)/canvasSize.y
 	
-		console.log(this)
 	}
 
 	l(){ return Math.sqrt(this.endpoint.x**2+this.endpoint.y**2) } // actual length
@@ -135,7 +134,6 @@ export class spring_physics2d{
 		this.v.y += this.a.y 
 		this.endpoint.x += this.v.x
 		this.endpoint.y += this.v.y
-		console.log(this.a, this.v, this.endpoint)
 	}
 
 
