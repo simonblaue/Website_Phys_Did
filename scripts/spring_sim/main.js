@@ -2,7 +2,6 @@ import { spring_physics2d } from "./physics.js"
 import { Coordinateline_Euklidian2d } from "./coordinates.js"
 import { drawablevVector } from "./drawablevector.js"
 
-
 // Global Canvas
 const canvas = document.getElementById("canvas")
 canvas.width = canvas.clientWidth;
@@ -10,6 +9,7 @@ canvas.height = canvas.clientWidth;
 canvas.style.background = "white";
 const c = canvas.getContext("2d")
 const canvasSize = {x:canvas.width, y:canvas.height}
+
 
 c.fillStyle = "black"
 c.translate(canvas.width/2, canvas.height/2)
