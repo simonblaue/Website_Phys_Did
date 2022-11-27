@@ -75,10 +75,17 @@ export class spring_physics2d{
 
 	plot_potential(width, height){
 		this.potential_data = [ ]
+		
+		let x_array = []
+		let y_array = []
 
+		for (var y=this.y_left; y<=this.y_right; y+=this.dr){
+			y_array.push(y)
+		}
 
 		for (var x=this.x_left; x<=this.x_right; x+=this.dr){
 			var row = []
+			x_array.push(x)
 			for (var y=this.y_left; y<=this.y_right; y+=this.dr){
 				row.push(this.potential_at(x,y))
 			}
@@ -86,6 +93,8 @@ export class spring_physics2d{
 		}
 
 		var data_z = {
+			x : x_array,
+			y: y_array,
 			z: this.potential_data,
 			type: 'surface',
 			showscale: false,
@@ -93,8 +102,8 @@ export class spring_physics2d{
 		};
 
 		var data_p = {
-			x: [this.endpoint.x/this.scaleX],
-			y: [this.endpoint.y/this.scaleY],
+			x: [this.endpoint.x],
+			y: [this.endpoint.y],
 			z: [this.potential_at(this.endpoint.x, this.endpoint.y)],
 			marker: {
 				color: 'rgb(255, 0, 0)',
