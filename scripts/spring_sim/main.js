@@ -1,6 +1,7 @@
-import { spring_physics2d } from "./physics.js"
-import { Coordinateline_Euklidian2d } from "./coordinates.js"
-import { drawablevVector } from "./drawablevector.js"
+import {spring_physics2d} from "./physics.js"
+import {Coordinateline_Euklidian2d} from "./coordinates.js"
+import {drawablevVector} from "./drawablevector.js"
+
 
 // Global Canvas
 const canvas = document.getElementById("canvas")
@@ -41,12 +42,12 @@ var vectors = []
  var dragging = false
  
 // ------- INIT END HERE ------- //
-main()
-// plot()
+redrawCanvas()
+plot()
 // ------- INIT END HERE ------- //
 
-function addVector(event){
-	let event_pos = getMouesPosition(event.offsetX, event.offsetY)
+function addVector(e){
+	let event_pos = getMouesPosition(e)
 	let p = spring.canvas_to_physics(event_pos.x, event_pos.y)
 	let F = spring.field_at(p.x, p.y)
 	let canvasF = spring.physics_to_canvas(F.x,F.y)
@@ -146,8 +147,9 @@ function engage(e) {
 	}
 };
 
-function disengage() {
+function disengage(e) {
 	dragging = false;
+	addVector(e)
 	document.body.style.cursor = "default";
 	animate()
 };
@@ -169,7 +171,7 @@ function CanvasMouseMove(e){
 canvas.addEventListener('mousedown', engage);
 canvas.addEventListener('mousemove', CanvasMouseMove);
 canvas.addEventListener('mouseup', disengage);
-document.addEventListener('mouseup', disengage);
+// document.addEventListener('mouseup', disengage);
 
 // ------- Slider Event Handeling -------
 
@@ -177,11 +179,3 @@ massSlider.addEventListener('mouseup', resetSpring)
 frictionSlider.addEventListener('mouseup', resetSpring)
 tensionSlider.addEventListener('mouseup', resetSpring)
 
-
-// ---------- Call on load --------
-
-
-function main(){
-	redrawCanvas()
-	// animate()
-}
