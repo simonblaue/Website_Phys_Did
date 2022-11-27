@@ -15,14 +15,14 @@ c.fillStyle = "black"
 c.translate(canvas.width/2, canvas.height/2)
 
 // Global Sliders
-const mass_slider = document.getElementById("mass_slider")
-const tension_slider = document.getElementById("tension_slider")
-const friction_slider = document.getElementById("friction_slider")
+const massSlider = document.getElementById("mass_slider")
+const tensionSlider = document.getElementById("tension_slider")
+const frictionSlider = document.getElementById("friction_slider")
 
 // Global Spring
 const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
 
-let spring = new spring_physics2d(canvasSize,boundaries, tension_slider.value/100, mass_slider.value/10, friction_slider.value/100)
+var spring = new spring_physics2d(canvasSize,boundaries,{x:6,y:6}, tension_slider.value/100, mass_slider.value/10, friction_slider.value/100)
 
 // for stoping the animation
 var stop_animation = false
@@ -123,7 +123,7 @@ function moveSpring(e) {
 }
 
 export function resetSpring(e){
-	spring = new spring_physics2d(canvasSize,boundaries, endpoint=spring.endpoint, k=tension_slider.value/100, m=mass_slider.value/10, friction=friction_slider.value/100)
+	spring = new spring_physics2d(canvasSize,boundaries,spring.endpoint, tension_slider.value/100, mass_slider.value/10, friction_slider.value/100)
 	console.log(spring)
 	redrawCanvas()
 }
@@ -173,7 +173,9 @@ document.addEventListener('mouseup', disengage);
 
 // ------- Slider Event Handeling -------
 
-mass_slider.addEventListener('mouseup', resetSpring)
+massSlider.addEventListener('mouseup', resetSpring)
+frictionSlider.addEventListener('mouseup', resetSpring)
+tensionSlider.addEventListener('mouseup', resetSpring)
 
 
 // ---------- Call on load --------

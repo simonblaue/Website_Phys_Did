@@ -15,13 +15,14 @@ export class spring_physics2d{
 	field_data = [] // Vector field of strength of spring if pulled up to this point
 
 	
-	constructor(canvasSize,boundaries, k=0.2, m=5, friction=0.5, endpoint={x:6,y:6}, dr=0.1){
+	constructor(canvasSize,boundaries,endpoint, k=0.2, m=5, friction=0.5, dr=0.1){
 		// Init vatrs
 		this.tension = k
 		this.mass = m
 		this.friction = friction
 		this.n = 10
 		this.base_l = Math.sqrt(endpoint.x**2+endpoint.y**2)
+		if (endpoint.x == NaN || endpoint.y==NaN){endpoint = {x:6,y:6}}
 		this.endpoint = endpoint
 		this.v = {x:0, y:0}
 		this.a = {x:0,y:0}
