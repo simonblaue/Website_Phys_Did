@@ -22,7 +22,7 @@ const frictionSlider = document.getElementById("friction_slider")
 // Global Spring
 const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
 
-var spring = new spring_physics2d(canvasSize,boundaries,{x:6,y:6}, tension_slider.value/100, mass_slider.value/10, friction_slider.value/100)
+var spring = new spring_physics2d(canvasSize,boundaries,{x:6,y:6}, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
 
 // for stoping the animation
 var stop_animation = false
