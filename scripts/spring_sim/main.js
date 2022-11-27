@@ -15,7 +15,6 @@ c.fillStyle = "black"
 c.translate(canvas.width/2, canvas.height/2)
 
 // Global Sliders
-
 const mass_slider = document.getElementById("mass_slider")
 const tension_slider = document.getElementById("tension_slider")
 const friction_slider = document.getElementById("friction_slider")
@@ -24,15 +23,6 @@ const friction_slider = document.getElementById("friction_slider")
 const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
 
 let spring = new spring_physics2d(canvasSize,boundaries, tension_slider.value/100, mass_slider.value/10, friction_slider.value/100)
-
-// Variables for handeling drawing
-var mouseDown = 0;
-document.body.onmousedown = function() { 
-  ++mouseDown;
-}
-document.body.onmouseup = function() {
-  --mouseDown;
-}
 
 // for stoping the animation
 var stop_animation = false
@@ -47,21 +37,16 @@ const euclid_coords = new Coordinateline_Euklidian2d(boundaries)
 var vectors = []
 
 
+ // Events
+ var dragging = false
+ 
+// ------- INIT END HERE ------- //
 main()
-plot()
-
-/////////// MAIN //////////////////
-
-function getTransformedPoint(x, y) {
-	const transform = c.getTransform();
-	const transformedX = x - transform.e;
-	const transformedY = y - transform.f;
-	return { x: transformedX, y: -transformedY };
- }
-
+// plot()
+// ------- INIT END HERE ------- //
 
 function addVector(event){
-	let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
+	let event_pos = getMouesPosition(event.offsetX, event.offsetY)
 	let p = spring.canvas_to_physics(event_pos.x, event_pos.y)
 	let F = spring.field_at(p.x, p.y)
 	let canvasF = spring.physics_to_canvas(F.x,F.y)
@@ -70,68 +55,7 @@ function addVector(event){
 }
 
 
-
- // Events
- var drag = false
- 
-// canvas.addEventListener('mousemove', (event) => {
-// 	let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
-// 	let p = spring.canvas_to_physics(event_pos.x, event_pos.y)
-// 	if (spring.near_end(p.x, p.y)) {
-// 		document.body.style.cursor = "pointer"
-// 	if (mouseDown){
-// 	 		drag = true
-// 			spring.endpoint = p
-// 			redraw_canvas()
-//  	}
-// 	// }
-// 	// else if (drag){
-// 	// 	spring.endpoint = p
-// 	// 	update_plot()
-// 	}
-// 	else{
-// 		document.body.style.cursor = "default"
-// 		drag = false
-// 	}
-// })
-
-canvas.addEventListener('mousedown', (event)=> {
-	let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
-	let p = spring.canvas_to_physics(event_pos.x, event_pos.y)
-	if (spring.near_end(p.x, p.y)) {
-		spring.endpoint = p
-		redraw_canvas()
-	}
-})
-
-canvas.addEventListener('mousemove', (event)=>{
-	if (mouseDown){
-		let event_pos = getTransformedPoint(event.offsetX, event.offsetY)
-		let p = spring.canvas_to_physics(event_pos.x, event_pos.y)
-		if (spring.near_end(p.x, p.y)) {
-			spring.endpoint = p
-			redraw_canvas()
-		}
-	}
-})
-
-canvas.addEventListener('mousup', (event)=> {
-	if (spring.near_end(p.x, p.y)) {
-		addVector(event)
-		redraw_canvas()
-	}
-})
-
-// canvas.addEventListener("click", (event)=>{
-// 	animate()
-// 	if (drag) {
-// 		addVector(event)
-// 	}
-// 	drag = false
-// })
-
-
-//// Canvas looking
+// ------- Canvas looking -------
 
 function clear_canvas(){
 	c.save()
@@ -142,7 +66,7 @@ function clear_canvas(){
 }
 
 
-function redraw_canvas(){
+function redrawCanvas(){
 	clear_canvas()
 	vectors.forEach((v) => {
 		v.draw(c)
@@ -151,8 +75,11 @@ function redraw_canvas(){
 	euclid_coords.draw(canvas, c)
 }
 
+// ------- Animation stuff -------
+
 export function toggleAnimation(){
 	stop_animation = !stop_animation
+	animate()
 }
 
 
@@ -162,13 +89,15 @@ function animate(){
 		animationID = 0
 	}
 	else{
-		if (!mouseDown)
+		if (!dragging)
 		animationID = requestAnimationFrame(animate)
 		spring.update(c)
-		redraw_canvas()
+		redrawCanvas()
 	}
 }
 
+
+// ------- Plot stuff -------
 
 function plot(){
 	let plotly_stuff = spring.plot_potential(canvas.width, canvas.height)
@@ -180,13 +109,77 @@ function update_plot(){
 	Plotly.restyle(plot_div, 'data_p',  [[new_value]] )
 }
 
-export function reset_spring(){
-	spring = new spring_physics2d(canvasSize,boundaries, endpoint=spring.endpoint, k=tension_slider.value/100, m=mass_slider.value/10, friction=friction_slider.value/100)
-	redraw_canvas()
+
+
+// ------- Event functions -------
+
+function moveSpring(e) {
+	if (dragging) {
+		let mousePoint = getMouesPosition(e)
+		let p = spring.canvas_to_physics(mousePoint.x, mousePoint.y)
+		spring.endpoint = p
+		redrawCanvas()
+	}
 }
+
+export function resetSpring(e){
+	spring = new spring_physics2d(canvasSize,boundaries, endpoint=spring.endpoint, k=tension_slider.value/100, m=mass_slider.value/10, friction=friction_slider.value/100)
+	console.log(spring)
+	redrawCanvas()
+}
+
+// ------- Canvas Event Handeling -------
+
+function getMouesPosition(e) {
+	const transform = c.getTransform();
+	const transformedX = e.offsetX - transform.e;
+	const transformedY = e.offsetY - transform.f;
+	return { x: transformedX, y: -transformedY };
+ }
+
+function engage(e) {
+	let mousePoint = getMouesPosition(e)
+	let p = spring.canvas_to_physics(mousePoint.x, mousePoint.y);
+	if (spring.near_end(p.x, p.y)) {
+		dragging = true;
+		moveSpring(e)
+	}
+};
+
+function disengage() {
+	dragging = false;
+	document.body.style.cursor = "default";
+	animate()
+};
+
+function CanvasMouseMove(e){
+	let mousePoint = getMouesPosition(e);
+	let p = spring.canvas_to_physics(mousePoint.x, mousePoint.y);
+	if (dragging){
+		moveSpring(e);
+	}
+	else if (spring.near_end(p.x, p.y)) {
+		document.body.style.cursor = "pointer";
+	}
+	else {
+		document.body.style.cursor = "default";
+	}
+}
+
+canvas.addEventListener('mousedown', engage);
+canvas.addEventListener('mousemove', CanvasMouseMove);
+canvas.addEventListener('mouseup', disengage);
+document.addEventListener('mouseup', disengage);
+
+// ------- Slider Event Handeling -------
+
+mass_slider.addEventListener('mouseup', resetSpring)
+
+
+// ---------- Call on load --------
 
 
 function main(){
-	redraw_canvas()
+	redrawCanvas()
 	// animate()
 }
