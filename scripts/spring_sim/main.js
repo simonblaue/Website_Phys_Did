@@ -40,8 +40,9 @@ var vectors = []
 
  // Events
  var dragging = false
+ var drag_counter = 0
  
-// ------- INIT END HERE ------- //
+
 redrawCanvas()
 plot()
 // ------- INIT END HERE ------- //
@@ -56,7 +57,7 @@ function addVector(e){
 }
 
 
-// ------- Canvas looking -------
+// ------- Canvas looks -------
 
 function clear_canvas(){
 	c.save()
@@ -76,7 +77,7 @@ function redrawCanvas(){
 	euclid_coords.draw(canvas, c)
 }
 
-// ------- Animation stuff -------
+// ------- Animation  -------
 
 export function toggleAnimation(){
 	stop_animation = !stop_animation
@@ -98,16 +99,18 @@ function animate(){
 }
 
 
-// ------- Plot stuff -------
+// ------- Plot  -------
 
 function plot(){
 	let plotly_stuff = spring.plot_potential(canvas.width, canvas.height)
 	Plotly.newPlot(plot_div, plotly_stuff.data, plotly_stuff.layout);
+	console.log(plot_div.data)
 }
 
 function update_plot(){
-	let new_value = 0
-	Plotly.restyle(plot_div, 'data_p',  [[new_value]] )
+	let new_value = spring.potential_at(spring.endpoint.x, spring.endpoint.y)
+	let new_data = { z:[new_value], x:[spring.endpoint.x], y:[spring.endpoint.y]};
+	Plotly.restyle(plot_div, new_data, 0)
 }
 
 
@@ -116,9 +119,13 @@ function update_plot(){
 
 function moveSpring(e) {
 	if (dragging) {
+		drag_counter += 1
 		let mousePoint = getMouesPosition(e)
 		let p = spring.canvas_to_physics(mousePoint.x, mousePoint.y)
 		spring.endpoint = p
+		if( drag_counter % 3 == 0){
+			update_plot()
+		}
 		redrawCanvas()
 	}
 }

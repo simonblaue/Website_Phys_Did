@@ -56,7 +56,8 @@ export class spring_physics2d{
 	}
 
 	field_at(x,y){
-		let v_norm = {x: x/this.l(), y: y/this.l()} // normalized spring vec
+		let l =  Math.sqrt(x**2+y**2)
+		let v_norm = {x: x/l, y: y/l} // normalized spring vec
 		let u = {x:this.base_l*v_norm.x, y: this.base_l*v_norm.y} // spring vector for base length in direction of its current orientation
 		var Fx = -this.tension*(x-u.x)-this.friction*this.v.x
 		var Fy = -this.tension*(y-u.y)-this.friction*this.v.y
@@ -108,7 +109,7 @@ export class spring_physics2d{
 			marker: {
 				color: 'rgb(255, 0, 0)',
 				size: 5,
-				symbol: 'x-thin-open',
+				symbol: "x",
 				line: {
 				color: 'rgb(255, 0, 0)',
 				width: 1},
