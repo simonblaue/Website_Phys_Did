@@ -40,7 +40,6 @@ var vectors = []
 
  // Events
  var dragging = false
- var drag_counter = 0
  
 
 redrawCanvas()
@@ -56,6 +55,13 @@ function addVector(e){
 	vectors.push(v)
 }
 
+
+// ------- Spring looks -------
+
+export function toggleSpring(){
+	spring.vis = !spring.vis
+	redrawCanvas()
+}
 
 // ------- Canvas looks -------
 
@@ -104,13 +110,15 @@ function animate(){
 function plot(){
 	let plotly_stuff = spring.plot_potential(canvas.width, canvas.height)
 	Plotly.newPlot(plot_div, plotly_stuff.data, plotly_stuff.layout);
-	console.log(plot_div.data)
 }
 
-function update_plot(){
-	let new_value = spring.potential_at(spring.endpoint.x, spring.endpoint.y)
-	let new_data = { z:[new_value], x:[spring.endpoint.x], y:[spring.endpoint.y]};
-	Plotly.restyle(plot_div, new_data, 0)
+function updatePlot(){
+	let new_data = { 
+		x:[spring.endpoint.x], 
+		y:[spring.endpoint.y],
+		z:[spring.potential_at(spring.endpoint.x, spring.endpoint.y)]
+	};
+	Plotly.restyle(plot_div, new_data, [0])
 }
 
 
@@ -119,20 +127,17 @@ function update_plot(){
 
 function moveSpring(e) {
 	if (dragging) {
-		drag_counter += 1
 		let mousePoint = getMouesPosition(e)
 		let p = spring.canvas_to_physics(mousePoint.x, mousePoint.y)
 		spring.endpoint = p
-		if( drag_counter % 3 == 0){
-			update_plot()
-		}
+		// update_plot()
 		redrawCanvas()
 	}
 }
 
 export function resetSpring(e){
 	spring = new spring_physics2d(canvasSize,boundaries,spring.endpoint, tension_slider.value/100, mass_slider.value/10, friction_slider.value/100)
-	console.log(spring)
+	plot()
 	redrawCanvas()
 }
 
@@ -158,6 +163,7 @@ function disengage(e) {
 	dragging = false;
 	addVector(e)
 	document.body.style.cursor = "default";
+	updatePlot()
 	animate()
 };
 

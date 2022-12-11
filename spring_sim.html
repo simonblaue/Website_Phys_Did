@@ -14,9 +14,10 @@
    <body>  
 		<script src="./scripts/spring_sim/main.js" type="module"></script>
 		<script type="module">
-			import { toggleAnimation, resetSpring } from "./scripts/spring_sim/main.js"
+			import { toggleAnimation, resetSpring, toggleSpring } from "./scripts/spring_sim/main.js"
 			window.toggleAnimation = toggleAnimation;
 			window.reset_spring = resetSpring;
+			window.toggleSpring = toggleSpring;
 		 </script>
 		<div class="container pt-4 content">
 			<!-- Header Row -->
@@ -40,7 +41,7 @@
 			<div class="row col-6">
 				<div class="mb-3">
 					<label for="tension_slider" class="form-label">Tension strength:</label>
-					<input type="range" class="form-range" max="100" min="0" id="tension_slider" value="20" ondrag="window.reset_spring()">
+					<input type="range" class="form-range" max="50" min="15" id="tension_slider" value="30" ondrag="window.reset_spring()">
 				</div>
 				<div class="mb-3">
 					<label for="friction_slider" class="form-label">Friction strength:</label>
@@ -53,8 +54,11 @@
 			</div>
 
 			<hr>
-			<div class="row col-3">
-				<button class="btn btn-primary" type="button" onclick="window.toggleAnimation()" >Stop Physics</button>
+			<div class="row col-6">
+				<div class="col-12">
+					<button class="btn btn-primary" type="button" onclick="window.toggleSpring()" >Hide Spring</button>
+					<button class="btn btn-primary" type="button" onclick="window.toggleAnimation()" >Stop Physics</button>
+				</div>
 			</div>
 		</div>
 		

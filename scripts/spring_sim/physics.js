@@ -15,8 +15,9 @@ export class spring_physics2d{
 	field_data = [] // Vector field of strength of spring if pulled up to this point
 
 	
-	constructor(canvasSize,boundaries,endpoint, k=0.2, m=5, friction=0.5, dr=0.1){
+	constructor(canvasSize,boundaries,endpoint, k=0.2, m=5, friction=0.5, dr=0.1, vis=true){
 		// Init vatrs
+		this.vis = vis
 		this.tension = k
 		this.mass = m
 		this.friction = friction
@@ -129,7 +130,8 @@ export class spring_physics2d{
 			t: 90,
 			},
 			xaxis: {range: [-10, 10]},
-  			yaxis: {range: [-10, 10]}
+			yaxis: {range: [-10, 10]},
+			zaxis: {range: [0, 10]},
 		};
 
 		let data = [data_p, data_z]
@@ -150,36 +152,39 @@ export class spring_physics2d{
 
 
 	draw(ctx){
-	let canvas_endpoint = this.physics_to_canvas(this.endpoint.x, this.endpoint.y)
-	let sl = Math.sqrt(canvas_endpoint.x**2+ canvas_endpoint.y**2)/(2*this.n)
-	let theta = Math.acos(canvas_endpoint.y/Math.sqrt(canvas_endpoint.x**2+ canvas_endpoint.y**2))
-	if (canvas_endpoint.x<0){ theta *= -1 }
-	ctx.save()
-	ctx.rotate(theta)
+	if (this.vis) {
+		let canvas_endpoint = this.physics_to_canvas(this.endpoint.x, this.endpoint.y)
+		let sl = Math.sqrt(canvas_endpoint.x**2+ canvas_endpoint.y**2)/(2*this.n)
+		let theta = Math.acos(canvas_endpoint.y/Math.sqrt(canvas_endpoint.x**2+ canvas_endpoint.y**2))
+		if (canvas_endpoint.x<0){ theta *= -1 }
+		ctx.save()
+		ctx.rotate(theta)
 
-	ctx.beginPath()
-	ctx.arc(0, 0, 2, 0, 2 * Math.PI)
-	ctx.moveTo(0, 0)
+		ctx.beginPath()
+		ctx.arc(0, 0, 2, 0, 2 * Math.PI)
+		ctx.moveTo(0, 0)
 
 
-	for (let i = 0; i <= this.n; i++) {
-		ctx.lineTo(10,-sl*(2*i))
-		ctx.moveTo(10,-1*sl*2*i)
-		
-		ctx.lineTo(-10,-sl*(2*i+1))
-		ctx.moveTo(-10,-sl*(2*i+1))
+		for (let i = 0; i <= this.n; i++) {
+			ctx.lineTo(10,-sl*(2*i))
+			ctx.moveTo(10,-1*sl*2*i)
+			
+			ctx.lineTo(-10,-sl*(2*i+1))
+			ctx.moveTo(-10,-sl*(2*i+1))
+		}
+
+		ctx.stroke()
+		ctx.closePath()
+		ctx.restore()
+
+		ctx.beginPath()
+		ctx.lineTo(canvas_endpoint.x, -canvas_endpoint.y)
+		ctx.arc(canvas_endpoint.x, -canvas_endpoint.y,2,0,2*Math.PI)
+		ctx.stroke()
+		ctx.closePath()
 	}
-
-	ctx.stroke()
-	ctx.closePath()
-	ctx.restore()
-
-	ctx.beginPath()
-	ctx.lineTo(canvas_endpoint.x, -canvas_endpoint.y)
-	ctx.arc(canvas_endpoint.x, -canvas_endpoint.y,2,0,2*Math.PI)
-	ctx.stroke()
-	ctx.closePath()
 	}
+	
 };
 
 
