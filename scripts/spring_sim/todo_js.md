@@ -1,4 +1,4 @@
-# Here som Todos fro javascript and the sprin sim
+# Here som Todos for javascript and the spring sim
 
 ## Better pixels on retina
 
