@@ -38,21 +38,21 @@ const paddlewheel_checkbox = document.querySelector('#paddlewheel')
 
 /// Setting the Tooltip strings -> End them with a whitespace for gluing them together
 
-const theorem_text = "Wähle zwischen den Theoremen, um zwischen Divergenz und Rotation zu wechseln. "
+const theorem_text = "Wähle zwischen den Theoremen, um zwischen Divergenz und Rotation zu wechseln."
 
-const field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /). Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden. Die Änderung muss mit Enter oder Neu berechnen bestätigt werden. '
+const field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /). Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden. Die Änderung muss mit Enter oder <i>Neu berechnen</i> bestätigt werden. '
 
-const vector_amount_text = 'Veränderung der Anzahl an Vektoren. Eine Änderung muss mit Enter oder Neu berechnen bestätigt werden. Mit den Pfeiltasten kann die Anzahl in Einer-Schritten erfolgen. '
+const vector_amount_text = 'Veränderung der Anzahl an Vektoren. Eine Änderung muss mit Enter oder <i>Neu berechnen</i> bestätigt werden. Mit den Pfeiltasten kann die Anzahl in Einer-Schritten erfolgen. '
 
 const coordinate_checkbox_text = 'Durch Aktivierung werden die Koordinatenachsen in den kartesischen Koordinaten x und y  eingeblendet. '
 
-const rectangle_text_gauss = 'Mit dem Mauszeiger kann ein Rechteck in das Vektorfeld gezogen werden (Feld abtasten muss deaktiviert sein). Dieses kann mit der Maus im Feld bewegt und seine Ränder können beliebig verschoben werden. Der Fluss durch/entlang des Randes der aufgezogenen Rechteckfläche wird angezeigt. Die Divergenz wird am Mittelpunkt des Rechtecks berechnet. '
+const rectangle_text_gauss = 'Mit dem Mauszeiger kann ein Rechteck in das Vektorfeld gezogen werden (<i>Feld abtasten</i> muss deaktiviert sein). Dieses kann mit der Maus im Feld bewegt und seine Ränder können beliebig verschoben werden. Der Fluss durch/entlang des Randes der aufgezogenen Rechteckfläche wird angezeigt. Die Divergenz wird am Mittelpunkt des Rechtecks berechnet. '
 
-const rectangle_text_stokes = 'Mit dem Mauszeiger kann ein Rechteck in das Vektorfeld gezogen werden (Feld abtasten muss deaktiviert sein). Dieses kann mit der Maus im Feld bewegt und seine Ränder können beliebig verschoben werden. Die Zirkulation durch/entlang des Randes der aufgezogenen Rechteckfläche wird angezeigt. Die Rotation wird am Mittelpunkt des Rechtecks berechnet. '
+const rectangle_text_stokes = 'Mit dem Mauszeiger kann ein Rechteck in das Vektorfeld gezogen werden (<i>Feld abtasten</i> muss deaktiviert sein). Dieses kann mit der Maus im Feld bewegt und seine Ränder können beliebig verschoben werden. Die Zirkulation durch/entlang des Randes der aufgezogenen Rechteckfläche wird angezeigt. Die Rotation wird am Mittelpunkt des Rechtecks berechnet. '
 
-const fieldscanner_text_gauss = 'Durch das Feld abtasten können durch Drücken der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Divergenz angezeigt. '
+const fieldscanner_text_gauss = 'Bei Aktivierung von <i>Feld abtasten</i> können durch Festhalten der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Divergenz angezeigt. '
 
-const fieldscanner_text_stokes = 'Durch das Feld abtasten können durch Drücken der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Rotation angezeigt. '
+const fieldscanner_text_stokes = 'Bei Aktivierung von <i>Feld abtasten</i> können durch Festhalten der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Rotation angezeigt. '
 
 const partial_x_text_gauss = 'Durch Aktivierung der x-Komponente kann diese innerhalb eines Rechtecks oder an den eingezeichneten Vektoren eingeblendet werden. '
 const partial_y_text_gauss = 'Durch Aktivierung der y-Komponente kann diese innerhalb eines Rechtecks oder an den eingezeichneten Vektoren eingeblendet werden. '
@@ -126,7 +126,7 @@ export function switch_tooltips(old_theorem){
 
 	all_with_title.forEach(elem => {
 		elem.setAttribute('data-bs-toggle','tooltip')
-		elem.setAttribute('data-bs-delay','{"show":200,"hide":150}')
+		elem.setAttribute('data-bs-delay','{"show":200,"hide":50}')
 	});
 
 }

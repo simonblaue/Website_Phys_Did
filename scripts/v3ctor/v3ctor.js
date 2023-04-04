@@ -19,12 +19,20 @@ document.body.onmouseup = function () {
 switch_tooltips('stokes')
 
 // Popover init from bootstrap for infobox
-const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+var popoverList = popoverTriggerList.map( function(popoverTriggerEl) {
+  return  new bootstrap.Popover(popoverTriggerEl, {
+  trigger : 'hover'
+  });
+});
 
 // Tooltips init
-var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map( function(tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl, {
+        trigger : 'hover'
+    })
+})
 
 // HTML OBJECTS //
 
@@ -61,6 +69,7 @@ const projections_checkbox = document.querySelector('#projection');
 const div_rot_label = document.querySelector('#div-rot-value');
 const integral_label = document.querySelector('#integral-value');
 //Changing between Gauss and Stokes
+const drop_down_menu = document.querySelector('#dropdown-menu')
 const div_rot_header = document.querySelector('#div_rot_header');
 const flux_header = document.querySelector('#flux_header');
 const projection_label = document.querySelector('#projection_label');
@@ -127,8 +136,15 @@ export function clickedGauss(event) {
     }    
     redraw_canvas()
     // Tooltips init
-    tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipList = tooltipTriggerList.map( function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl, {
+            trigger : 'hover'
+        })
+    })
+
+    console.log(drop_down_menu)
+
 }
 
 export function clickedStokes(event) {
@@ -147,8 +163,13 @@ export function clickedStokes(event) {
         rect.draw_line_vectores()
     }    
     redraw_canvas()
-    tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    // Tooltips init
+    tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipList = tooltipTriggerList.map( function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl, {
+            trigger : 'hover'
+        })
+    })
 }
 
 // Pressing enter on field entries or Neu berechnen

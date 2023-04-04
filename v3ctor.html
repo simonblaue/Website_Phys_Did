@@ -44,7 +44,7 @@
             <div class="row align-items-center">
                 <!-- Dropdown für Integral -->
                 <div class="col-4 ">
-                  <div class="dropdown text-center mb-3" data-bs-toggle="tooltip" id="dropdown-menu">
+                  <div class="dropdown text-center mb-3" data-bs-toggle="tooltip" id="dropdown-menu" data-bs-html="true">
                       <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
                         Integralsatz
                       </button>
@@ -60,17 +60,17 @@
 
                 <!-- Vektorfeld eingabe -->
                 <div class="col-6 mt-2"> 
-                  <h3 class="align-self-center" id="vectorfield_define_label">Definiere das Vektorfeld: </h3> 
+                  <h3 class="align-self-center" data-bs-html="true" id="vectorfield_define_label">Definiere das Vektorfeld: </h3> 
                 </div>
                 <div class="col-6 mt-3"> 
                     <form>
                         <div class="mb-3">
-                          <label for="x-component" class="form-label">x-Komponente:</label>
-                          <input type="text" class="form-control" id="x-component" value="x" onkeypress="clickPressField(event)" >
+                          <label for="x-component" data-bs-html="true" class="form-label">x-Komponente:</label>
+                          <input type="text" class="form-control" data-bs-html="true" id="x-component" value="x" onkeypress="clickPressField(event)" >
                         </div>
                         <div class="mb-3">
-                          <label for="y-component" class="form-label">y-Komponente:</label>
-                          <input type="text" class="form-control" id="y-component" value="y" onkeypress="clickPressField(event)">
+                          <label for="y-component" data-bs-html="true" class="form-label">y-Komponente:</label>
+                          <input type="text" class="form-control" data-bs-html="true" id="y-component" value="y" onkeypress="clickPressField(event)">
                         </div>
                         <button class="btn btn-primary" type="button" onclick="clickPressField(event)" >Neu berechnen</button>
                         <button class="btn btn-primary" type="button" onclick="window.location.reload()" >Zurücksetzen</button>
@@ -82,8 +82,8 @@
             <div class="row">
                 <form>
                     <div class="mb-3">
-                      <label for="x-component" class="form-label">Anzahl der Vektoren:</label>
-                      <input type="number" class="form-control" max="25" min="5" id="vector-amount" value="11" onkeypress="clickPressField(event)">
+                      <label for="x-component" data-bs-html="true" class="form-label">Anzahl der Vektoren:</label>
+                      <input type="number" data-bs-html="true" class="form-control" max="25" min="5" id="vector-amount" value="11" onkeypress="clickPressField(event)">
                     </div>
                     <div class="form-check mb-3">
                         <input type="checkbox" class="form-check-input" id="coordinatesystem">
@@ -96,33 +96,33 @@
             <div class="row">
                 <!-- Divergenz Optionen -->
                 <div class="col-6">
-                    <h3 id="div_rot_header">Divergenz</h3>
+                    <h3 id="div_rot_header" data-bs-html="true" >Divergenz</h3>
                     <form>
                       <div class="form-check mb-3">
-                        <input type="checkbox" class="form-check-input" id="fieldscanner">
-                        <label for="fieldscanner" class="form-check-label">Feld abtasten</label>
+                        <input type="checkbox" data-bs-html="true" class="form-check-input" id="fieldscanner">
+                        <label for="fieldscanner" data-bs-html="true" class="form-check-label">Feld abtasten</label>
                       </div>
                       <div class="form-check mb-3">
-                        <input type="checkbox" class="form-check-input" id="xcomponentview">
-                        <label for="xcomponentview" class="form-check-label">x Komponente anzeigen</label>
+                        <input type="checkbox" data-bs-html="true" class="form-check-input" id="xcomponentview">
+                        <label for="xcomponentview" data-bs-html="true" class="form-check-label">x Komponente anzeigen</label>
                      </div>
                       <div class="form-check mb-3">
-                          <input type="checkbox" class="form-check-input" id="ycomponentview">
-                          <label for="ycomponentview" class="form-check-label">y Komponente anzeigen</label>
+                          <input type="checkbox" data-bs-html="true" class="form-check-input" id="ycomponentview">
+                          <label for="ycomponentview" data-bs-html="true" class="form-check-label">y Komponente anzeigen</label>
                       </div>
                     </form>
                 </div>
                 <!-- Integral Optionen -->
                 <div class="col-6">
-                    <h3 id="flux_header"> Fluss durch Fläche</h3>
+                    <h3 id="flux_header" data-bs-html="true"> Fluss durch Fläche</h3>
                     <form>
                       <div class="form-check mb-3">
-                        <input type="checkbox" class="form-check-input" id="projection">
-                        <label for="projection" class="form-check-label" id="projection_label">Projektion auf die Kurvennormale der Fläche einblenden</label>
+                        <input type="checkbox" data-bs-html="true" class="form-check-input" id="projection">
+                        <label for="projection" data-bs-html="true" class="form-check-label" id="projection_label">Projektion auf die Kurvennormale der Fläche einblenden</label>
                       </div>
                       <div class="form-check mb-3" id="paddlewheel_div">
-                        <input type="checkbox" class="form-check-input" id="paddlewheel">
-                        <label for="paddlewheel" class="form-check-label" id="paddlewheel_label">Paddlewheel einfügen</label>
+                        <input type="checkbox" data-bs-html="true" class="form-check-input" id="paddlewheel">
+                        <label for="paddlewheel" data-bs-html="true" class="form-check-label" id="paddlewheel_label">Paddlewheel einfügen</label>
                       </div>
                     </form>
                   </div>
