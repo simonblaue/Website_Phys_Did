@@ -77,7 +77,7 @@ export class Rectangle {
         max_riemann_error += Math.abs((this.field.value_at(y1,x1).scalar(n_right) - this.field.value_at(y0,x1).scalar(n_right)) * (y1-y0)/precison)
        value *= this.field.norm_factor
 
-       value = value/precison*perimeter
+       value = value/(4*precison)*perimeter
     // console.log(max_riemann_error)
        return {value: value, error:max_riemann_error}
    }
