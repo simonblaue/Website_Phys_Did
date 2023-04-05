@@ -1,7 +1,7 @@
 /// Get Elements from DOM
 
 //Theorems
-const theorem_button = document.querySelector('#dropdown-menu')
+const theorem_button = document.querySelector('#dropdown-menu-tooltip')
 const latex_image = document.querySelector('#latex_img')
 
 //Field defeinition

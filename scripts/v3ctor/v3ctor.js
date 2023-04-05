@@ -142,9 +142,6 @@ export function clickedGauss(event) {
             trigger : 'hover'
         })
     })
-
-    console.log(drop_down_menu)
-
 }
 
 export function clickedStokes(event) {
