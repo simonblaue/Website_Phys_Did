@@ -568,11 +568,13 @@ function redraw_canvas_debug(){
 if (debug){
     canvas.setAttribute("style","background-color: green;")
     debug_btn.setAttribute("style","display:show;")
+    console.log(canvas)
 
     debug_btn.addEventListener('click', (event) =>{
     redraw_canvas_debug()
 
     console.log("Redrawed Manually", F1)
+
 })
 
 }

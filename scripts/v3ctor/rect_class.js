@@ -71,10 +71,10 @@ export class Rectangle {
         }
 
         /// Error Calculations
-        // max_riemann_error += Math.abs((this.field.value_at(x1,y0).scalar(n_top) - this.field.value_at(x0,y0).scalar(n_top)) * (x1-x0)/precison)
-        // max_riemann_error += Math.abs((this.field.value_at(x1,y1).scalar(n_bottom) - this.field.value_at(x0,y1).scalar(n_bottom)) * (x1-x0)/precison)
-        // max_riemann_error += Math.abs((this.field.value_at(y1,x0).scalar(n_left) - this.field.value_at(y0,x0).scalar(n_left)) * (y1-y0)/precison)
-        // max_riemann_error += Math.abs((this.field.value_at(y1,x1).scalar(n_right) - this.field.value_at(y0,x1).scalar(n_right)) * (y1-y0)/precison)
+        max_riemann_error += Math.abs((this.field.value_at(x1,y0).scalar(n_top) - this.field.value_at(x0,y0).scalar(n_top)) * (x1-x0)/precison)
+        max_riemann_error += Math.abs((this.field.value_at(x1,y1).scalar(n_bottom) - this.field.value_at(x0,y1).scalar(n_bottom)) * (x1-x0)/precison)
+        max_riemann_error += Math.abs((this.field.value_at(y1,x0).scalar(n_left) - this.field.value_at(y0,x0).scalar(n_left)) * (y1-y0)/precison)
+        max_riemann_error += Math.abs((this.field.value_at(y1,x1).scalar(n_right) - this.field.value_at(y0,x1).scalar(n_right)) * (y1-y0)/precison)
        value *= this.field.norm_factor
 
        value = value/precison*perimeter

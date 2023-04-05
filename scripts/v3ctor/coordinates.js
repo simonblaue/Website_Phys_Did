@@ -12,6 +12,7 @@ export class Coordinateline_Euklidian {
            // X-Axis:
            for (let i = 0; i < canvas.width; i += canvas.width / 10) {
                let p = this.field.transform({ x: i, y: i });
+               console.log(i, p.x)
                canvas_context.fillStyle = 'white';
                canvas_context.textAlign = 'center';
                canvas_context.fillText((p.x).toFixed(1), i, this.canvas_middle.y + 10);

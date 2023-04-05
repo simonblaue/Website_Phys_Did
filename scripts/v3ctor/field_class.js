@@ -192,8 +192,9 @@ export class Field {
 
 
     transform(point) {
-        let x = (point.x - this.canvas_middle.x)/// this.canvas_middle.x;
-        let y = (this.canvas_middle.y - point.y) /// this.canvas_middle.y;
+        let x = (point.x - this.canvas_middle.x) / (this.canvas.width/2) * 10 /// this.canvas_middle.x;
+        let y = (this.canvas_middle.y - point.y)/ (this.canvas.height/2) * 10 /// this.canvas_middle.y;
+
         return {x: x, y: y};
     }
 }
