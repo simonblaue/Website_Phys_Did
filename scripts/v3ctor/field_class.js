@@ -18,11 +18,12 @@ export class Field {
    p_wheel_partial_y = [];
 
 
-   constructor(x, y,canvas, amount_of_vectors) {
+   constructor(x, y,canvas, amount_of_vectors, coordinate_system) {
     this.x = x;
     this.y = y;
     this.canvas = canvas
     this.max_possible_len = canvas.width / amount_of_vectors;
+    this.coordinate_system = coordinate_system;
     if (canvas.height/ amount_of_vectors < this.max_possible_len) {
         this.max_possible_len = canvas.height/ amount_of_vectors
     }
@@ -33,9 +34,20 @@ export class Field {
 
    /// Math operations //
    value_at(x, y) {
-   let Fx = math.evaluate(this.x, { 'x': x, 'y': y });
-   let Fy = math.evaluate(this.y, { 'x': x, 'y': y });
-       return new Vector2d(Fx, Fy);
+    let Fx = 0
+    let Fy = 0
+    if (this.coordinate_system == "cartesian") {
+        Fx = math.evaluate(this.x, { 'x': x, 'y': y, "xy": x*y, "yx":x*y });
+        Fy = math.evaluate(this.y, { 'x': x, 'y': y, "xy": x*y, "yx":x*y  });
+    } else if (this.coordinate_system == "polar") {
+        let Fr = math.evaluate(this.x, { 'r': Math.hypot(x,y), 'φ': Math.atan2(y,x) });
+        let Fphi = math.evaluate(this.y, { 'r': Math.hypot(x,y), 'φ': Math.atan2(y,x) });
+        Fx = Fr*Math.cos(Fphi)
+        Fy = Fr*Math.sin(Fphi)
+    }
+    
+    return new Vector2d(Fx, Fy);
+
    }
    divergence_at(p) {
        var expr_x = math.parse(this.x);

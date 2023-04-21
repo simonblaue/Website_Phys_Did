@@ -93,7 +93,7 @@ var res // Result varibale for flux
 
 
 // Init of rectangle and coordinate lines
-let F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors);
+let F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors, coordinate_system);
 F1.draw(c);
 let coordinates = new Coordinateline_Euklidian(canvas, F1);
 let rect = new Rectangle(F1);
@@ -117,8 +117,8 @@ export function clickedCartesian(event) {
     y_component_label.innerHTML = "y-Komponente"
     btn_cartesian.setAttribute('class', 'dropdown-item active')
     btn_polar.setAttribute('class', 'dropdown-item')
+    F1.coordinate_system = coordinate_system
     clickPressField(event)
-    console.log(coordinate_system)
 }
 
 export function clickedPolar(event) {
@@ -127,9 +127,8 @@ export function clickedPolar(event) {
     y_component_label.innerHTML = "φ-Komponente"
     btn_cartesian.setAttribute('class', 'dropdown-item')
     btn_polar.setAttribute('class', 'dropdown-item active')
-    
+    F1.coordinate_system = coordinate_system
     clickPressField(event)
-    console.log(coordinate_system)
 }
 
 export function clickedGauss(event) {
@@ -205,7 +204,7 @@ export function clickPressField(event) {
         c.fillRect(0, 0, canvas.width, canvas.height);
         amount_of_vectors = vector_amount_entry.value;
         var old_fieldscann_vecs = F1.fieldscanner_vectors
-        F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors);
+        F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors, coordinate_system);
         F1.fieldscanner_vectors = recalc_fieldscanner_vecs(old_fieldscann_vecs)
         rect.field = F1
         coordinates.field = F1
