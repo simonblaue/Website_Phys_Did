@@ -49,6 +49,8 @@ canvas.height = canvas.clientHeight;
 
 
 //Field defeinition
+const x_component_label = document.querySelector('#x_comp_label')
+const y_component_label = document.querySelector('#y_comp_label')
 const x_component_entry = document.querySelector('#x-component');
 const y_component_entry = document.querySelector('#y-component');
 
@@ -58,6 +60,8 @@ const vector_amount_entry = document.querySelector('#vector-amount');
 const coordinate_checkbox = document.querySelector('#coordinatesystem');
 const btn_gauss = document.querySelector('#Btn-Gauss');
 const btn_stokes = document.querySelector('#Btn-Stokes');
+const btn_cartesian = document.querySelector('#Btn-Cartesian')
+const btn_polar = document.querySelector('#Btn-Polar')
 //Fieldscanner
 const fieldscanner_checkbox = document.querySelector('#fieldscanner');
 //Partial x and y
@@ -84,6 +88,7 @@ var amount_of_vectors = vector_amount_entry.value;
 let move = 0; // For mouse movement over canvas
 let first_clicked_p = {x:0,y:0}
 let theorem = 'gauss';
+let coordinate_system = "cartesian";
 var res // Result varibale for flux
 
 
@@ -103,6 +108,29 @@ let p_wheel = new Paddlewheel(F1)
 ///////////////////////////////////// INIT ENDs HERE /////////////////////////////////////
 
 // Event Handeling  for Buttons//
+
+
+
+export function clickedCartesian(event) {
+    coordinate_system = "cartesian"
+    x_component_label.innerHTML = "x-Komponente"
+    y_component_label.innerHTML = "y-Komponente"
+    btn_cartesian.setAttribute('class', 'dropdown-item active')
+    btn_polar.setAttribute('class', 'dropdown-item')
+    clickPressField(event)
+    console.log(coordinate_system)
+}
+
+export function clickedPolar(event) {
+    coordinate_system = "polar"
+    x_component_label.innerHTML = "r-Komponente"
+    y_component_label.innerHTML = "φ-Komponente"
+    btn_cartesian.setAttribute('class', 'dropdown-item')
+    btn_polar.setAttribute('class', 'dropdown-item active')
+    
+    clickPressField(event)
+    console.log(coordinate_system)
+}
 
 export function clickedGauss(event) {
     // Looks
