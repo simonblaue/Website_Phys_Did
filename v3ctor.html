@@ -46,19 +46,6 @@
             <div class="row align-items-center">
 
               <div class="col-4 ">
-
-              <!-- Dropdown für Koordinaten -->
-              <div class="dropdown text-center mb-3" id="dropdown-menu">
-                <div id="dropdown-menu-tooltip"></div>
-                  <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
-                    Koordinatensystem
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><button class="dropdown-item active" id="Btn-Cartesian" onclick="clickedCartesian(event)" >Kartesische Koordinaten</button></li>
-                    <li><button class="dropdown-item" id="Btn-Polar" onclick="clickedPolar(event)">Polar Koordinaten</button></li>
-                  </ul>
-              </div>
-
                 <!-- Dropdown für Integral -->
                   <div class="dropdown text-center mb-3" id="dropdown-menu">
                     <div id="dropdown-menu-tooltip"></div>
@@ -71,6 +58,17 @@
                       </ul>
                   </div>
 
+                              <!-- Dropdown für Koordinaten -->
+                <div class="dropdown text-center mb-3" id="dropdown-menu">
+                  <div id="dropdown-menu-tooltip"></div>
+                    <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
+                      Koordinatensystem
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><button class="dropdown-item active" id="Btn-Cartesian" onclick="clickedCartesian(event)" >Kartesische Koordinaten</button></li>
+                      <li><button class="dropdown-item" id="Btn-Polar" onclick="clickedPolar(event)">Polar Koordinaten</button></li>
+                    </ul>
+                </div>
 
                 </div>
                 <img src="./res/Latex_Gauss.png" class="col-6 p-4" id="latex_img" data-bs-toggle="tooltip">

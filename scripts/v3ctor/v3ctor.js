@@ -115,6 +115,8 @@ export function clickedCartesian(event) {
     coordinate_system = "cartesian"
     x_component_label.innerHTML = "x-Komponente"
     y_component_label.innerHTML = "y-Komponente"
+    x_component_entry.value = "x"
+    y_component_entry.value = "y"
     btn_cartesian.setAttribute('class', 'dropdown-item active')
     btn_polar.setAttribute('class', 'dropdown-item')
     F1.coordinate_system = coordinate_system
@@ -124,7 +126,9 @@ export function clickedCartesian(event) {
 export function clickedPolar(event) {
     coordinate_system = "polar"
     x_component_label.innerHTML = "r-Komponente"
-    y_component_label.innerHTML = "φ-Komponente"
+    y_component_label.innerHTML = "Winkel-Komponente-a"
+    x_component_entry.value = "r"
+    y_component_entry.value = "a"
     btn_cartesian.setAttribute('class', 'dropdown-item')
     btn_polar.setAttribute('class', 'dropdown-item active')
     F1.coordinate_system = coordinate_system
