@@ -84,60 +84,79 @@ export class Field {
            for (let j = 0; j < canvas.height; j += this.max_possible_len) {
             var z = this.transform({ x: i, y: j });
             var v = this.value_at(z.x, z.y);
-            // v.x *= this.norm_factor;
-            // v.y *= this.norm_factor;
+            // v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x);
+            // v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y);
             this.vectors.push({ p: { x: i, y: j }, v: v });
         }
     }
    }
-   
+
+   rescale_comp(comp, smallest, longest, possible_size, minimal_size) {
+    let sgn = Math.sign(comp)
+    console.log(comp, sgn)
+    let value = Math.abs(comp)
+    value = (value - smallest) / (longest - smallest) * (possible_size - minimal_size) + minimal_size
+    return sgn * value 
+    }
+
    normalize_to(possible_size){
-    var longest = 0
+    const minimal_size_x = 2
+    const minimal_size_y = 2
+    const possible_size_x = possible_size
+    const possible_size_y = possible_size
+
+    var longest_x = 0
+    var longest_y = 0
+    var smallest_x = possible_size
+    var smallest_y = possible_size
+
     this.vectors.forEach((p_and_v)=>{
         var v = p_and_v.v
-        if (v.len > longest){ longest = v.len }
+        if (Math.abs(v.x) > Math.abs(longest_x)){ longest_x = v.x }
+        if (Math.abs(v.y) > Math.abs(longest_y)){ longest_y = v.y }
+        if (Math.abs(v.x) < Math.abs(smallest_x)) {smallest_x = v.x}
+        if (Math.abs(v.y) < Math.abs(smallest_y)) {smallest_y = v.y}
     })
-    this.norm_factor = possible_size/(longest+1)
     this.vectors.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.fieldscanner_vectors.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.rec_vectors.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.partial_x_vecs.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.partial_y_vecs.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.p_wheel_partial_x.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.p_wheel_partial_y.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
    }
