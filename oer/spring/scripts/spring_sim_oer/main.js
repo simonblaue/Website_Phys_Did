@@ -23,13 +23,11 @@ const frictionSlider = document.getElementById("friction_slider")
 // Global Spring
 const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
 
-var spring = new spring_physics2d(canvasSize,boundaries,{x:6,y:6}, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
+var spring = new spring_physics2d(canvasSize,boundaries,{x:5,y:5}, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
 
 // for stoping the animation
 var stop_animation = false
 
-// Div for Plotting
-const plot_div = document.getElementById('plotly-object');
 
 // Global Coordinates
 const euclid_coords = new Coordinateline_Euklidian2d(boundaries)
@@ -43,7 +41,9 @@ var vectors = []
  
 
 redrawCanvas()
-plot()
+requestAnimationFrame(animate)
+
+
 // ------- INIT END HERE ------- //
 
 function addVector(e){
@@ -56,6 +56,7 @@ function addVector(e){
 }
 
 
+
 // ------- Spring looks -------
 
 export function toggleSpring(){
@@ -64,6 +65,17 @@ export function toggleSpring(){
 }
 
 // ------- Canvas looks -------
+
+export function clearCanvas(){
+	c.save()
+	c.resetTransform()
+	c.clearRect(0,0,canvas.width, canvas.height)
+	vectors = []
+	console.log("Cleand")
+	c.restore()
+	spring.draw(c)
+	euclid_coords.draw(canvas, c)
+}
 
 function clear_canvas(){
 	c.save()
@@ -90,35 +102,19 @@ export function toggleAnimation(){
 	animate()
 }
 
+let previousTimeStamp
+function animate(timeStamp){
+	if (!dragging){
 
-function animate(){
-	let animationID
-	if (stop_animation){
-		animationID = 0
+		if (previousTimeStamp !== timeStamp) {
+			spring.update(c)
+			redrawCanvas()
 	}
-	else{
-		if (!dragging)
-		animationID = requestAnimationFrame(animate)
-		spring.update(c)
-		redrawCanvas()
+
+		previousTimeStamp = timeStamp
+		if (!stop_animation)
+			requestAnimationFrame(animate)
 	}
-}
-
-
-// ------- Plot  -------
-
-function plot(){
-	let plotly_stuff = spring.plot_potential(canvas.width, canvas.height)
-	Plotly.newPlot(plot_div, plotly_stuff.data, plotly_stuff.layout);
-}
-
-function updatePlot(){
-	let new_data = { 
-		x:[spring.endpoint.x], 
-		y:[spring.endpoint.y],
-		z:[spring.potential_at(spring.endpoint.x, spring.endpoint.y)]
-	};
-	Plotly.restyle(plot_div, new_data, [0])
 }
 
 
@@ -130,15 +126,14 @@ function moveSpring(e) {
 		let mousePoint = getMouesPosition(e)
 		let p = spring.canvas_to_physics(mousePoint.x, mousePoint.y)
 		spring.endpoint = p
-		// update_plot()
 		redrawCanvas()
 	}
 }
 
 export function resetSpring(e){
 	spring = new spring_physics2d(canvasSize,boundaries,spring.endpoint, tension_slider.value/100, mass_slider.value/10, friction_slider.value/100)
-	plot()
 	redrawCanvas()
+	animate()
 }
 
 // ------- Canvas Event Handeling -------
@@ -157,13 +152,13 @@ function engage(e) {
 		dragging = true;
 		moveSpring(e)
 	}
+	animate()
 };
 
 function disengage(e) {
 	dragging = false;
 	addVector(e)
 	document.body.style.cursor = "default";
-	updatePlot()
 	animate()
 };
 

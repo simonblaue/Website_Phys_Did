@@ -141,7 +141,7 @@ export class spring_physics2d{
 
 	update(){
 		let F = this.field_at(this.endpoint.x, this.endpoint.y)
-		this.a.x = F.x/this.mass
+		this.a.x = F.x/this.mass 
 		this.a.y = F.y/this.mass
 		this.v.x += this.a.x
 		this.v.y += this.a.y 
@@ -165,7 +165,7 @@ export class spring_physics2d{
 		ctx.moveTo(0, 0)
 
 
-		for (let i = 0; i <= this.n; i++) {
+		for (let i = 0; i < this.n; i++) {
 			ctx.lineTo(10,-sl*(2*i))
 			ctx.moveTo(10,-1*sl*2*i)
 			
@@ -173,15 +173,24 @@ export class spring_physics2d{
 			ctx.moveTo(-10,-sl*(2*i+1))
 		}
 
+		ctx.lineTo(5,-sl*(2*this.n))
+		ctx.moveTo(5,-1*sl*2*this.n)
+
 		ctx.stroke()
 		ctx.closePath()
 		ctx.restore()
 
+		ctx.save()
 		ctx.beginPath()
-		ctx.lineTo(canvas_endpoint.x, -canvas_endpoint.y)
-		ctx.arc(canvas_endpoint.x, -canvas_endpoint.y,2,0,2*Math.PI)
+		ctx.translate(canvas_endpoint.x, -canvas_endpoint.y)
+		ctx.rotate(theta)
+		let height = this.mass*4
+		let width = 20
+		ctx.rect(-width/2,-height, width, height)
+		// ctx.fillText(this.mass, -8, -10)
 		ctx.stroke()
 		ctx.closePath()
+		ctx.restore()
 	}
 	}
 	

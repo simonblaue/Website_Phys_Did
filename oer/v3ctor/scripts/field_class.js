@@ -18,11 +18,12 @@ export class Field {
    p_wheel_partial_y = [];
 
 
-   constructor(x, y,canvas, amount_of_vectors) {
+   constructor(x, y,canvas, amount_of_vectors, coordinate_system) {
     this.x = x;
     this.y = y;
     this.canvas = canvas
     this.max_possible_len = canvas.width / amount_of_vectors;
+    this.coordinate_system = coordinate_system;
     if (canvas.height/ amount_of_vectors < this.max_possible_len) {
         this.max_possible_len = canvas.height/ amount_of_vectors
     }
@@ -33,24 +34,47 @@ export class Field {
 
    /// Math operations //
    value_at(x, y) {
-   let Fx = math.evaluate(this.x, { 'x': x, 'y': y });
-   let Fy = math.evaluate(this.y, { 'x': x, 'y': y });
-       return new Vector2d(Fx, Fy);
+    let Fx = 0
+    let Fy = 0
+    if (this.coordinate_system == "cartesian") {
+        Fx = math.evaluate(this.x, { 'x': x, 'y': y, "xy": x*y, "yx":x*y });
+        Fy = math.evaluate(this.y, { 'x': x, 'y': y, "xy": x*y, "yx":x*y  });
+    } else if (this.coordinate_system == "polar") {
+        let Fr = math.evaluate(this.x, { 'r': Math.hypot(x,y), 'a': Math.atan2(y,x) });
+        let Fphi = math.evaluate(this.y, { 'r': Math.hypot(x,y), 'a': Math.atan2(y,x) });
+        Fx = Fr*Math.cos(Fphi)
+        Fy = Fr*Math.sin(Fphi)
+    }
+    
+    return new Vector2d(Fx, Fy);
+
    }
    divergence_at(p) {
        var expr_x = math.parse(this.x);
        var expr_y = math.parse(this.y);
-       var diff_Fx_x = math.derivative(expr_x, "x");
-       var diff_Fy_y = math.derivative(expr_y, "y");
-       var divergence = diff_Fx_x.evaluate({ 'x': p.x, 'y': p.y }) + diff_Fy_y.evaluate({ 'x': p.x, 'y': p.y });
+       if (this.coordinate_system == "cartesian") {
+        var diff_Fx_x = math.derivative(expr_x, "x");
+        var diff_Fy_y = math.derivative(expr_y, "y");
+        var divergence = diff_Fx_x.evaluate({ 'x': p.x, 'y': p.y }) + diff_Fy_y.evaluate({ 'x': p.x, 'y': p.y });
+       }else if (this.coordinate_system == "polar"){
+        var diff_Fx_x = math.derivative(expr_x, "r");
+        var diff_Fy_y = math.derivative(expr_y, "a");
+        var divergence = diff_Fx_x.evaluate({ 'r': Math.hypot(p.x,p.y), 'a': Math.atan2(p.y, p.x) }) + diff_Fy_y.evaluate({'r': Math.hypot(p.x,p.y), 'a': Math.atan2(p.y, p.x)});
+       }
        return divergence;
    }
    curl_at(p) {
        var expr_x = math.parse(this.x);
        var expr_y = math.parse(this.y);
-       var diff_Fx_y = math.derivative(expr_x, "y");
-       var diff_Fy_x = math.derivative(expr_y, "x");
-       var curl = diff_Fy_x.evaluate({ 'x': p.x, 'y': p.y }) - diff_Fx_y.evaluate({ 'x': p.x, 'y': p.y });
+       if (this.coordinate_system == "cartesian") {
+        var diff_Fx_y = math.derivative(expr_x, "y");
+        var diff_Fy_x = math.derivative(expr_y, "x");
+        var curl = diff_Fy_x.evaluate({ 'x': p.x, 'y': p.y }) - diff_Fx_y.evaluate({ 'x': p.x, 'y': p.y });
+       }else if (this.coordinate_system == "polar") {
+        var diff_Fx_y = math.derivative(expr_x, "r");
+        var diff_Fy_x = math.derivative(expr_y, "a");
+        var curl = diff_Fy_x.evaluate({ 'r': Math.hypot(p.x,p.y), 'a': Math.atan2(p.y, p.x) }) - diff_Fx_y.evaluate({ 'r': Math.hypot(p.x,p.y), 'a': Math.atan2(p.y, p.x) });
+       }
        return curl;
    }
    
@@ -60,60 +84,79 @@ export class Field {
            for (let j = 0; j < canvas.height; j += this.max_possible_len) {
             var z = this.transform({ x: i, y: j });
             var v = this.value_at(z.x, z.y);
-            // v.x *= this.norm_factor;
-            // v.y *= this.norm_factor;
+            // v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x);
+            // v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y);
             this.vectors.push({ p: { x: i, y: j }, v: v });
         }
     }
    }
-   
+
+   rescale_comp(comp, smallest, longest, possible_size, minimal_size) {
+    let sgn = Math.sign(comp)
+    console.log(comp, sgn)
+    let value = Math.abs(comp)
+    value = (value - smallest) / (longest - smallest) * (possible_size - minimal_size) + minimal_size
+    return sgn * value 
+    }
+
    normalize_to(possible_size){
-    var longest = 0
+    const minimal_size_x = 2
+    const minimal_size_y = 2
+    const possible_size_x = possible_size
+    const possible_size_y = possible_size
+
+    var longest_x = 0
+    var longest_y = 0
+    var smallest_x = possible_size
+    var smallest_y = possible_size
+
     this.vectors.forEach((p_and_v)=>{
         var v = p_and_v.v
-        if (v.len > longest){ longest = v.len }
+        if (Math.abs(v.x) > Math.abs(longest_x)){ longest_x = v.x }
+        if (Math.abs(v.y) > Math.abs(longest_y)){ longest_y = v.y }
+        if (Math.abs(v.x) < Math.abs(smallest_x)) {smallest_x = v.x}
+        if (Math.abs(v.y) < Math.abs(smallest_y)) {smallest_y = v.y}
     })
-    this.norm_factor = possible_size/(longest+1)
     this.vectors.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.fieldscanner_vectors.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.rec_vectors.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.partial_x_vecs.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.partial_y_vecs.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.p_wheel_partial_x.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
     this.p_wheel_partial_y.forEach((p_and_v)=>{
         var v = p_and_v.v
-        v.x *= this.norm_factor
-        v.y *= this.norm_factor
+        v.x = this.rescale_comp(v.x, smallest_x, longest_x, possible_size_x, minimal_size_x)
+        v.y = this.rescale_comp(v.y, smallest_y, longest_y, possible_size_y, minimal_size_y)
         v.recalc_len()
     })
    }

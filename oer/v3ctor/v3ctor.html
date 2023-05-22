@@ -19,10 +19,12 @@
 
 <script src="./scripts/v3ctor/v3ctor.js" type="module" > </script> 
   <script type="module">
-    import { clickPressField, clickedGauss, clickedStokes } from "./scripts/v3ctor/v3ctor.js"
+    import { clickPressField, clickedGauss, clickedStokes, clickedPolar, clickedCartesian } from "./scripts/v3ctor/v3ctor.js"
     window.clickPressField = clickPressField
     window.clickedGauss = clickedGauss
     window.clickedStokes = clickedStokes
+    window.clickedCartesian = clickedCartesian
+    window.clickedPolar = clickedPolar
   </script>
 
 
@@ -42,8 +44,9 @@
     <div class="row">
         <div class="col-6">
             <div class="row align-items-center">
+
+              <div class="col-4 ">
                 <!-- Dropdown für Integral -->
-                <div class="col-4 ">
                   <div class="dropdown text-center mb-3" id="dropdown-menu">
                     <div id="dropdown-menu-tooltip"></div>
                       <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
@@ -54,6 +57,19 @@
                         <li><button class="dropdown-item" id="Btn-Stokes" onclick="clickedStokes(event)">Satz von Stokes</button></li>
                       </ul>
                   </div>
+
+                              <!-- Dropdown für Koordinaten -->
+                <div class="dropdown text-center mb-3" id="dropdown-menu">
+                  <div id="dropdown-menu-tooltip"></div>
+                    <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
+                      Koordinatensystem
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><button class="dropdown-item active" id="Btn-Cartesian" onclick="clickedCartesian(event)" >Kartesische Koordinaten</button></li>
+                      <li><button class="dropdown-item" id="Btn-Polar" onclick="clickedPolar(event)">Polar Koordinaten</button></li>
+                    </ul>
+                </div>
+
                 </div>
                 <img src="./res/Latex_Gauss.png" class="col-6 p-4" id="latex_img" data-bs-toggle="tooltip">
                 <hr>
@@ -66,11 +82,11 @@
                 <div class="col-6 mt-3"> 
                     <form>
                         <div class="mb-3">
-                          <label for="x-component" data-bs-html="true" class="form-label">x-Komponente:</label>
+                          <label for="x-component" data-bs-html="true" class="form-label" id="x_comp_label">x-Komponente:</label>
                           <input type="text" class="form-control" data-bs-html="true" id="x-component" value="x" onkeypress="clickPressField(event)" >
                         </div>
                         <div class="mb-3">
-                          <label for="y-component" data-bs-html="true" class="form-label">y-Komponente:</label>
+                          <label for="y-component" data-bs-html="true" class="form-label" id="y_comp_label">y-Komponente:</label>
                           <input type="text" class="form-control" data-bs-html="true" id="y-component" value="y" onkeypress="clickPressField(event)">
                         </div>
                         <button class="btn btn-primary" type="button" onclick="clickPressField(event)" >Neu berechnen</button>
