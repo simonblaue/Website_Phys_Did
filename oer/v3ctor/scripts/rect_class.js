@@ -100,6 +100,7 @@ export class Rectangle {
         var precison = 1000
 
         var perimeter = 2*(x1-x0)+2*(y0-y1)
+        var max_riemann_error = 0
 
         for (var i=x0; i<x1; i+= (x1-x0)/precison){
             value += this.field.value_at(i,y0).scalar(n_top)
@@ -110,9 +111,15 @@ export class Rectangle {
             value += this.field.value_at(x1,i).scalar(n_right)
         }
 
+        /// Error Calculations
+        max_riemann_error += Math.abs((this.field.value_at(x1,y0).scalar(n_top) - this.field.value_at(x0,y0).scalar(n_top)) * (x1-x0)/precison)
+        max_riemann_error += Math.abs((this.field.value_at(x1,y1).scalar(n_bottom) - this.field.value_at(x0,y1).scalar(n_bottom)) * (x1-x0)/precison)
+        max_riemann_error += Math.abs((this.field.value_at(y1,x0).scalar(n_left) - this.field.value_at(y0,x0).scalar(n_left)) * (y1-y0)/precison)
+        max_riemann_error += Math.abs((this.field.value_at(y1,x1).scalar(n_right) - this.field.value_at(y0,x1).scalar(n_right)) * (y1-y0)/precison)
+
         value = value/(4*precison)*perimeter
 
-        return {value: value, error:0}
+        return {value: value, error:max_riemann_error}
     }
 
 
