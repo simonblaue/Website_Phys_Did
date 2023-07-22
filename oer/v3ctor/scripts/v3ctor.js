@@ -2,7 +2,8 @@ import {Field} from './field_class.js'
 import { Rectangle } from './rect_class.js';
 import { Coordinateline_Euklidian } from './coordinates.js';
 import { Paddlewheel } from './paddlewheel.js';
-import { switch_tooltips } from './docs.js'
+import { switch_tooltips, switch_language } from './docs.js'
+
 import { Vector2d } from './vector_class.js';
 
 window.addEventListener('resize', resize);
@@ -34,6 +35,8 @@ var tooltipList = tooltipTriggerList.map( function(tooltipTriggerEl) {
     })
 })
 
+var lang = "de"
+
 // HTML OBJECTS //
 
 //Debugging
@@ -47,29 +50,48 @@ const c = canvas.getContext("2d",  { alpha: false });
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 
+//Language Button
+const btn_lang = document.querySelector('#lang-btn');
+// Labels
+const btn_reset = document.querySelector('#btn-reset')
+const btn_calc = document.querySelector('#btn-recalc')
+const subheader = document.querySelector('#subheader')
+
 
 //Field defeinition
+const field_define_label = document.querySelector('#vectorfield_define_label')
 const x_component_entry = document.querySelector('#x-component');
 const y_component_entry = document.querySelector('#y-component');
+const x_component_entry_label = document.querySelector('#x-component-label')
+const y_component_entry_label = document.querySelector('#y-component-label')
 
 //Vectoramount
 const vector_amount_entry = document.querySelector('#vector-amount');
+const vector_amount_entry_label = document.querySelector('#vector-amount-label');
 // Coordinate System
 const coordinate_checkbox = document.querySelector('#coordinatesystem');
+const coordinate_checkbox_label = document.querySelector('#coordinatesystem-label');
 const btn_gauss = document.querySelector('#Btn-Gauss');
 const btn_stokes = document.querySelector('#Btn-Stokes');
 //Fieldscanner
 const fieldscanner_checkbox = document.querySelector('#fieldscanner');
+const fieldscanner_checkbox_label = document.querySelector('#fieldscanner-label');
 //Partial x and y
 const partial_x_checkbox = document.querySelector('#xcomponentview');
+const partial_x_checkbox_label = document.querySelector('#xcomponentview-label');
 const partial_y_checkbox = document.querySelector('#ycomponentview');
+const partial_y_checkbox_label = document.querySelector('#ycomponentview-label');
 //Projections
 const projections_checkbox = document.querySelector('#projection');
 // Output Labels
 const div_rot_label = document.querySelector('#div-rot-value');
 const integral_label = document.querySelector('#integral-value');
+const div_rot_label_header = document.querySelector('#div-rot-value-header');
+const integral_label_header = document.querySelector('#integral-value-header');
+
 //Changing between Gauss and Stokes
 const drop_down_menu = document.querySelector('#dropdown-menu')
+const drop_down_menu_label = document.querySelector('#dropdownmenubutton1-label')
 const div_rot_header = document.querySelector('#div_rot_header');
 const flux_header = document.querySelector('#flux_header');
 const projection_label = document.querySelector('#projection_label');
@@ -103,6 +125,82 @@ let p_wheel = new Paddlewheel(F1)
 ///////////////////////////////////// INIT ENDs HERE /////////////////////////////////////
 
 // Event Handeling  for Buttons//
+
+export function clickedLanguage(event) {
+
+    if (lang == "de"){ 
+        lang = "en" 
+        btn_lang.innerHTML  = 'Zur Deutschen Version'
+
+        field_define_label.innerHTML = "Define the Field: "
+        x_component_entry_label.innerHTML = "x-Component"
+        y_component_entry_label.innerHTML = "y-Component"
+        vector_amount_entry_label.innerHTML = "Number of vectors"
+        coordinate_checkbox_label.innerHTML = "Show coordinate axis"
+        fieldscanner_checkbox_label.innerHTML = "Scan field"
+        partial_x_checkbox_label.innerHTML  = "Show x-component"
+        partial_y_checkbox_label.innerHTML = "Show y-component"
+        div_rot_header.innerHTML = "Divergence"
+        flux_header.innerHTML = "Flux through Area"
+        projection_label.innerHTML = "Show projection on the normal of the curve of the surface"
+        drop_down_menu_label.innerHTML = "Theorem"
+        div_rot_label_header.innerHTML = "Value:"
+        integral_label_header.innerHTML = "Value:"
+        subheader.innerHTML = "A research-based simulation on vector fields divergence and curl"
+        btn_reset.innerHTML = "Reset all"
+        btn_calc.innerHTML = "Recalculate"
+        btn_gauss.innerHTML = "Gauss' Theorem"
+        btn_stokes.innerHTML = "Stokes' Theorem"
+
+        switch_language(lang, theorem)
+    }
+    else if (lang == "en"){
+        lang = "de"
+        btn_lang.innerHTML  = 'Switch to English'
+
+        field_define_label.innerHTML = "Definiere das Vektorfeld: "
+        x_component_entry_label.innerHTML = "x-Komponente"
+        y_component_entry_label.innerHTML = "y-Komponente"
+        vector_amount_entry_label.innerHTML = "Anzahl der Vektoren"
+        coordinate_checkbox_label.innerHTML = "Koordinatenachsen anzeigen"
+        fieldscanner_checkbox_label.innerHTML = "Feld abtasten"
+        partial_x_checkbox_label.innerHTML  = "x-Komponente anzeigen"
+        partial_y_checkbox_label.innerHTML = "y-Komponente anzeigen"
+        div_rot_header.innerHTML = "Divergenz"
+        flux_header.innerHTML = "Fluss durch Fläche"
+        projection_label.innerHTML = "Projektion auf die Normale der Kurve oder der Oberfläche anzeigen"
+        drop_down_menu_label.innerHTML = "Integralsatz"
+        div_rot_label_header.innerHTML = "Wert:"
+        integral_label_header.innerHTML = "Wert:"
+        subheader.innerHTML = "Eine forschungsbasierte Simulation zu Vektorfeldern: Divergenz und Curl"
+        btn_reset.innerHTML = "Zurücksetzen"
+        btn_calc.innerHTML = "Neu berechnen"
+        
+        btn_gauss.innerHTML = 'Satz von Gauss'
+        btn_stokes.innerHTML = 'Satz von Stokes'
+
+        switch_language(lang, theorem)
+    }
+
+    // Popover init from bootstrap for infobox
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    var popoverList = popoverTriggerList.map( function(popoverTriggerEl) {
+    return  new bootstrap.Popover(popoverTriggerEl, {
+    trigger : 'hover'
+    });
+    });
+
+    // Tooltips init
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map( function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl, {
+            trigger : 'hover'
+        })
+    })
+
+    
+
+}
 
 export function clickedGauss(event) {
     // Looks

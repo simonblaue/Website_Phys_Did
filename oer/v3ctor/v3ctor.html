@@ -19,10 +19,11 @@
 
 <script src="./scripts/v3ctor.js" type="module" > </script> 
   <script type="module">
-    import { clickPressField, clickedGauss, clickedStokes } from "./scripts/v3ctor.js"
+    import { clickPressField, clickedGauss, clickedStokes, clickedLanguage } from "./scripts/v3ctor.js"
     window.clickPressField = clickPressField
     window.clickedGauss = clickedGauss
     window.clickedStokes = clickedStokes
+    window.switch_lang = clickedLanguage
   </script>
 
 
@@ -32,10 +33,13 @@
         <h1> <a tabindex="0" class="btn " role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Die Applikation wurde an der Fakultät für Physik der Universität Göttingen in der Didaktik der Physik (Prof. Dr. Pascal Klein) für Lehrzwecke entwickelt. Kontakt für Feedback und Fragen: Simon Blaue, Larissa Hahn (larissa.hahn@uni-goettingen.de).">
           <img src="./res/icon.png" class="float-left" width="50" type="'button">
         </a>  Vere Vedi Vecu   </h1>
-        <h2> Eine forschungsbasierte Simulation zu Vektorfeldern Divergenz und Curl</h2>
+        <h2 id="subheader"> Eine forschungsbasierte Simulation zu Vektorfeldern Divergenz und Curl</h2>
       </div>
       <div class="col-2">
         <a tabindex="0" class="btn btn-secondary float-end" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Halte die Maus über den einzelnen Elementen still, um mehr über sie zu erfahren.">Info</a>
+        <button class="btn btn-secondary float-end mt-4" type="button" id="lang-btn" onclick="switch_lang(event)">
+          Switch to English
+        </button>
       </div>
     </div>
     <hr>
@@ -46,7 +50,7 @@
                 <div class="col-4 ">
                   <div class="dropdown text-center mb-3" id="dropdown-menu">
                     <div id="dropdown-menu-tooltip"></div>
-                      <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
+                      <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownmenubutton1-label" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
                         Integralsatz
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -66,15 +70,15 @@
                 <div class="col-6 mt-3"> 
                     <form>
                         <div class="mb-3">
-                          <label for="x-component" data-bs-html="true" class="form-label">x-Komponente:</label>
+                          <label for="x-component" data-bs-html="true" class="form-label" id="x-component-label">x-Komponente:</label>
                           <input type="text" class="form-control" data-bs-html="true" id="x-component" value="x" onkeypress="clickPressField(event)" >
                         </div>
                         <div class="mb-3">
-                          <label for="y-component" data-bs-html="true" class="form-label">y-Komponente:</label>
+                          <label for="y-component" data-bs-html="true" class="form-label" id="y-component-label">y-Komponente:</label>
                           <input type="text" class="form-control" data-bs-html="true" id="y-component" value="y" onkeypress="clickPressField(event)">
                         </div>
-                        <button class="btn btn-primary" type="button" onclick="clickPressField(event)" >Neu berechnen</button>
-                        <button class="btn btn-primary" type="button" onclick="window.location.reload()" >Zurücksetzen</button>
+                        <button class="btn btn-primary" type="button" id="btn-recalc" onclick="clickPressField(event)" >Neu berechnen</button>
+                        <button class="btn btn-primary" type="button" id="btn-reset" onclick="window.location.reload()" >Zurücksetzen</button>
                       </form>
                 </div>    
             </div>
@@ -83,12 +87,12 @@
             <div class="row">
                 <form>
                     <div class="mb-3">
-                      <label for="x-component" data-bs-html="true" class="form-label">Anzahl der Vektoren:</label>
+                      <label for="vector-amount" data-bs-html="true" class="form-label" id="vector-amount-label">Anzahl der Vektoren:</label>
                       <input type="number" data-bs-html="true" class="form-control" max="25" min="5" id="vector-amount" value="11" onkeypress="clickPressField(event)">
                     </div>
                     <div class="form-check mb-3">
                         <input type="checkbox" class="form-check-input" id="coordinatesystem">
-                        <label for="coordinatesystem" class="form-check-label">Koordinatensystem einblenden</label>
+                        <label for="coordinatesystem" class="form-check-label" id="coordinatesystem-label">Koordinatensystem einblenden</label>
                     </div>
                   </form>
             </div>
@@ -101,15 +105,15 @@
                     <form>
                       <div class="form-check mb-3">
                         <input type="checkbox" data-bs-html="true" class="form-check-input" id="fieldscanner">
-                        <label for="fieldscanner" data-bs-html="true" class="form-check-label">Feld abtasten</label>
+                        <label for="fieldscanner" data-bs-html="true" class="form-check-label" id="fieldscanner-label">Feld abtasten</label>
                       </div>
                       <div class="form-check mb-3">
                         <input type="checkbox" data-bs-html="true" class="form-check-input" id="xcomponentview">
-                        <label for="xcomponentview" data-bs-html="true" class="form-check-label">x Komponente anzeigen</label>
+                        <label for="xcomponentview" data-bs-html="true" class="form-check-label" id="xcomponentview-label">x Komponente anzeigen</label>
                      </div>
                       <div class="form-check mb-3">
                           <input type="checkbox" data-bs-html="true" class="form-check-input" id="ycomponentview">
-                          <label for="ycomponentview" data-bs-html="true" class="form-check-label">y Komponente anzeigen</label>
+                          <label for="ycomponentview" data-bs-html="true" class="form-check-label" id="ycomponentview-label">y Komponente anzeigen</label>
                       </div>
                     </form>
                 </div>
@@ -129,10 +133,12 @@
                   </div>
                   <!-- Werte Anzeigen -->
                 <div class="col-6">
-                  <h4 class="text-bottom d-inline"> Wert:</h4> <h4 class="text-bottom d-inline" id="div-rot-value"></h4> 
+                  <h4 class="text-bottom d-inline" id="div-rot-value-header"> Wert:</h4> 
+                  <h4 class="text-bottom d-inline" id="div-rot-value"></h4> 
                 </div>
                 <div class="col-6">
-                  <h4 class="text-bottom d-inline"> Wert:</h4> <h4 class="text-bottom d-inline" id="integral-value"></h4> 
+                  <h4 class="text-bottom d-inline" id="integral-value-header"> Wert:</h4> 
+                  <h4 class="text-bottom d-inline" id="integral-value"></h4> 
                 </div>
             </div>
         </div>

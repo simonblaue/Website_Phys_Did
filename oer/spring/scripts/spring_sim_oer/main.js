@@ -24,7 +24,7 @@ const frictionSlider = document.getElementById("friction_slider")
 const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
 
 var spring = new spring_physics2d(canvasSize,boundaries,{x:5,y:5}, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
-
+spring.vis = false
 // for stoping the animation
 var stop_animation = false
 
@@ -61,6 +61,12 @@ function addVector(e){
 
 export function toggleSpring(){
 	spring.vis = !spring.vis
+	redrawCanvas()
+}
+
+export function resetSpring(){
+	clearCanvas()
+	spring = new spring_physics2d(canvasSize,boundaries,{x:5,y:5}, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
 	redrawCanvas()
 }
 
@@ -117,8 +123,6 @@ function animate(timeStamp){
 	}
 }
 
-
-
 // ------- Event functions -------
 
 function moveSpring(e) {
@@ -130,7 +134,7 @@ function moveSpring(e) {
 	}
 }
 
-export function resetSpring(e){
+export function resetSpringafterSettingchange(e){
 	spring = new spring_physics2d(canvasSize,boundaries,spring.endpoint, tension_slider.value/100, mass_slider.value/10, friction_slider.value/100)
 	redrawCanvas()
 	animate()
@@ -183,7 +187,7 @@ canvas.addEventListener('mouseup', disengage);
 
 // ------- Slider Event Handeling -------
 
-massSlider.addEventListener('mouseup', resetSpring)
-frictionSlider.addEventListener('mouseup', resetSpring)
-tensionSlider.addEventListener('mouseup', resetSpring)
+massSlider.addEventListener('mouseup', resetSpringafterSettingchange)
+frictionSlider.addEventListener('mouseup', resetSpringafterSettingchange)
+tensionSlider.addEventListener('mouseup', resetSpringafterSettingchange)
 
