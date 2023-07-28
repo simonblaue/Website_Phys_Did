@@ -1,5 +1,8 @@
 /// Get Elements from DOM
 
+
+const icon_btn = document.querySelector('#icon-btn')
+const info_btn = document.querySelector('#info-btn')
 //Theorems
 const theorem_button = document.querySelector('#dropdown-menu-tooltip')
 const latex_image = document.querySelector('#latex_img')
@@ -37,6 +40,9 @@ const paddlewheel_checkbox = document.querySelector('#paddlewheel')
 
 
 /// Setting the Tooltip strings -> End them with a whitespace for gluing them together
+let info_text = "Halte die Maus über den einzelnen Elementen still, um mehr über sie zu erfahren."
+
+let icon_text = "Die Applikation wurde an der Fakultät für Physik der Universität Göttingen in der Didaktik der Physik (Prof. Dr. Pascal Klein) für Lehrzwecke entwickelt. Kontakt für Feedback und Fragen: Simon Blaue, Larissa Hahn (larissa.hahn@uni-goettingen.de)."
 
 let theorem_text = "Wähle zwischen den Theoremen, um zwischen Divergenz und Rotation zu wechseln."
 
@@ -69,6 +75,9 @@ let paddlewheel_text = 'Durch Aktivierung der Box wird ein Schaufelrad in das Fe
 // function for change between stokes and gauss
 
 export function switch_tooltips(old_theorem){
+
+	info_btn.setAttribute('data-bs-content', info_text)
+	icon_btn.setAttribute('data-bs-content', icon_text)
 
 	theorem_button.setAttribute('title', theorem_text)
 	latex_image.setAttribute('title', theorem_text)
@@ -134,6 +143,11 @@ export function switch_tooltips(old_theorem){
 export function switch_language(old_lang, theorem){
 
 	if (old_lang == "en"){
+
+		info_text = "Hold your mouse still over each item to learn more about them."
+
+		icon_text = "The application was developed at the Faculty of Physics of the University of Göttingen in the Didactics of Physics (Prof. Dr. Pascal Klein) for teaching purposes. Contact for feedback and questions: Simon Blaue, Larissa Hahn (larissa.hahn@uni-goettingen.de)."
+
 		theorem_text = "Choose between the theorems to switch between Divergence and Rotation.";
 
 		field_creation_text = 'Define the field over its components depending on x, y, scalars, and operations (+, -, *, /). Operators must be used between numbers and variables. The changes must be confirmed with Enter or <i>Recalculate</i>. ';
@@ -163,6 +177,11 @@ export function switch_language(old_lang, theorem){
 
 
 	} else {
+
+		info_text = "Halte die Maus über den einzelnen Elementen still, um mehr über sie zu erfahren."
+
+		icon_text = "Die Applikation wurde an der Fakultät für Physik der Universität Göttingen in der Didaktik der Physik (Prof. Dr. Pascal Klein) für Lehrzwecke entwickelt. Kontakt für Feedback und Fragen: Simon Blaue, Larissa Hahn (larissa.hahn@uni-goettingen.de)."
+
 		theorem_text = "Wähle zwischen den Theoremen, um zwischen Divergenz und Rotation zu wechseln."
 
 		field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /). Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden. Die Änderung muss mit Enter oder <i>Neu berechnen</i> bestätigt werden. '
@@ -190,7 +209,8 @@ export function switch_language(old_lang, theorem){
 		paddlewheel_text = 'Durch Aktivierung der Box wird ein Schaufelrad in das Feld eingefügt. Dieses kann mit der Maus verschoben werden. '
 	}
 
-
+	info_btn.setAttribute('data-bs-content', info_text)
+	icon_btn.setAttribute('data-bs-content', icon_text)
 
 	theorem_button.setAttribute('title', theorem_text)
 	latex_image.setAttribute('title', theorem_text)

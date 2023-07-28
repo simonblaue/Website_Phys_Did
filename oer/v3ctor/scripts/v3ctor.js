@@ -58,6 +58,7 @@ const btn_calc = document.querySelector('#btn-recalc')
 const subheader = document.querySelector('#subheader')
 
 
+
 //Field defeinition
 const field_define_label = document.querySelector('#vectorfield_define_label')
 const x_component_entry = document.querySelector('#x-component');
@@ -99,6 +100,8 @@ const latex_image = document.querySelector('#latex_img')
 const paddlewheel_div = document.querySelector('#paddlewheel_div')
 paddlewheel_div.style.visibility='hidden' 
 const paddlewheel_checkbox = document.querySelector('#paddlewheel')
+const paddlewheel_checkbox_label = document.querySelector('#paddlewheel-label')
+
 
 
 // Simulation defining vars // 
@@ -132,7 +135,7 @@ export function clickedLanguage(event) {
         lang = "en" 
         btn_lang.innerHTML  = 'Zur Deutschen Version'
 
-        field_define_label.innerHTML = "Define the Field: "
+        field_define_label.innerHTML = "Define the field: "
         x_component_entry_label.innerHTML = "x-Component"
         y_component_entry_label.innerHTML = "y-Component"
         vector_amount_entry_label.innerHTML = "Number of vectors"
@@ -142,15 +145,28 @@ export function clickedLanguage(event) {
         partial_y_checkbox_label.innerHTML = "Show y-component"
         div_rot_header.innerHTML = "Divergence"
         flux_header.innerHTML = "Flux through Area"
-        projection_label.innerHTML = "Show projection on the normal of the curve of the surface"
+        projection_label.innerHTML = "Show projection on the outer normal of the rectangle curve"
         drop_down_menu_label.innerHTML = "Theorem"
         div_rot_label_header.innerHTML = "Value:"
         integral_label_header.innerHTML = "Value:"
-        subheader.innerHTML = "A research-based simulation on vector fields divergence and curl"
+        subheader.innerHTML = "A research-based simulation on vector fields: divergence and curl"
         btn_reset.innerHTML = "Reset all"
         btn_calc.innerHTML = "Recalculate"
         btn_gauss.innerHTML = "Gauss' Theorem"
         btn_stokes.innerHTML = "Stokes' Theorem"
+
+        if (theorem == "gauss"){
+            div_rot_header.innerHTML = "Divergence"
+            flux_header.innerHTML = "Flux through Area"
+            projection_label.innerHTML = "Show projection on the outer normal of the rectangle curve"
+
+        }
+        if (theorem == "stokes"){
+            div_rot_header.innerHTML = "Curl"
+            flux_header.innerHTML = "Circulation along a curve"
+            projection_label.innerHTML = "Show projection on the vector path element of the curve"
+            paddlewheel_checkbox_label.innerHTML = "Insert paddlewheel"
+        }
 
         switch_language(lang, theorem)
     }
@@ -166,9 +182,19 @@ export function clickedLanguage(event) {
         fieldscanner_checkbox_label.innerHTML = "Feld abtasten"
         partial_x_checkbox_label.innerHTML  = "x-Komponente anzeigen"
         partial_y_checkbox_label.innerHTML = "y-Komponente anzeigen"
-        div_rot_header.innerHTML = "Divergenz"
-        flux_header.innerHTML = "Fluss durch Fläche"
-        projection_label.innerHTML = "Projektion auf die Normale der Kurve oder der Oberfläche anzeigen"
+        
+        if (theorem == "gauss"){
+            div_rot_header.innerHTML = "Divergenz"
+            flux_header.innerHTML = "Fluss durch Fläche"
+            projection_label.innerHTML = "Projektion auf die Normale der Kurve oder der Oberfläche anzeigen"
+
+        }
+        if (theorem == "stokes"){
+            div_rot_header.innerHTML = "Rotation"
+            flux_header.innerHTML = "Zirkulation entlang einer Kurve"
+            projection_label.innerHTML = "Projektion auf das vektorielle Wegelement einblenden"
+            paddlewheel_checkbox_label.innerHTML = " Paddlewheel einfügen"
+        }
         drop_down_menu_label.innerHTML = "Integralsatz"
         div_rot_label_header.innerHTML = "Wert:"
         integral_label_header.innerHTML = "Wert:"
@@ -206,9 +232,17 @@ export function clickedGauss(event) {
     // Looks
     btn_gauss.setAttribute('class', 'dropdown-item active');
     btn_stokes.setAttribute('class', 'dropdown-item');
-    div_rot_header.innerHTML = 'Divergenz';
-    flux_header.innerHTML = 'Fluss durch Fläche';
-    projection_label.innerHTML = 'Projektion auf die Kurvennormale der Fläche einblenden';
+    if (lang == "de"){
+        div_rot_header.innerHTML = 'Divergenz';
+        flux_header.innerHTML = 'Fluss durch Fläche';
+        projection_label.innerHTML = 'Projektion auf die Kurvennormale der Fläche einblenden';
+    }
+    if (lang == "en"){
+        div_rot_header.innerHTML = "Divergence"
+        flux_header.innerHTML = "Flux through Area"
+        projection_label.innerHTML = "Show projection on the outer normal of the rectangle curve"
+    }
+    
     latex_image.src = './res/Latex_Gauss.png'
     paddlewheel_div.style.visibility='hidden' 
     // Tooltips
@@ -245,9 +279,19 @@ export function clickedGauss(event) {
 export function clickedStokes(event) {
     btn_gauss.setAttribute('class', 'dropdown-item');
     btn_stokes.setAttribute('class', 'dropdown-item active');
-    div_rot_header.innerHTML = 'Rotation';
-    flux_header.innerHTML = 'Zirkulation entlang einer Kurve';
-    projection_label.innerHTML = 'Projektion auf das vektorielle Wegelement einblenden';
+    if(lang == "de")
+    {
+        div_rot_header.innerHTML = 'Rotation';
+        flux_header.innerHTML = 'Zirkulation entlang einer Kurve';
+        projection_label.innerHTML = 'Projektion auf das vektorielle Wegelement einblenden';
+    }  
+    if (lang == "en")
+    {
+        div_rot_header.innerHTML = 'Curl';
+        flux_header.innerHTML = "Circulation along a curve"
+        projection_label.innerHTML = "Show projection on the vector path element of the curve"
+        paddlewheel_checkbox_label.innerHTML = "Insert paddlewheel"
+    }
     latex_image.src = './res/Latex_Stokes.png'
     paddlewheel_div.style.visibility='visible'
     switch_tooltips('gauss')
