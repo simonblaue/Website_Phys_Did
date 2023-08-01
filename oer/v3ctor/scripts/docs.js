@@ -58,7 +58,8 @@ let rectangle_text_stokes = 'Mit dem Mauszeiger kann ein Rechteck in das Vektorf
 
 let fieldscanner_text_gauss = 'Bei Aktivierung von <i>Feld abtasten</i> können durch Festhalten der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Divergenz angezeigt. '
 
-let fieldscanner_text_stokes = 'Bei Aktivierung von <i>Feld abtasten</i> können durch Festhalten der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Rotation angezeigt. '
+let fieldscanner_text_stokes = 'Wenn Sie das <i>Feld abtasten </i> aktivieren, können Sie Vektoren zeichnen, indem Sie die Maustaste gedrückt halten. Der Wert der Rotation für diesen Punkt wird unten angezeigt. Zeigen Sie x- oder y-Komponenten innerhalb eines gezeichneten Rechtecks (<i>Feld abtasten deaktiviert), für gezeichnete Vektoren oder in der Nähe eines eingefügten Schaufelrads an, indem Sie <i>x-Komponente / y-Komponente anzeigen</i> aktivieren.'
+
 let partial_x_text_gauss = 'Durch Aktivierung der x-Komponente kann diese innerhalb eines Rechtecks oder an den eingezeichneten Vektoren eingeblendet werden. '
 let partial_y_text_gauss = 'Durch Aktivierung der y-Komponente kann diese innerhalb eines Rechtecks oder an den eingezeichneten Vektoren eingeblendet werden. '
 
@@ -144,25 +145,25 @@ export function switch_language(old_lang, theorem){
 
 	if (old_lang == "en"){
 
-		info_text = "Hold your mouse still over each item to learn more about them."
+		info_text = "To learn more about the features and elements of the simulation, hold your mouse still over them. "
 
-		icon_text = "The application was developed at the Faculty of Physics of the University of Göttingen in the Didactics of Physics (Prof. Dr. Pascal Klein) for teaching purposes. Contact for feedback and questions: Simon Blaue, Larissa Hahn (larissa.hahn@uni-goettingen.de)."
+		icon_text = "The application was developed by the Physics Education Research Group (Prof. Dr. Pascal Klein) at the University of Göttingen (Faculty of Physics) for for teaching purposes. Contact for feedback and questions: Simon Blaue, Larissa Hahn (larissa.hahn@uni-goettingen.de)."
 
 		theorem_text = "Choose between the theorems to switch between Divergence and Rotation.";
 
-		field_creation_text = 'Define the field over its components depending on x, y, scalars, and operations (+, -, *, /). Operators must be used between numbers and variables. The changes must be confirmed with Enter or <i>Recalculate</i>. ';
+		field_creation_text = 'Define the field through its components depending on x, y, scalars, and operations (+, -, *, /). Between numbers and variables, operators have to be used. Confirm changes with <i>Enter</i> or <i>Recalculate</i>. Remove all changes with <i>Reset all</i> ';
 
-		vector_amount_text = 'Change the number of vectors. A modification must be confirmed with Enter or <i>Recalculate</i>. The arrow keys can be used to change the number one step at a time. ';
+		vector_amount_text = 'Change the number of vectors. A modification must be confirmed with Enter or <i>Recalculate</i>. The arrow keys can be used to change the number one step at a time. Confirm changes with <i>Enter</i> or <i>Recalculate</i>. Remove all changes with <i>Reset all</i> ';
 
-		coordinate_checkbox_text = 'By activating, the coordinate axes in the Cartesian coordinates x and y will be displayed. ';
+		coordinate_checkbox_text = 'Display the coordinate axes in Cartesian coordinates x and y';
 
-		rectangle_text_gauss = 'With the mouse pointer, a rectangle can be drawn into the vector field ( <i>scan field</i> must be deactivated). It can be moved within the field with the mouse, and its borders can be shifted arbitrarily. The flow through/along the boundary of the drawn rectangle area will be shown. The divergence is calculated at the center of the rectangle. ';
+		rectangle_text_gauss = 'Draw a rectangle into the vector field with the mouse held down (<i>scan field</i> must be deactivated). Move the drawn rectangle in the field with the mouse and shift its borders arbitrary. The flow through the boundary of the drawn rectangle area is shown below. The divergence is calculated at the center of the rectangle.';
 
-		rectangle_text_stokes = 'With the mouse pointer, a rectangle can be drawn into the vector field ( <i>scan field</i> must be deactivated). It can be moved within the field with the mouse, and its borders can be shifted arbitrarily. The circulation through/along the boundary of the drawn rectangle area will be shown. The rotation is calculated at the center of the rectangle. ';
+		rectangle_text_stokes = 'Draw a rectangle into the vector field with the mouse held down (scan field must be deactivated). Move the drawn rectangle in the field with the mouse and shift its borders arbitrary. The circulation along the boundary of the drawn rectangle area is shown below. The Curl is calculated at the center of the rectangle. Display the projection of the field vectors on the vector path element of the rectangle curve by activating the corresponding box. Insert a paddle wheel in the vector field and move it in the field using the mouse. ';
 
-		fieldscanner_text_gauss = 'When activating <i>scan field</i>, vectors can be drawn by holding down the mouse button. The value of divergence will be displayed for that point. ';
+		fieldscanner_text_gauss = ' Activate Scan field to draw additional vectors in the vector field by holding down the mouse button. The value of divergence for that point is displayed below. Display x or y components within a drawn rectangle (<i>scan field</i> deactivated) or for drawn vectors by activating <i>show x component / y component</i>';
 
-		fieldscanner_text_stokes = 'When activating <i>scan field</i>, vectors can be drawn by holding down the mouse button. The value of rotation will be displayed for that point. ';
+		fieldscanner_text_stokes = 'When activating <i>scan field</i>, vectors can be drawn by holding down the mouse button. The value of curl for that point is displayed below. Display x or y components within a drawn rectangle (<i>scan field</i> deactivated), for drawn vectors, or near an inserted paddle wheel by activating <i>show x component / y component.</i>';
 
 		partial_x_text_gauss = 'By activating the x-component, it can be displayed within a rectangle or at the drawn vectors. ';
 		partial_y_text_gauss = 'By activating the y-component, it can be displayed within a rectangle or at the drawn vectors. ';
@@ -170,7 +171,7 @@ export function switch_language(old_lang, theorem){
 		partial_x_text_stokes = 'By activating the x-component, it can be displayed within a rectangle, at the drawn vectors, and near the paddlewheel. ';
 		partial_y_text_stokes = 'By activating the y-component, it can be displayed within a rectangle, at the drawn vectors, and near the paddlewheel. ';
 
-		projections_text_gauss = 'The projection of the field components onto the normals at the boundary of the rectangle area is displayed by activating the box. ';
+		projections_text_gauss = 'Display the projection of the field vectors on the outer normal vectors of the boundary of the rectangle area by activating the box.  ';
 		projections_text_stokes = 'The projection of the field components onto the vectorial path elements of the rectangle curve is displayed by activating the box. ';
 
 		paddlewheel_text = 'By activating the box, a paddlewheel is inserted into the field. It can be moved with the mouse. ';
@@ -196,7 +197,7 @@ export function switch_language(old_lang, theorem){
 
 		fieldscanner_text_gauss = 'Bei Aktivierung von <i>Feld abtasten</i> können durch Festhalten der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Divergenz angezeigt. '
 
-		fieldscanner_text_stokes = 'Bei Aktivierung von <i>Feld abtasten</i> können durch Festhalten der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Rotation angezeigt. '
+		fieldscanner_text_stokes = 'Wenn Sie das <i>Feld abtasten </i> aktivieren, können Sie Vektoren zeichnen, indem Sie die Maustaste gedrückt halten. Der Wert der Rotation für diesen Punkt wird unten angezeigt. Zeigen Sie x- oder y-Komponenten innerhalb eines gezeichneten Rechtecks (<i>Feld abtasten deaktiviert), für gezeichnete Vektoren oder in der Nähe eines eingefügten Schaufelrads an, indem Sie <i>x-Komponente / y-Komponente anzeigen</i> aktivieren.'
 		partial_x_text_gauss = 'Durch Aktivierung der x-Komponente kann diese innerhalb eines Rechtecks oder an den eingezeichneten Vektoren eingeblendet werden. '
 		partial_y_text_gauss = 'Durch Aktivierung der y-Komponente kann diese innerhalb eines Rechtecks oder an den eingezeichneten Vektoren eingeblendet werden. '
 

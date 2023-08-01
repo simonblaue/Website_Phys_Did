@@ -22,7 +22,7 @@ export class Paddlewheel {
       // Acctual Path of Paddlewhee, one circle and four lines
       c.beginPath()
       c.arc(0,0, 3.5, 0, 2*Math.PI)
-      c.fillStyle = 'white'
+      c.fillStyle = 'black'
       c.fill()
       c.moveTo(0,15)
       c.lineTo(0,-15)
@@ -36,7 +36,7 @@ export class Paddlewheel {
       c.moveTo(-10, 10)
       c.lineTo(10, -10)
       // White coloring
-      c.strokeStyle = 'white'
+      c.strokeStyle = 'black'
       c.lineWidth = 1
       c.stroke() 
       

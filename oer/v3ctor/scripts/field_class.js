@@ -16,6 +16,8 @@ export class Field {
    partial_y_vecs = [];
    p_wheel_partial_x = [];
    p_wheel_partial_y = [];
+   background_color = 'white'
+   base_arrow_color = 'black'
 
 
    constructor(x, y,canvas, amount_of_vectors) {
@@ -35,7 +37,7 @@ export class Field {
    value_at(x, y) {
    let Fx = math.evaluate(this.x, { 'x': x, 'y': y });
    let Fy = math.evaluate(this.y, { 'x': x, 'y': y });
-       return new Vector2d(Fx, Fy);
+       return new Vector2d(Fx, Fy, this.base_arrow_color);
    }
    divergence_at(p) {
        var expr_x = math.parse(this.x);

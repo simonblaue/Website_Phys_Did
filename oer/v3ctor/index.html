@@ -19,11 +19,12 @@
 
 <script src="./scripts/v3ctor.js" type="module" > </script> 
   <script type="module">
-    import { clickPressField, clickedGauss, clickedStokes, clickedLanguage } from "./scripts/v3ctor.js"
+    import { clickPressField, clickedGauss, clickedStokes, clickedLanguage, resetPage } from "./scripts/v3ctor.js"
     window.clickPressField = clickPressField
     window.clickedGauss = clickedGauss
     window.clickedStokes = clickedStokes
     window.switch_lang = clickedLanguage
+    window.resetPage = resetPage
   </script>
 
 
@@ -78,7 +79,7 @@
                           <input type="text" class="form-control" data-bs-html="true" id="y-component" value="y" onkeypress="clickPressField(event)">
                         </div>
                         <button class="btn btn-primary" type="button" id="btn-recalc" onclick="clickPressField(event)" >Neu berechnen</button>
-                        <button class="btn btn-primary" type="button" id="btn-reset" onclick="window.location.reload()" >Zurücksetzen</button>
+                        <button class="btn btn-primary" type="button" id="btn-reset" onclick="resetPage(event)" >Zurücksetzen</button>
                       </form>
                 </div>    
             </div>
@@ -142,7 +143,7 @@
                 </div>
             </div>
         </div>
-        <canvas class="rounded col-6 d-block" style="padding: 0; background-color: black;" id="canvas"></canvas>
+        <canvas class="rounded col-6 d-block" style="padding: 0; background-color: white; border-color: black; border-style: solid;" id="canvas"></canvas>
     </div>
     <hr>
 </div>

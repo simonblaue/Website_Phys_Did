@@ -6,6 +6,7 @@ export class Rectangle {
    height = 0;
    vecs_in_rect = [];
    field;
+   color = "black"
 
    constructor(field) {
        this.startpoint = {x:0, y:0};
@@ -192,7 +193,7 @@ export class Rectangle {
     canvas_context.save()
     canvas_context.beginPath();
     canvas_context.rect(this.startpoint.x, this.startpoint.y, this.width, this.height);
-    canvas_context.strokeStyle = '#ffffff';
+    canvas_context.strokeStyle = '#00000';
     canvas_context.stroke();
     canvas_context.closePath()
     canvas_context.restore()

@@ -45,10 +45,14 @@ const debug_btn = document.getElementById("debugger")
 debug_btn.setAttribute("style","display:none;")
 
 // Canvas
+const canvas_background = 'white'
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext("2d",  { alpha: false });
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
+canvas.style.backgroundColor = canvas_background
+
+
 
 //Language Button
 const btn_lang = document.querySelector('#lang-btn');
@@ -136,13 +140,13 @@ export function clickedLanguage(event) {
         btn_lang.innerHTML  = 'Zur Deutschen Version'
 
         field_define_label.innerHTML = "Define the field: "
-        x_component_entry_label.innerHTML = "x-Component"
-        y_component_entry_label.innerHTML = "y-Component"
+        x_component_entry_label.innerHTML = "x component"
+        y_component_entry_label.innerHTML = "y component"
         vector_amount_entry_label.innerHTML = "Number of vectors"
-        coordinate_checkbox_label.innerHTML = "Show coordinate axis"
+        coordinate_checkbox_label.innerHTML = "Show coordinate axes"
         fieldscanner_checkbox_label.innerHTML = "Scan field"
-        partial_x_checkbox_label.innerHTML  = "Show x-component"
-        partial_y_checkbox_label.innerHTML = "Show y-component"
+        partial_x_checkbox_label.innerHTML  = "Show x component"
+        partial_y_checkbox_label.innerHTML = "Show y component"
         div_rot_header.innerHTML = "Divergence"
         flux_header.innerHTML = "Flux through Area"
         projection_label.innerHTML = "Show projection on the outer normal of the rectangle curve"
@@ -152,12 +156,12 @@ export function clickedLanguage(event) {
         subheader.innerHTML = "A research-based simulation on vector fields: divergence and curl"
         btn_reset.innerHTML = "Reset all"
         btn_calc.innerHTML = "Recalculate"
-        btn_gauss.innerHTML = "Gauss' Theorem"
-        btn_stokes.innerHTML = "Stokes' Theorem"
+        btn_gauss.innerHTML = "Gauss' theorem"
+        btn_stokes.innerHTML = "Stokes' theorem"
 
         if (theorem == "gauss"){
             div_rot_header.innerHTML = "Divergence"
-            flux_header.innerHTML = "Flux through Area"
+            flux_header.innerHTML = "Flux through area"
             projection_label.innerHTML = "Show projection on the outer normal of the rectangle curve"
 
         }
@@ -165,7 +169,7 @@ export function clickedLanguage(event) {
             div_rot_header.innerHTML = "Curl"
             flux_header.innerHTML = "Circulation along a curve"
             projection_label.innerHTML = "Show projection on the vector path element of the curve"
-            paddlewheel_checkbox_label.innerHTML = "Insert paddlewheel"
+            paddlewheel_checkbox_label.innerHTML = "Insert paddle wheel"
         }
 
         switch_language(lang, theorem)
@@ -315,7 +319,7 @@ export function clickedStokes(event) {
 export function clickPressField(event) {
     if (event.keyCode == 13 || event.type == 'click') {
         event.preventDefault();
-        c.fillStyle = 'black';
+        c.fillStyle = canvas_background;
         c.fillRect(0, 0, canvas.width, canvas.height);
         amount_of_vectors = vector_amount_entry.value;
         var old_fieldscann_vecs = F1.fieldscanner_vectors
@@ -343,6 +347,28 @@ export function clickPressField(event) {
         set_integral_label()
         redraw_canvas()
     }
+}
+
+export function resetPage(event) {
+    vector_amount_entry.value = 11;
+    amount_of_vectors = vector_amount_entry.value;
+    x_component_entry.value = 'x';
+    y_component_entry.value = 'y';
+    partial_x_checkbox.checked = false
+    partial_y_checkbox.checked = false
+    projections_checkbox.checked = false
+    fieldscanner_checkbox.checked = false
+    paddlewheel_checkbox.checked = false
+    coordinate_checkbox.checked = false
+    F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors);
+    p_wheel = new Paddlewheel()
+    coordinates = new Coordinateline_Euklidian(canvas, F1)
+    coordinates.field = F1
+    rect = new Rectangle(F1)
+
+    div_rot_label.innerHTML = " "
+    set_integral_label()
+    redraw_canvas()
 }
 
 // Event Handeling for checkboxes
