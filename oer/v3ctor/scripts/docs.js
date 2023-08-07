@@ -46,7 +46,7 @@ let icon_text = "Die Applikation wurde an der Fakultät für Physik der Universi
 
 let theorem_text = "Wähle zwischen den Theoremen, um zwischen Divergenz und Rotation zu wechseln."
 
-let field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /). Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden. Die Änderung muss mit Enter oder <i>Neu berechnen</i> bestätigt werden. '
+let field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /, sqrt(), ^). Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden. Die Änderung muss mit Enter oder <i>Neu berechnen</i> bestätigt werden. '
 
 let vector_amount_text = 'Veränderung der Anzahl an Vektoren. Eine Änderung muss mit Enter oder <i>Neu berechnen</i> bestätigt werden. Mit den Pfeiltasten kann die Anzahl in Einer-Schritten erfolgen. '
 
@@ -71,6 +71,9 @@ let projections_text_stokes = 'Die Projektion der Feldkomponenten auf die vektor
 
 let paddlewheel_text = 'Durch Aktivierung der Box wird ein Schaufelrad in das Feld eingefügt. Dieses kann mit der Maus verschoben werden. '
 
+let div_header_text_2 = ' Zeige x- oder y-Komponenten innerhalb eines gezeichneten Rechtecks (<i>Scanfeld</i> deaktiviert), indem du  indem du <i>x-Komponente / y-Komponente anzeigen</i> aktivierst.';
+
+let stokes_header_text_2 = ' Zeige x- oder y-Komponenten innerhalb eines gezeichneten Rechtecks (<i>Scanfeld</i> deaktiviert), für gezeichnete Vektoren oder in der Nähe eines eingefügten Paddelrades, indem du <i>x-Komponente / y-Komponente anzeigen</i> aktivierst.';
 
 
 // function for change between stokes and gauss
@@ -147,13 +150,13 @@ export function switch_language(old_lang, theorem){
 
 		info_text = "To learn more about the features and elements of the simulation, hold your mouse still over them. "
 
-		icon_text = "The application was developed by the Physics Education Research Group (Prof. Dr. Pascal Klein) at the University of Göttingen (Faculty of Physics) for for teaching purposes. Contact for feedback and questions: Simon Blaue, Larissa Hahn (larissa.hahn@uni-goettingen.de)."
+		icon_text = "The application was developed by the Physics Education Research Group (Prof. Dr. Pascal Klein) at the University of Göttingen (Faculty of Physics) for teaching purposes. Contact for feedback and questions: Simon Blaue, Larissa Hahn (larissa.hahn@uni-goettingen.de)."
 
-		theorem_text = "Choose between the theorems to switch between Divergence and Rotation.";
+		theorem_text = "Choose an integral theorem to switch between divergence and curl";
 
-		field_creation_text = 'Define the field through its components depending on x, y, scalars, and operations (+, -, *, /). Between numbers and variables, operators have to be used. Confirm changes with <i>Enter</i> or <i>Recalculate</i>. Remove all changes with <i>Reset all</i> ';
+		field_creation_text = 'Define the field through its components depending on x, y, scalars, and operations (+, -, *, /, sqrt(), ^). Between numbers and variables, operators have to be used. Confirm changes with <i>Enter</i> or <i>Recalculate</i>. Remove all changes with <i>Reset all</i> ';
 
-		vector_amount_text = 'Change the number of vectors. A modification must be confirmed with Enter or <i>Recalculate</i>. The arrow keys can be used to change the number one step at a time. Confirm changes with <i>Enter</i> or <i>Recalculate</i>. Remove all changes with <i>Reset all</i> ';
+		vector_amount_text = 'Change the number of vectors. The arrow keys can be used to change the number one step at a time. Confirm changes with <i>Enter</i> or <i>Recalculate</i>. Remove all changes with <i>Reset all</i> ';
 
 		coordinate_checkbox_text = 'Display the coordinate axes in Cartesian coordinates x and y';
 
@@ -161,20 +164,24 @@ export function switch_language(old_lang, theorem){
 
 		rectangle_text_stokes = 'Draw a rectangle into the vector field with the mouse held down (scan field must be deactivated). Move the drawn rectangle in the field with the mouse and shift its borders arbitrary. The circulation along the boundary of the drawn rectangle area is shown below. The Curl is calculated at the center of the rectangle. Display the projection of the field vectors on the vector path element of the rectangle curve by activating the corresponding box. Insert a paddle wheel in the vector field and move it in the field using the mouse. ';
 
-		fieldscanner_text_gauss = ' Activate Scan field to draw additional vectors in the vector field by holding down the mouse button. The value of divergence for that point is displayed below. Display x or y components within a drawn rectangle (<i>scan field</i> deactivated) or for drawn vectors by activating <i>show x component / y component</i>';
+		fieldscanner_text_gauss = ' Activate <i>Scan field</i> to draw additional vectors in the vector field by holding down the mouse button. The value of divergence for that point is displayed below.'
 
-		fieldscanner_text_stokes = 'When activating <i>scan field</i>, vectors can be drawn by holding down the mouse button. The value of curl for that point is displayed below. Display x or y components within a drawn rectangle (<i>scan field</i> deactivated), for drawn vectors, or near an inserted paddle wheel by activating <i>show x component / y component.</i>';
+		fieldscanner_text_stokes = 'Activate <i>Scan field</i> to draw additional vectors in the vector field by holding down the mouse button. The value of curl for that point is displayed below. ';
 
-		partial_x_text_gauss = 'By activating the x-component, it can be displayed within a rectangle or at the drawn vectors. ';
-		partial_y_text_gauss = 'By activating the y-component, it can be displayed within a rectangle or at the drawn vectors. ';
+		div_header_text_2 = ' Display x or y components within a drawn rectangle (<i>scan field</i> deactivated), or for drawn vectors by activating <i>show x component / y component.</i>'
 
-		partial_x_text_stokes = 'By activating the x-component, it can be displayed within a rectangle, at the drawn vectors, and near the paddlewheel. ';
-		partial_y_text_stokes = 'By activating the y-component, it can be displayed within a rectangle, at the drawn vectors, and near the paddlewheel. ';
+		stokes_header_text_2 = ' Display x or y components within a drawn rectangle (<i>scan field</i> deactivated), for drawn vectors, or near an inserted paddle wheel by activating <i>show x component / y component.</i>'
 
-		projections_text_gauss = 'Display the projection of the field vectors on the outer normal vectors of the boundary of the rectangle area by activating the box.  ';
-		projections_text_stokes = 'The projection of the field components onto the vectorial path elements of the rectangle curve is displayed by activating the box. ';
+		partial_x_text_gauss = 'Display x componentes within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors. ';
+		partial_y_text_gauss = 'Display y componentes within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors. ';
 
-		paddlewheel_text = 'By activating the box, a paddlewheel is inserted into the field. It can be moved with the mouse. ';
+		partial_x_text_stokes = 'Display x componentes within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors, or near an inserted paddlewheel. ';
+		partial_y_text_stokes = 'Display y componentes within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors, or near an inserted paddlewheel. ';
+
+		projections_text_gauss = 'Display the projection of the field vectors on the outer normal vectors of the boundary of the rectangle area. ';
+		projections_text_stokes = 'Display the projection of the field vectors on the components onto the vectorial path elements of the rectangle curve. ';
+
+		paddlewheel_text = 'Insert a paddle wheel  in the vector field and move it in the field using the mouse. ';
 
 
 	} else {
@@ -185,7 +192,7 @@ export function switch_language(old_lang, theorem){
 
 		theorem_text = "Wähle zwischen den Theoremen, um zwischen Divergenz und Rotation zu wechseln."
 
-		field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /). Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden. Die Änderung muss mit Enter oder <i>Neu berechnen</i> bestätigt werden. '
+		field_creation_text = 'Definiere das Feld über seine Komponenten abhängig von x, y, Skalaren und den Operationen (+, -, *, /, sqrt(), ^). Es müssen Operatoren zwischen Zahlen und Variablen verwendet werden. Die Änderung muss mit Enter oder <i>Neu berechnen</i> bestätigt werden. '
 
 		vector_amount_text = 'Veränderung der Anzahl an Vektoren. Eine Änderung muss mit Enter oder <i>Neu berechnen</i> bestätigt werden. Mit den Pfeiltasten kann die Anzahl in Einer-Schritten erfolgen. '
 
@@ -198,6 +205,10 @@ export function switch_language(old_lang, theorem){
 		fieldscanner_text_gauss = 'Bei Aktivierung von <i>Feld abtasten</i> können durch Festhalten der Maustaste Vektorern eingezeichnet werden. Für diese Stelle wird der Wert der Divergenz angezeigt. '
 
 		fieldscanner_text_stokes = 'Wenn Sie das <i>Feld abtasten </i> aktivieren, können Sie Vektoren zeichnen, indem Sie die Maustaste gedrückt halten. Der Wert der Rotation für diesen Punkt wird unten angezeigt. Zeigen Sie x- oder y-Komponenten innerhalb eines gezeichneten Rechtecks (<i>Feld abtasten deaktiviert), für gezeichnete Vektoren oder in der Nähe eines eingefügten Schaufelrads an, indem Sie <i>x-Komponente / y-Komponente anzeigen</i> aktivieren.'
+		
+		div_header_text_2 = ' Zeige x- oder y-Komponenten innerhalb eines gezeichneten Rechtecks (<i>Scanfeld</i> deaktiviert), indem du <i>x-Komponente / y-Komponente anzeigen</i> aktivierst.';
+		stokes_header_text_2 = ' Zeige x- oder y-Komponenten innerhalb eines gezeichneten Rechtecks (<i>Scanfeld</i> deaktiviert), für gezeichnete Vektoren oder in der Nähe eines eingefügten Paddelrades, indem du <i>x-Komponente / y-Komponente anzeigen</i> aktivierst.';
+
 		partial_x_text_gauss = 'Durch Aktivierung der x-Komponente kann diese innerhalb eines Rechtecks oder an den eingezeichneten Vektoren eingeblendet werden. '
 		partial_y_text_gauss = 'Durch Aktivierung der y-Komponente kann diese innerhalb eines Rechtecks oder an den eingezeichneten Vektoren eingeblendet werden. '
 
@@ -230,12 +241,12 @@ export function switch_language(old_lang, theorem){
 
 
 	if (theorem == 'gauss'){
-		div_rot_header.setAttribute('title', fieldscanner_text_gauss+partial_x_text_gauss+partial_y_text_gauss)
+		div_rot_header.setAttribute('title', fieldscanner_text_gauss+div_header_text_2)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_gauss)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_gauss)
 
-		flux_header.setAttribute('title', rectangle_text_gauss+projections_text_gauss)
+		flux_header.setAttribute('title', rectangle_text_gauss+' '+projections_text_gauss)
 		projections_checkbox.setAttribute('title', projections_text_gauss)
 		projections_checkbox.nextElementSibling.setAttribute('title', projections_text_gauss)
 
@@ -245,12 +256,12 @@ export function switch_language(old_lang, theorem){
 		partial_y_checkbox.nextElementSibling.setAttribute('title', partial_y_text_gauss)
 	}
 	else {
-		div_rot_header.setAttribute('title', fieldscanner_text_stokes+partial_x_text_stokes+partial_y_text_stokes)
+		div_rot_header.setAttribute('title', fieldscanner_text_stokes+stokes_header_text_2)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_stokes)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_stokes)
 
-		flux_header.setAttribute('title', rectangle_text_stokes+projections_text_stokes)
+		flux_header.setAttribute('title', rectangle_text_stokes+' ')
 		projections_checkbox.setAttribute('title', projections_text_stokes)
 		projections_checkbox.nextElementSibling.setAttribute('title', projections_text_stokes)
 

@@ -148,7 +148,7 @@ export function clickedLanguage(event) {
         partial_x_checkbox_label.innerHTML  = "Show x component"
         partial_y_checkbox_label.innerHTML = "Show y component"
         div_rot_header.innerHTML = "Divergence"
-        flux_header.innerHTML = "Flux through Area"
+        flux_header.innerHTML = "Flux through area"
         projection_label.innerHTML = "Show projection on the outer normal of the rectangle curve"
         drop_down_menu_label.innerHTML = "Theorem"
         div_rot_label_header.innerHTML = "Value:"
