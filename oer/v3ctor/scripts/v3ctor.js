@@ -294,7 +294,7 @@ export function clickedStokes(event) {
         div_rot_header.innerHTML = 'Curl';
         flux_header.innerHTML = "Circulation along a curve"
         projection_label.innerHTML = "Show projection on the vector path element of the curve"
-        paddlewheel_checkbox_label.innerHTML = "Insert paddlewheel"
+        paddlewheel_checkbox_label.innerHTML = "Insert paddle wheel"
     }
     latex_image.src = './res/Latex_Stokes.png'
     paddlewheel_div.style.visibility='visible'

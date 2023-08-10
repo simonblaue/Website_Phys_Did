@@ -120,7 +120,7 @@ export function switch_tooltips(old_theorem){
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_stokes)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_stokes)
 
-		flux_header.setAttribute('title', rectangle_text_stokes+projections_text_stokes)
+		flux_header.setAttribute('title', rectangle_text_stokes)
 		projections_checkbox.setAttribute('title', projections_text_stokes)
 		projections_checkbox.nextElementSibling.setAttribute('title', projections_text_stokes)
 
@@ -152,19 +152,19 @@ export function switch_language(old_lang, theorem){
 
 		icon_text = "The application was developed by the Physics Education Research Group (Prof. Dr. Pascal Klein) at the University of Göttingen (Faculty of Physics) for teaching purposes. Contact for feedback and questions: Simon Blaue, Larissa Hahn (larissa.hahn@uni-goettingen.de)."
 
-		theorem_text = "Choose an integral theorem to switch between divergence and curl";
+		theorem_text = "Choose an integral theorem to switch between divergence and curl.";
 
-		field_creation_text = 'Define the field through its components depending on x, y, scalars, and operations (+, -, *, /, sqrt(), ^). Between numbers and variables, operators have to be used. Confirm changes with <i>Enter</i> or <i>Recalculate</i>. Remove all changes with <i>Reset all</i> ';
+		field_creation_text = 'Define the field through its components depending on x, y, scalars, and operations (+, -, *, /, sqrt(), ^). Between numbers and variables, operators have to be used. Confirm changes with <i>Enter</i> or <i>Recalculate</i>. Remove all changes with <i>Reset all</i>. ';
 
-		vector_amount_text = 'Change the number of vectors. The arrow keys can be used to change the number one step at a time. Confirm changes with <i>Enter</i> or <i>Recalculate</i>. Remove all changes with <i>Reset all</i> ';
+		vector_amount_text = 'Change the number of vectors. The arrow keys can be used to change the number one step at a time. Confirm changes with <i>Enter</i> or <i>Recalculate</i>. Remove all changes with <i>Reset all</i>. ';
 
-		coordinate_checkbox_text = 'Display the coordinate axes in Cartesian coordinates x and y';
+		coordinate_checkbox_text = 'Display the coordinate axes in Cartesian coordinates x and y.';
 
-		rectangle_text_gauss = 'Draw a rectangle into the vector field with the mouse held down (<i>scan field</i> must be deactivated). Move the drawn rectangle in the field with the mouse and shift its borders arbitrary. The flow through the boundary of the drawn rectangle area is shown below. The divergence is calculated at the center of the rectangle.';
+		rectangle_text_gauss = 'Draw a rectangle into the vector field with the mouse held down (<i>Scan field</i> must be deactivated). Move the drawn rectangle in the field with the mouse and shift its borders arbitrary. The flow through the boundary of the drawn rectangle area is shown below. The divergence is calculated at the center of the rectangle. ';
 
-		rectangle_text_stokes = 'Draw a rectangle into the vector field with the mouse held down (scan field must be deactivated). Move the drawn rectangle in the field with the mouse and shift its borders arbitrary. The circulation along the boundary of the drawn rectangle area is shown below. The Curl is calculated at the center of the rectangle. Display the projection of the field vectors on the vector path element of the rectangle curve by activating the corresponding box. Insert a paddle wheel in the vector field and move it in the field using the mouse. ';
+		rectangle_text_stokes = 'Draw a rectangle into the vector field with the mouse held down (<i>Scan field</i> must be deactivated). Move the drawn rectangle in the field with the mouse and shift its borders arbitrary. The circulation along the boundary of the drawn rectangle area is shown below. The curl is calculated at the center of the rectangle. Display the projection of the field vectors on the vector path element of the rectangle curve by activating the corresponding box. Insert a paddle wheel in the vector field and move it in the field using the mouse. ';
 
-		fieldscanner_text_gauss = ' Activate <i>Scan field</i> to draw additional vectors in the vector field by holding down the mouse button. The value of divergence for that point is displayed below.'
+		fieldscanner_text_gauss = ' Activate <i>Scan field</i> to draw additional vectors in the vector field by holding down the mouse button. The value of divergence for that point is displayed below. '
 
 		fieldscanner_text_stokes = 'Activate <i>Scan field</i> to draw additional vectors in the vector field by holding down the mouse button. The value of curl for that point is displayed below. ';
 
@@ -172,14 +172,15 @@ export function switch_language(old_lang, theorem){
 
 		stokes_header_text_2 = ' Display x or y components within a drawn rectangle (<i>scan field</i> deactivated), for drawn vectors, or near an inserted paddle wheel by activating <i>show x component / y component.</i>'
 
-		partial_x_text_gauss = 'Display x componentes within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors. ';
-		partial_y_text_gauss = 'Display y componentes within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors. ';
+		partial_x_text_gauss = 'Display x components within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors. ';
+		partial_y_text_gauss = 'Display y components within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors. ';
 
-		partial_x_text_stokes = 'Display x componentes within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors, or near an inserted paddlewheel. ';
-		partial_y_text_stokes = 'Display y componentes within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors, or near an inserted paddlewheel. ';
+		partial_x_text_stokes = 'Display x components within a drawn rectangle (<i>Scan field</i> deactivated), for drawn vectors, or near an inserted paddlewheel. ';
+		partial_y_text_stokes = 'Display y components within a drawn rectangle (<i>Scan field</i> deactivated), for drawn vectors, or near an inserted paddlewheel. ';
 
 		projections_text_gauss = 'Display the projection of the field vectors on the outer normal vectors of the boundary of the rectangle area. ';
-		projections_text_stokes = 'Display the projection of the field vectors on the components onto the vectorial path elements of the rectangle curve. ';
+		//  Display the projection of the field vectors on the vector path element of the rectangle curve. 
+		projections_text_stokes = 'Display the projection of the field vectors on the vector path element of the rectangle curve.  ';
 
 		paddlewheel_text = 'Insert a paddle wheel  in the vector field and move it in the field using the mouse. ';
 
@@ -241,7 +242,7 @@ export function switch_language(old_lang, theorem){
 
 
 	if (theorem == 'gauss'){
-		div_rot_header.setAttribute('title', fieldscanner_text_gauss+div_header_text_2)
+		div_rot_header.setAttribute('title', fieldscanner_text_gauss+partial_x_text_gauss+partial_y_text_gauss)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_gauss)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_gauss)
@@ -256,7 +257,7 @@ export function switch_language(old_lang, theorem){
 		partial_y_checkbox.nextElementSibling.setAttribute('title', partial_y_text_gauss)
 	}
 	else {
-		div_rot_header.setAttribute('title', fieldscanner_text_stokes+stokes_header_text_2)
+		div_rot_header.setAttribute('title', fieldscanner_text_stokes+partial_x_text_stokes+partial_y_text_stokes)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_stokes)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_stokes)
