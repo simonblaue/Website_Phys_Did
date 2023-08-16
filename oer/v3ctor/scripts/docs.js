@@ -175,8 +175,8 @@ export function switch_language(old_lang, theorem){
 		partial_x_text_gauss = 'Display x components within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors. ';
 		partial_y_text_gauss = 'Display y components within a drawn rectangle (<i>Scan field</i> deactivated) or for drawn vectors. ';
 
-		partial_x_text_stokes = 'Display x components within a drawn rectangle (<i>Scan field</i> deactivated), for drawn vectors, or near an inserted paddlewheel. ';
-		partial_y_text_stokes = 'Display y components within a drawn rectangle (<i>Scan field</i> deactivated), for drawn vectors, or near an inserted paddlewheel. ';
+		partial_x_text_stokes = 'Display x components within a drawn rectangle (<i>Scan field</i> deactivated), for drawn vectors, or near an inserted paddle wheel. ';
+		partial_y_text_stokes = 'Display y components within a drawn rectangle (<i>Scan field</i> deactivated), for drawn vectors, or near an inserted paddle wheel. ';
 
 		projections_text_gauss = 'Display the projection of the field vectors on the outer normal vectors of the boundary of the rectangle area. ';
 		//  Display the projection of the field vectors on the vector path element of the rectangle curve. 
@@ -242,7 +242,7 @@ export function switch_language(old_lang, theorem){
 
 
 	if (theorem == 'gauss'){
-		div_rot_header.setAttribute('title', fieldscanner_text_gauss+partial_x_text_gauss+partial_y_text_gauss)
+		div_rot_header.setAttribute('title', div_header_text_2)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_gauss)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_gauss)
@@ -257,7 +257,7 @@ export function switch_language(old_lang, theorem){
 		partial_y_checkbox.nextElementSibling.setAttribute('title', partial_y_text_gauss)
 	}
 	else {
-		div_rot_header.setAttribute('title', fieldscanner_text_stokes+partial_x_text_stokes+partial_y_text_stokes)
+		div_rot_header.setAttribute('title', fstokes_header_text_2)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_stokes)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_stokes)

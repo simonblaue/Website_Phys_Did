@@ -243,7 +243,7 @@ export function clickedGauss(event) {
     }
     if (lang == "en"){
         div_rot_header.innerHTML = "Divergence"
-        flux_header.innerHTML = "Flux through Area"
+        flux_header.innerHTML = "Flux through area"
         projection_label.innerHTML = "Show projection on the outer normal of the rectangle curve"
     }
     
