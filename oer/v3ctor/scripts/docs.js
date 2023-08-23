@@ -100,7 +100,7 @@ export function switch_tooltips(old_theorem){
 
 
 	if (old_theorem == 'stokes'){
-		div_rot_header.setAttribute('title', fieldscanner_text_gauss+partial_x_text_gauss+partial_y_text_gauss)
+		div_rot_header.setAttribute('title', fieldscanner_text_gauss + " "+ div_header_text_2)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_gauss)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_gauss)
@@ -115,7 +115,7 @@ export function switch_tooltips(old_theorem){
 		partial_y_checkbox.nextElementSibling.setAttribute('title', partial_y_text_gauss)
 	}
 	else {
-		div_rot_header.setAttribute('title', fieldscanner_text_stokes+partial_x_text_stokes+partial_y_text_stokes)
+		div_rot_header.setAttribute('title', fieldscanner_text_stokes+" "+stokes_header_text_2)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_stokes)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_stokes)
@@ -242,7 +242,7 @@ export function switch_language(old_lang, theorem){
 
 
 	if (theorem == 'gauss'){
-		div_rot_header.setAttribute('title', div_header_text_2)
+		div_rot_header.setAttribute('title', fieldscanner_text_gauss + " "+ div_header_text_2)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_gauss)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_gauss)
@@ -257,7 +257,7 @@ export function switch_language(old_lang, theorem){
 		partial_y_checkbox.nextElementSibling.setAttribute('title', partial_y_text_gauss)
 	}
 	else {
-		div_rot_header.setAttribute('title', fstokes_header_text_2)
+		div_rot_header.setAttribute('title', fieldscanner_text_stokes+" "+stokes_header_text_2)
 		
 		fieldscanner_checkbox.setAttribute('title', fieldscanner_text_stokes)
 		fieldscanner_checkbox.nextElementSibling.setAttribute('title', fieldscanner_text_stokes)
