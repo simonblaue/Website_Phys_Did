@@ -14,11 +14,12 @@
    <body>  
 		<script src="./scripts/spring_sim_oer/main.js" type="module"></script>
 		<script type="module">
-			import { toggleAnimation, resetSpring, toggleSpring, clearCanvas } from "./scripts/spring_sim_oer/main.js"
+			import { toggleAnimation, resetSpring, toggleSpring, clearCanvas, showField } from "./scripts/spring_sim_oer/main.js"
 			window.toggleAnimation = toggleAnimation;
 			window.toggleSpring = toggleSpring;
 			window.clearCanvas = clearCanvas;
 			window.resetSpring = resetSpring;
+			window.showField = showField;
 		 </script>
 		<div class="container pt-4 content">
 			<!-- Header Row -->
@@ -36,30 +37,37 @@
 					<div class="row col-6">
 						<div class="m-3">
 							<label for="tension_slider" class="form-label">Spannungskoeffizient:</label>
-							<input type="range" class="form-range" max="50" min="15" id="tension_slider" value="30" ondrag="window.reset_spring()">
+							<input type="range" class="form-range" max="50" min="15" id="tension_slider" value="30" ondrag="window.resetSpring()">
 						</div>
 						<div class="m-3">
 							<label for="friction_slider" class="form-label">Reibung:</label>
-							<input type="range" class="form-range" max="100" min="0" id="friction_slider" value="50" ondrag="window.reset_spring()">
+							<input type="range" class="form-range" max="100" min="0" id="friction_slider" value="50" ondrag="window.resetSpring()">
 						</div>
 						<div class="m-3">
 							<label for="mass_slider" class="form-label">Masse:</label>
-							<input type="range" class="form-range" max="100" min="10" id="mass_slider" value="50" ondrag="window.reset_spring()">
+							<input type="range" class="form-range" max="100" min="10" id="mass_slider" value="50" ondrag="window.resetSpring()">
+						</div>
+						<div class="m-3">
+							<label for="length_slider" class="form-label">Länge:</label>
+							<input type="range" class="form-range" max="100" min="0" id="length_slider" value="30" ondrag="window.resetSpring()">
 						</div>
 					
 						<div class="row col-6 m-3">
 						
 							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="flexSwitchSpringShower" unchecked onclick="window.toggleSpring()">
+								<input class="form-check-input" type="checkbox" id="flexSwitchSpringShower" checked onclick="window.toggleSpring()">
 								<label class="form-check-label" for="flexSwitchSpringShower">Feder anzeigen</label>
 							</div>
 						</div>
 						<div class="row">
-								<div class="col-6">
+								<div class="col-4">
 									<button type="button" class="btn btn-primary" onclick="window.resetSpring()">Zurücksetzen</button>
 								</div>
-								<div class="col-6">
+								<div class="col-4">
 									<button type="button" class="btn btn-primary" onclick="window.clearCanvas()">Pfeile löschen</button>
+								</div>
+								<div class="col-4">
+									<button type="button" class="btn btn-primary" onclick="window.showField()">Vektorfeld anzeigen</button>
 								</div>
 						</div>
 					</div>

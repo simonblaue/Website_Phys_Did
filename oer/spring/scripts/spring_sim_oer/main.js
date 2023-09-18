@@ -19,12 +19,14 @@ c.translate(canvas.width/2, canvas.height/2)
 const massSlider = document.getElementById("mass_slider")
 const tensionSlider = document.getElementById("tension_slider")
 const frictionSlider = document.getElementById("friction_slider")
+const lengthSlider = document.getElementById("length_slider")
 
 // Global Spring
 const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
+const spring_base_length = 5
 
-var spring = new spring_physics2d(canvasSize,boundaries,{x:5,y:5}, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
-spring.vis = false
+var spring = new spring_physics2d(canvasSize,boundaries,{x:5,y:0}, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
+spring.vis = true
 // for stoping the animation
 var stop_animation = false
 
@@ -66,9 +68,13 @@ export function toggleSpring(){
 
 export function resetSpring(){
 	clearCanvas()
-	spring = new spring_physics2d(canvasSize,boundaries,{x:5,y:5}, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
+	let new_spring_length = spring_base_length * lengthSlider.value/100
+	let scale = new_spring_length / spring.l()
+	let new_endpoint = {x: spring.endpoint.x*scale, y: spring.endpoint.y*scale}
+	spring = new spring_physics2d(canvasSize,boundaries,new_endpoint, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
 	redrawCanvas()
 }
+
 
 // ------- Canvas looks -------
 
@@ -77,10 +83,23 @@ export function clearCanvas(){
 	c.resetTransform()
 	c.clearRect(0,0,canvas.width, canvas.height)
 	vectors = []
-	console.log("Cleand")
 	c.restore()
 	spring.draw(c)
 	euclid_coords.draw(canvas, c)
+}
+
+export function showField(){
+	vectors = []
+	for (let i = -canvas.width; i < canvas.width; i+=2*canvas.width/22) {
+		for (let j = -canvas.height; j < canvas.height; j+=2*canvas.height/22) {
+			let p = spring.canvas_to_physics(i,j)
+			let F = spring.field_at(p.x, p.y)
+			let canvasF = spring.physics_to_canvas(F.x,F.y)
+			let v = new drawablevVector({x:i,y:j}, canvasF)
+			vectors.push(v)
+		}
+		
+	}
 }
 
 function clear_canvas(){
@@ -95,6 +114,10 @@ function clear_canvas(){
 function redrawCanvas(){
 	clear_canvas()
 	vectors.forEach((v) => {
+		let p = spring.canvas_to_physics(v.pos.x, v.pos.y)
+		let F = spring.field_at(p.x, p.y)
+		let canvasF = spring.physics_to_canvas(F.x,F.y)
+		v.s = canvasF
 		v.draw(c)
 	})
 	spring.draw(c)
@@ -111,8 +134,10 @@ export function toggleAnimation(){
 let previousTimeStamp
 function animate(timeStamp){
 	if (!dragging){
-
+		
 		if (previousTimeStamp !== timeStamp) {
+			var ms = 1000; //1 second
+			setTimeout(function(){}, ms);
 			spring.update(c)
 			redrawCanvas()
 	}
@@ -135,7 +160,10 @@ function moveSpring(e) {
 }
 
 export function resetSpringafterSettingchange(e){
-	spring = new spring_physics2d(canvasSize,boundaries,spring.endpoint, tension_slider.value/100, mass_slider.value/10, friction_slider.value/100)
+	let new_spring_length = spring_base_length * lengthSlider.value/100
+	let scale = new_spring_length / spring.l()
+	let new_endpoint = {x: spring.endpoint.x*scale, y: spring.endpoint.y*scale}
+	spring = new spring_physics2d(canvasSize,boundaries,new_endpoint, tension_slider.value/100, mass_slider.value/10, friction_slider.value/100, spring.dr, spring.vis)
 	redrawCanvas()
 	animate()
 }
@@ -190,4 +218,5 @@ canvas.addEventListener('mouseup', disengage);
 massSlider.addEventListener('mouseup', resetSpringafterSettingchange)
 frictionSlider.addEventListener('mouseup', resetSpringafterSettingchange)
 tensionSlider.addEventListener('mouseup', resetSpringafterSettingchange)
+lengthSlider.addEventListener('mouseup', resetSpringafterSettingchange)
 

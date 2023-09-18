@@ -47,7 +47,7 @@ debug_btn.setAttribute("style","display:none;")
 // Canvas
 const canvas_background = 'white'
 const canvas = document.querySelector('canvas');
-const c = canvas.getContext("2d",  { alpha: false });
+const c = canvas.getContext("2d",  { alpha: true });
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 canvas.style.backgroundColor = canvas_background

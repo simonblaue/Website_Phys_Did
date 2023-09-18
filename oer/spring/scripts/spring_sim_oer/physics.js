@@ -7,7 +7,7 @@ export class spring_physics2d{
 	x_right // right x boundary
 	y_left // left y boundary
 	y_right // right y boundary
-	dr // gridsize
+	dr // grid size for plotting
 	base_l // spring defualt length
 	n // number of windings
 	endpoint
@@ -15,7 +15,7 @@ export class spring_physics2d{
 	field_data = [] // Vector field of strength of spring if pulled up to this point
 
 	
-	constructor(canvasSize,boundaries,endpoint, k=0.2, m=5, friction=0.5, dr=0.1, vis=true){
+	constructor(canvasSize,boundaries,endpoint, k=0.2, m=5, friction=0, dr=0.1, vis=true){
 		// Init vatrs
 		this.vis = vis
 		this.tension = k
@@ -57,9 +57,12 @@ export class spring_physics2d{
 	}
 
 	field_at(x,y){
+		// Distance from Center l
 		let l =  Math.sqrt(x**2+y**2)
-		let v_norm = {x: x/l, y: y/l} // normalized spring vec
-		let u = {x:this.base_l*v_norm.x, y: this.base_l*v_norm.y} // spring vector for base length in direction of its current orientation
+		// normalized vec at x,y 
+		let v_norm = {x: x/l, y: y/l} 
+		// vector for base length in direction of its current orientation
+		let u = {x:this.base_l*v_norm.x, y: this.base_l*v_norm.y} 
 		var Fx = -this.tension*(x-u.x)-this.friction*this.v.x
 		var Fy = -this.tension*(y-u.y)-this.friction*this.v.y
 		return {x: Fx, y:Fy}
