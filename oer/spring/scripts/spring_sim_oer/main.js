@@ -25,7 +25,9 @@ const lengthSlider = document.getElementById("length_slider")
 const boundaries = {x0: -10, x1:10, y0:-10, y1:10}
 const spring_base_length = 5
 
-var spring = new spring_physics2d(canvasSize,boundaries,{x:5,y:0}, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
+const init_spring_leng = lengthSlider.value/100 * spring_base_length
+
+var spring = new spring_physics2d(canvasSize,boundaries,{x:init_spring_leng,y:0}, tensionSlider.value/100, massSlider.value/10, frictionSlider.value/100)
 spring.vis = true
 // for stoping the animation
 var stop_animation = false

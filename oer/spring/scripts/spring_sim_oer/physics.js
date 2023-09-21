@@ -21,7 +21,7 @@ export class spring_physics2d{
 		this.tension = k
 		this.mass = m
 		this.friction = friction
-		this.n = 10
+		this.n = 20
 		this.base_l = Math.sqrt(endpoint.x**2+endpoint.y**2)
 		if (endpoint.x == NaN || endpoint.y==NaN){endpoint = {x:6,y:6}}
 		this.endpoint = endpoint
@@ -63,8 +63,8 @@ export class spring_physics2d{
 		let v_norm = {x: x/l, y: y/l} 
 		// vector for base length in direction of its current orientation
 		let u = {x:this.base_l*v_norm.x, y: this.base_l*v_norm.y} 
-		var Fx = -this.tension*(x-u.x)-this.friction*this.v.x
-		var Fy = -this.tension*(y-u.y)-this.friction*this.v.y
+		var Fx = -this.tension*(x-u.x)
+		var Fy = -this.tension*(y-u.y)
 		return {x: Fx, y:Fy}
 	}
 
@@ -144,8 +144,8 @@ export class spring_physics2d{
 
 	update(){
 		let F = this.field_at(this.endpoint.x, this.endpoint.y)
-		this.a.x = F.x/this.mass 
-		this.a.y = F.y/this.mass
+		this.a.x = (F.x-this.friction*this.v.x) /this.mass 
+		this.a.y = (F.y-this.friction*this.v.y)/this.mass
 		this.v.x += this.a.x
 		this.v.y += this.a.y 
 		this.endpoint.x += this.v.x
