@@ -185,7 +185,7 @@ export class Rectangle {
     canvas_context.save()
     canvas_context.beginPath();
     canvas_context.rect(this.startpoint.x, this.startpoint.y, this.width, this.height);
-    canvas_context.strokeStyle = '#ffffff';
+    canvas_context.strokeStyle = '#000000';
     canvas_context.stroke();
     canvas_context.closePath()
     canvas_context.restore()

@@ -204,7 +204,7 @@ export function clickedStokes(event) {
 export function clickPressField(event) {
     if (event.keyCode == 13 || event.type == 'click') {
         event.preventDefault();
-        c.fillStyle = 'black';
+        c.fillStyle = 'white';
         c.fillRect(0, 0, canvas.width, canvas.height);
         amount_of_vectors = vector_amount_entry.value;
         var old_fieldscann_vecs = F1.fieldscanner_vectors
