@@ -61,7 +61,6 @@ export class Rectangle {
         var max_riemann_error = 0
         // this is a left handed riemann sum  
        for (var i=x0; i<x1; i+= (x1-x0)/precison){
-       // console.log(i,x1 )
            value += this.field.value_at(i,y0).scalar(n_top)
            value += this.field.value_at(i,y1).scalar(n_bottom)
        }

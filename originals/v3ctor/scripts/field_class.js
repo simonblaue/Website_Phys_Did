@@ -93,7 +93,6 @@ export class Field {
 
    rescale_comp(comp, smallest, longest, possible_size, minimal_size) {
     let sgn = Math.sign(comp)
-    console.log(comp, sgn)
     let value = Math.abs(comp)
     value = (value - smallest) / (longest - smallest) * (possible_size - minimal_size) + minimal_size
     return sgn * value 
