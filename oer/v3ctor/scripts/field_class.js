@@ -20,9 +20,10 @@ export class Field {
    base_arrow_color = 'black'
 
 
-   constructor(x, y,canvas, amount_of_vectors) {
+   constructor(x, y,canvas, amount_of_vectors, coordinate_system) {
     this.x = x;
     this.y = y;
+    this.coordinate_system = coordinate_system;
     this.canvas = canvas
     this.max_possible_len = canvas.width / amount_of_vectors;
     if (canvas.height/ amount_of_vectors < this.max_possible_len) {
@@ -31,28 +32,51 @@ export class Field {
     this.canvas_middle = { x: canvas.width / 2, y: canvas.height / 2 }
     this.create_vectors();
     this.normalize_to(this.max_possible_len)
+    
    }
 
    /// Math operations //
    value_at(x, y) {
-   let Fx = math.evaluate(this.x, { 'x': x, 'y': y });
-   let Fy = math.evaluate(this.y, { 'x': x, 'y': y });
+    let Fx,Fy = 0;
+    if (this.coordinate_system == "cartesian"){
+        Fx = math.evaluate(this.x, { 'x': x, 'y': y });
+        Fy = math.evaluate(this.y, { 'x': x, 'y': y });
+    } else if (this.coordinate_system == "polar"){
+        let Fr = math.evaluate(this.x, {'r': Math.hypot(x,y), 'a':Math.atan2(y,x)} )
+        let Fphi = math.evaluate(this.y, {'r': Math.hypot(x,y), 'a':Math.atan2(y,x)} )
+        Fx = Fr*Math.cos(Fphi);
+        Fy = Fr*Math.sin(Fphi);
+    }
        return new Vector2d(Fx, Fy, this.base_arrow_color);
    }
+
    divergence_at(p) {
        var expr_x = math.parse(this.x);
        var expr_y = math.parse(this.y);
-       var diff_Fx_x = math.derivative(expr_x, "x");
-       var diff_Fy_y = math.derivative(expr_y, "y");
-       var divergence = diff_Fx_x.evaluate({ 'x': p.x, 'y': p.y }) + diff_Fy_y.evaluate({ 'x': p.x, 'y': p.y });
+       if (this.coordinate_system == "cartesian"){
+        var diff_Fx_x = math.derivative(expr_x, "x");
+        var diff_Fy_y = math.derivative(expr_y, "y");
+        var divergence = diff_Fx_x.evaluate({ 'x': p.x, 'y': p.y }) + diff_Fy_y.evaluate({ 'x': p.x, 'y': p.y });
+       } else if (this.coordinate_system = "polar"){
+        var diff_Fx_x = math.derivative(expr_x, "r");
+        var diff_Fy_y = math.derivative(expr_y, "a");
+        var divergence = diff_Fx_x.evaluate({ 'r': Math.hypot(p.x, p.y), 'a': Math.atan2(p.y, p.x) }) + diff_Fy_y.evaluate({ 'r': Math.hypot(p.x,p.y), 'a': Math.atan2(p.y,p.x) });
+       }
        return divergence;
    }
    curl_at(p) {
        var expr_x = math.parse(this.x);
        var expr_y = math.parse(this.y);
-       var diff_Fx_y = math.derivative(expr_x, "y");
-       var diff_Fy_x = math.derivative(expr_y, "x");
-       var curl = diff_Fy_x.evaluate({ 'x': p.x, 'y': p.y }) - diff_Fx_y.evaluate({ 'x': p.x, 'y': p.y });
+       if (this.coordinate_system == "cartesian"){
+           var diff_Fx_y = math.derivative(expr_x, "y");
+           var diff_Fy_x = math.derivative(expr_y, "x");
+           var curl = diff_Fy_x.evaluate({ 'x': p.x, 'y': p.y }) - diff_Fx_y.evaluate({ 'x': p.x, 'y': p.y });
+
+       }else if(this.coordinate_system == "polar"){
+        var diff_Fx_y = math.derivative(expr_x, "r");
+        var diff_Fy_x = math.derivative(expr_y, "a");
+        var curl = diff_Fy_x.evaluate({ 'r': Math.hypot(p.x,p.y), 'a': Math.atan2(p.y,p.x) }) - diff_Fx_y.evaluate({ 'r': Math.hypot(p.x,p.y), 'y': Math.atan2(p.y,p.x) });
+       }
        return curl;
    }
    

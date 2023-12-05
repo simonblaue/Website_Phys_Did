@@ -67,8 +67,8 @@ const subheader = document.querySelector('#subheader')
 const field_define_label = document.querySelector('#vectorfield_define_label')
 const x_component_entry = document.querySelector('#x-component');
 const y_component_entry = document.querySelector('#y-component');
-const x_component_entry_label = document.querySelector('#x-component-label')
-const y_component_entry_label = document.querySelector('#y-component-label')
+const x_component_entry_label = document.querySelector('#x_comp_label')
+const y_component_entry_label = document.querySelector('#y_comp_label')
 
 //Vectoramount
 const vector_amount_entry = document.querySelector('#vector-amount');
@@ -78,6 +78,8 @@ const coordinate_checkbox = document.querySelector('#coordinatesystem');
 const coordinate_checkbox_label = document.querySelector('#coordinatesystem-label');
 const btn_gauss = document.querySelector('#Btn-Gauss');
 const btn_stokes = document.querySelector('#Btn-Stokes');
+const btn_cartesian = document.querySelector('#Btn-Cartesian')
+const btn_polar = document.querySelector('#Btn-Polar')
 //Fieldscanner
 const fieldscanner_checkbox = document.querySelector('#fieldscanner');
 const fieldscanner_checkbox_label = document.querySelector('#fieldscanner-label');
@@ -113,11 +115,12 @@ var amount_of_vectors = vector_amount_entry.value;
 let move = 0; // For mouse movement over canvas
 let first_clicked_p = {x:0,y:0}
 let theorem = 'gauss';
+let coordinate_system = "cartesian"
 var res // Result varibale for flux
 
 
 // Init of rectangle and coordinate lines
-let F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors);
+let F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors, coordinate_system);
 F1.draw(c);
 let coordinates = new Coordinateline_Euklidian(canvas, F1);
 let rect = new Rectangle(F1);
@@ -132,6 +135,30 @@ let p_wheel = new Paddlewheel(F1)
 ///////////////////////////////////// INIT ENDs HERE /////////////////////////////////////
 
 // Event Handeling  for Buttons//
+
+export function clickedCartesian(event) {
+    coordinate_system = "cartesian"
+    x_component_entry_label.innerHTML = "x-Komponente"
+    y_component_entry_label.innerHTML = "y-Komponente"
+    x_component_entry.value = "x"
+    y_component_entry.value = "y"
+    btn_cartesian.setAttribute('class', 'dropdown-item active')
+    btn_polar.setAttribute('class', 'dropdown-item')
+    F1.coordinate_system = coordinate_system
+    clickPressField(event)
+}
+
+export function clickedPolar(event) {
+    coordinate_system = "polar"
+    x_component_entry_label.innerHTML = "r-Komponente"
+    y_component_entry_label.innerHTML = "Winkel-Komponente-a"
+    x_component_entry.value = "r"
+    y_component_entry.value = "a"
+    btn_cartesian.setAttribute('class', 'dropdown-item')
+    btn_polar.setAttribute('class', 'dropdown-item active')
+    F1.coordinate_system = coordinate_system
+    clickPressField(event)
+}
 
 export function clickedLanguage(event) {
 
@@ -323,7 +350,7 @@ export function clickPressField(event) {
         c.fillRect(0, 0, canvas.width, canvas.height);
         amount_of_vectors = vector_amount_entry.value;
         var old_fieldscann_vecs = F1.fieldscanner_vectors
-        F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors);
+        F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors, coordinate_system);
         F1.fieldscanner_vectors = recalc_fieldscanner_vecs(old_fieldscann_vecs)
         rect.field = F1
         coordinates.field = F1
@@ -360,7 +387,7 @@ export function resetPage(event) {
     fieldscanner_checkbox.checked = false
     paddlewheel_checkbox.checked = false
     coordinate_checkbox.checked = false
-    F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors);
+    F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors, coordinate_system);
     p_wheel = new Paddlewheel()
     coordinates = new Coordinateline_Euklidian(canvas, F1)
     coordinates.field = F1

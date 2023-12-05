@@ -19,12 +19,12 @@
 
 <script src="./scripts/v3ctor.js" type="module" > </script> 
   <script type="module">
-    import { clickPressField, clickedGauss, clickedStokes, clickedLanguage, resetPage } from "./scripts/v3ctor.js"
+    import { clickPressField, clickedGauss, clickedStokes, clickedPolar, clickedCartesian } from "./scripts/v3ctor.js"
     window.clickPressField = clickPressField
     window.clickedGauss = clickedGauss
     window.clickedStokes = clickedStokes
-    window.switch_lang = clickedLanguage
-    window.resetPage = resetPage
+    window.clickedCartesian = clickedCartesian
+    window.clickedPolar = clickedPolar
   </script>
 
 
@@ -38,7 +38,7 @@
       </div>
       <div class="col-2">
         <a tabindex="0" id="info-btn" class="btn btn-secondary float-end" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Halte die Maus über den einzelnen Elementen still, um mehr über sie zu erfahren.">Info</a>
-        <button class="btn btn-secondary float-end mt-4" type="button" id="lang-btn" onclick="switch_lang(event)">
+<button class="btn btn-secondary float-end mt-4" type="button" id="lang-btn" onclick="switch_lang(event)">
           Switch to English
         </button>
       </div>
@@ -47,11 +47,12 @@
     <div class="row">
         <div class="col-6">
             <div class="row align-items-center">
+
+              <div class="col-4 ">
                 <!-- Dropdown für Integral -->
-                <div class="col-4 ">
                   <div class="dropdown text-center mb-3" id="dropdown-menu">
                     <div id="dropdown-menu-tooltip"></div>
-                      <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownmenubutton1-label" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
+                      <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
                         Integralsatz
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -59,6 +60,19 @@
                         <li><button class="dropdown-item" id="Btn-Stokes" onclick="clickedStokes(event)">Satz von Stokes</button></li>
                       </ul>
                   </div>
+
+                              <!-- Dropdown für Koordinaten -->
+                <div class="dropdown text-center mb-3" id="dropdown-menu">
+                  <div id="dropdown-menu-tooltip"></div>
+                    <button class="btn btn-primary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="popover">
+                      Koordinatensystem
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><button class="dropdown-item active" id="Btn-Cartesian" onclick="clickedCartesian(event)" >Kartesische Koordinaten</button></li>
+                      <li><button class="dropdown-item" id="Btn-Polar" onclick="clickedPolar(event)">Polar Koordinaten</button></li>
+                    </ul>
+                </div>
+
                 </div>
                 <img src="./res/Latex_Gauss.png" class="col-6 p-4" id="latex_img" data-bs-toggle="tooltip">
                 <hr>
@@ -71,15 +85,15 @@
                 <div class="col-6 mt-3"> 
                     <form>
                         <div class="mb-3">
-                          <label for="x-component" data-bs-html="true" class="form-label" id="x-component-label">x-Komponente:</label>
+                          <label for="x-component" data-bs-html="true" class="form-label" id="x_comp_label">x-Komponente:</label>
                           <input type="text" class="form-control" data-bs-html="true" id="x-component" value="x" onkeypress="clickPressField(event)" >
                         </div>
                         <div class="mb-3">
-                          <label for="y-component" data-bs-html="true" class="form-label" id="y-component-label">y-Komponente:</label>
+                          <label for="y-component" data-bs-html="true" class="form-label" id="y_comp_label">y-Komponente:</label>
                           <input type="text" class="form-control" data-bs-html="true" id="y-component" value="y" onkeypress="clickPressField(event)">
                         </div>
-                        <button class="btn btn-primary" type="button" id="btn-recalc" onclick="clickPressField(event)" >Neu berechnen</button>
-                        <button class="btn btn-primary" type="button" id="btn-reset" onclick="resetPage(event)" >Zurücksetzen</button>
+                        <button class="btn btn-primary" type="button" onclick="clickPressField(event)" >Neu berechnen</button>
+                        <button class="btn btn-primary" type="button" onclick="window.location.reload()" >Zurücksetzen</button>
                       </form>
                 </div>    
             </div>
@@ -88,12 +102,12 @@
             <div class="row">
                 <form>
                     <div class="mb-3">
-                      <label for="vector-amount" data-bs-html="true" class="form-label" id="vector-amount-label">Anzahl der Vektoren:</label>
+                      <label for="x-component" data-bs-html="true" class="form-label">Anzahl der Vektoren:</label>
                       <input type="number" data-bs-html="true" class="form-control" max="25" min="5" id="vector-amount" value="11" onkeypress="clickPressField(event)">
                     </div>
                     <div class="form-check mb-3">
                         <input type="checkbox" class="form-check-input" id="coordinatesystem">
-                        <label for="coordinatesystem" class="form-check-label" id="coordinatesystem-label">Koordinatensystem einblenden</label>
+                        <label for="coordinatesystem" class="form-check-label">Koordinatensystem einblenden</label>
                     </div>
                   </form>
             </div>
@@ -106,15 +120,15 @@
                     <form>
                       <div class="form-check mb-3">
                         <input type="checkbox" data-bs-html="true" class="form-check-input" id="fieldscanner">
-                        <label for="fieldscanner" data-bs-html="true" class="form-check-label" id="fieldscanner-label">Feld abtasten</label>
+                        <label for="fieldscanner" data-bs-html="true" class="form-check-label">Feld abtasten</label>
                       </div>
                       <div class="form-check mb-3">
                         <input type="checkbox" data-bs-html="true" class="form-check-input" id="xcomponentview">
-                        <label for="xcomponentview" data-bs-html="true" class="form-check-label" id="xcomponentview-label">x Komponente anzeigen</label>
+                        <label for="xcomponentview" data-bs-html="true" class="form-check-label">x Komponente anzeigen</label>
                      </div>
                       <div class="form-check mb-3">
                           <input type="checkbox" data-bs-html="true" class="form-check-input" id="ycomponentview">
-                          <label for="ycomponentview" data-bs-html="true" class="form-check-label" id="ycomponentview-label">y Komponente anzeigen</label>
+                          <label for="ycomponentview" data-bs-html="true" class="form-check-label">y Komponente anzeigen</label>
                       </div>
                     </form>
                 </div>
