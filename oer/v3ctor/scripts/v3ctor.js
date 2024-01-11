@@ -1,6 +1,6 @@
 import {Field} from './field_class.js'
 import { Rectangle } from './rect_class.js';
-import { Coordinateline_Euklidian } from './coordinates.js';
+import { Coordinatelines } from './coordinates.js';
 import { Paddlewheel } from './paddlewheel.js';
 import { switch_tooltips, switch_language } from './docs.js'
 
@@ -122,7 +122,8 @@ var res // Result varibale for flux
 // Init of rectangle and coordinate lines
 let F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors, coordinate_system);
 F1.draw(c);
-let coordinates = new Coordinateline_Euklidian(canvas, F1);
+let coordinates = new Coordinatelines(canvas, F1);
+
 let rect = new Rectangle(F1);
 if (debug){
     rect.width = 200
@@ -138,6 +139,7 @@ let p_wheel = new Paddlewheel(F1)
 
 export function clickedCartesian(event) {
     coordinate_system = "cartesian"
+    coordinates.type = "Euclid"
     x_component_entry_label.innerHTML = "x-Komponente"
     y_component_entry_label.innerHTML = "y-Komponente"
     x_component_entry.value = "x"
@@ -150,10 +152,11 @@ export function clickedCartesian(event) {
 
 export function clickedPolar(event) {
     coordinate_system = "polar"
+    coordinates.type = "Polar"
     x_component_entry_label.innerHTML = "r-Komponente"
     y_component_entry_label.innerHTML = "Winkel-Komponente-a"
-    x_component_entry.value = "r"
-    y_component_entry.value = "a"
+    x_component_entry.value = "r*cos(a)"
+    y_component_entry.value = "r*sin(a)"
     btn_cartesian.setAttribute('class', 'dropdown-item')
     btn_polar.setAttribute('class', 'dropdown-item active')
     F1.coordinate_system = coordinate_system
@@ -389,7 +392,7 @@ export function resetPage(event) {
     coordinate_checkbox.checked = false
     F1 = new Field(x_component_entry.value, y_component_entry.value, canvas, amount_of_vectors, coordinate_system);
     p_wheel = new Paddlewheel()
-    coordinates = new Coordinateline_Euklidian(canvas, F1)
+    coordinates = new Coordinatelines(canvas, F1)
     coordinates.field = F1
     rect = new Rectangle(F1)
 

@@ -42,10 +42,12 @@ export class Field {
         Fx = math.evaluate(this.x, { 'x': x, 'y': y });
         Fy = math.evaluate(this.y, { 'x': x, 'y': y });
     } else if (this.coordinate_system == "polar"){
-        let Fr = math.evaluate(this.x, {'r': Math.hypot(x,y), 'a':Math.atan2(y,x)} )
-        let Fphi = math.evaluate(this.y, {'r': Math.hypot(x,y), 'a':Math.atan2(y,x)} )
-        Fx = Fr*Math.cos(Fphi);
-        Fy = Fr*Math.sin(Fphi);
+        let r =  Math.hypot(x,y)
+        let phi = Math.atan2(y,x) 
+        let Fr = math.evaluate(this.x, {'r': r, 'a':phi} )
+        let Fphi = math.evaluate(this.y, {'r': r, 'a':phi} )
+        Fx = Fr * Math.cos(Fphi) - Fphi * Math.sin(Fphi);
+        Fy = Fr * Math.sin(Fphi) + Fphi * Math.cos(Fphi);
     }
        return new Vector2d(Fx, Fy, this.base_arrow_color);
    }
@@ -58,9 +60,11 @@ export class Field {
         var diff_Fy_y = math.derivative(expr_y, "y");
         var divergence = diff_Fx_x.evaluate({ 'x': p.x, 'y': p.y }) + diff_Fy_y.evaluate({ 'x': p.x, 'y': p.y });
        } else if (this.coordinate_system = "polar"){
-        var diff_Fx_x = math.derivative(expr_x, "r");
+        var diff_Fx_x = math.derivative("r*"+expr_x, "r");
         var diff_Fy_y = math.derivative(expr_y, "a");
-        var divergence = diff_Fx_x.evaluate({ 'r': Math.hypot(p.x, p.y), 'a': Math.atan2(p.y, p.x) }) + diff_Fy_y.evaluate({ 'r': Math.hypot(p.x,p.y), 'a': Math.atan2(p.y,p.x) });
+        var r = Math.hypot(p.x, p.y)
+        var a =  Math.atan2(p.y, p.x)
+        var divergence = 1/r* diff_Fx_x.evaluate({ 'r': r, 'a':a }) + 1/r * diff_Fy_y.evaluate({ 'r':r, 'a': a });
        }
        return divergence;
    }
@@ -75,7 +79,7 @@ export class Field {
        }else if(this.coordinate_system == "polar"){
         var diff_Fx_y = math.derivative(expr_x, "r");
         var diff_Fy_x = math.derivative(expr_y, "a");
-        var curl = diff_Fy_x.evaluate({ 'r': Math.hypot(p.x,p.y), 'a': Math.atan2(p.y,p.x) }) - diff_Fx_y.evaluate({ 'r': Math.hypot(p.x,p.y), 'y': Math.atan2(p.y,p.x) });
+        var curl = diff_Fy_x.evaluate({ 'r': Math.hypot(p.x,p.y), 'a': Math.atan2(p.y,p.x) }) - diff_Fx_y.evaluate({ 'r': Math.hypot(p.x,p.y), 'a': Math.atan2(p.y,p.x) });
        }
        return curl;
    }

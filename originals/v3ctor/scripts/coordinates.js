@@ -22,6 +22,12 @@ export class Coordinateline_Euklidian {
            canvas_context.strokeStyle = 'black';
            canvas_context.stroke();
            canvas_context.restore();
+           // Make "x" text
+           
+           canvas_context.fillStyle = 'black';
+           canvas_context.textAlign = 'center';
+           canvas_context.fillText("HHHHHHH", 100, this.canvas_middle.y+10);
+           console.log("printed")
            // Y-Axis
            for (let i = 0; i < canvas.height; i += canvas.height / 10) {
                if (i != this.canvas_middle.y) {
