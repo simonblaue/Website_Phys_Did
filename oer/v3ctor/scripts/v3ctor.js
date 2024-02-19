@@ -155,8 +155,8 @@ export function clickedPolar(event) {
     coordinates.type = "Polar"
     x_component_entry_label.innerHTML = "r-Komponente"
     y_component_entry_label.innerHTML = "Winkel-Komponente-a"
-    x_component_entry.value = "r*cos(a)"
-    y_component_entry.value = "r*sin(a)"
+    x_component_entry.value = "r"
+    y_component_entry.value = "0"
     btn_cartesian.setAttribute('class', 'dropdown-item')
     btn_polar.setAttribute('class', 'dropdown-item active')
     F1.coordinate_system = coordinate_system

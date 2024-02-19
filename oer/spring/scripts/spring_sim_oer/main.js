@@ -3,6 +3,14 @@ import {Coordinateline_Euklidian2d} from "./coordinates.js"
 import {drawablevVector} from "./drawablevector.js"
 
 
+// Popover init from bootstrap for infobox
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+var popoverList = popoverTriggerList.map( function(popoverTriggerEl) {
+  return  new bootstrap.Popover(popoverTriggerEl, {
+  trigger : 'hover'
+  });
+});
+
 // Global Canvas
 const canvas = document.getElementById("canvas")
 canvas.width = canvas.clientWidth;

@@ -7,7 +7,7 @@ export class Coordinatelines {
        this.field = field;
        this.canvas = canvas
        this.canvas_middle = { x: canvas.width / 2, y: canvas.height / 2 }
-       this.color = "black"
+       this.color = "gray"
    }
 
    draw_euclid(canvas_context){

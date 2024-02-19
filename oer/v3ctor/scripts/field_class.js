@@ -42,12 +42,14 @@ export class Field {
         Fx = math.evaluate(this.x, { 'x': x, 'y': y });
         Fy = math.evaluate(this.y, { 'x': x, 'y': y });
     } else if (this.coordinate_system == "polar"){
+
         let r =  Math.hypot(x,y)
         let phi = Math.atan2(y,x) 
-        let Fr = math.evaluate(this.x, {'r': r, 'a':phi} )
+
+        let Fr = math.evaluate(this.x, {'r': r, 'a': phi} )
         let Fphi = math.evaluate(this.y, {'r': r, 'a':phi} )
-        Fx = Fr * Math.cos(Fphi) - Fphi * Math.sin(Fphi);
-        Fy = Fr * Math.sin(Fphi) + Fphi * Math.cos(Fphi);
+        Fx = Fr * Math.cos(phi) - Fphi * Math.sin(phi);
+        Fy = Fr * Math.sin(phi) + Fphi * Math.cos(phi);
     }
        return new Vector2d(Fx, Fy, this.base_arrow_color);
    }
